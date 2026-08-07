@@ -1,0 +1,81 @@
+---
+import { resolvePath } from '../utils/paths.js';
+
+const currentPath = Astro.url.pathname;
+
+const isLinkActive = (href) => {
+  const resolvedHref = resolvePath(href);
+  const normalizedCurrent = currentPath.endsWith('/') ? currentPath : currentPath + '/';
+  const normalizedHref = resolvedHref.endsWith('/') ? resolvedHref : resolvedHref + '/';
+
+  if (normalizedHref === resolvePath('/') || normalizedHref === resolvePath('/') + '/') {
+    return normalizedCurrent === normalizedHref;
+  }
+  return normalizedCurrent.startsWith(normalizedHref);
+};
+
+const links = [
+  { name: 'Home', href: '/' },
+  { name: 'About', href: '/about' },
+];
+---
+
+<nav class="relative z-50">
+  <button
+    id="hamburger-btn"
+    class="block text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-100 rounded p-2 -mr-2 hover:text-blue-600 transition-colors"
+    aria-label="Open menu"
+    aria-expanded="false"
+  >
+    <svg id="hamburger-icon-open" class="w-6 h-6 block" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+    </svg>
+    <svg id="hamburger-icon-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+    </svg>
+  </button>
+
+  <div id="mobile-menu" class="hidden absolute top-full right-0 mt-6 w-48 bg-slate-50 border border-slate-200 shadow-lg z-50">
+    <ul class="flex flex-col p-2 space-y-1">
+      {links.map((link) => {
+        const active = isLinkActive(link.href);
+        return (
+          <li>
+            <a
+              href={resolvePath(link.href)}
+              aria-current={active ? "page" : undefined}
+              class={`block px-4 py-2 font-sans text-sm uppercase tracking-widest transition-colors rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-inset ${
+                active
+                  ? 'bg-slate-200 text-blue-600 font-bold border-l-2 border-blue-600 -ml-[2px]'
+                  : 'text-slate-600 hover:bg-slate-100 hover:text-blue-600 border-l-2 border-transparent -ml-[2px]'
+              }`}
+            >
+              {link.name}
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  </div>
+</nav>
+
+<script>
+  const btn = document.getElementById('hamburger-btn');
+  const menu = document.getElementById('mobile-menu');
+  const iconOpen = document.getElementById('hamburger-icon-open');
+  const iconClose = document.getElementById('hamburger-icon-close');
+
+  if (btn && menu && iconOpen && iconClose) {
+    btn.addEventListener('click', () => {
+      const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!isExpanded));
+      btn.setAttribute('aria-label', isExpanded ? 'Open menu' : 'Close menu');
+
+      menu.classList.toggle('hidden');
+      iconOpen.classList.toggle('hidden');
+      iconOpen.classList.toggle('block');
+      iconClose.classList.toggle('hidden');
+      iconClose.classList.toggle('block');
+    });
+  }
+</script>

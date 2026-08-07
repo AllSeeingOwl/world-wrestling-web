@@ -1,0 +1,56 @@
+---
+import '../styles/global.css';
+import Navigation from '../components/Navigation.astro';
+import { resolvePath } from '../utils/paths.js';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Wrestling Heritage Registry" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href={resolvePath('/favicon.svg')} />
+    <title>{title}</title>
+  </head>
+  <body class="bg-slate-50 text-slate-900 font-sans min-h-screen">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-white focus:text-blue-600 focus:border focus:border-slate-300 focus:top-0 focus:left-0">
+      Skip to main content
+    </a>
+    <header class="bg-white mb-8 border-b border-slate-200">
+      <div class="py-6 px-8 max-w-4xl mx-auto flex items-start justify-between gap-4">
+        <div class="flex items-center gap-4">
+          <div>
+            <h1 class="font-bold text-3xl sm:text-4xl text-slate-900 tracking-tight mb-1">
+              Wrestling Heritage <span class="text-blue-600">Registry</span>
+            </h1>
+            <p class="text-[10px] sm:text-xs uppercase tracking-widest text-slate-500">
+              The Crabtree Catalogue
+            </p>
+          </div>
+        </div>
+        <div class="mt-1">
+          <Navigation />
+        </div>
+      </div>
+    </header>
+
+    <main id="main-content" tabindex="-1" class="max-w-4xl mx-auto px-8 pb-16 outline-none">
+      <slot />
+    </main>
+
+    <footer class="border-t border-slate-200 mt-12 py-8 text-center bg-white">
+      <div class="max-w-4xl mx-auto px-8">
+        <p class="text-[10px] text-slate-500 uppercase tracking-widest">
+          &copy; {new Date().getFullYear()} International Professional Wrestling Heritage Registry.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

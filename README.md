@@ -13,6 +13,7 @@ A generic, neutral website template built for the "Crabtree Catalogue" - designe
 Requires **Node.js v22 or higher** and **pnpm**.
 
 1. **Install dependencies:**
+
    ```bash
    pnpm install
    ```
@@ -24,6 +25,7 @@ Requires **Node.js v22 or higher** and **pnpm**.
      ```
 
 3. **Testing & Verification:**
+
    ```bash
    pnpm run typecheck          # TypeScript validation
    pnpm run lint               # Run ESLint

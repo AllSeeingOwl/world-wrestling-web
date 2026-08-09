@@ -4,7 +4,7 @@
   "type": "module",
   "description": "Fic-His-Arch website",
   "scripts": {
-    "dev:server": "nodemon --exec ts-node server.ts",
+    "dev:server": "nodemon --exec ts-node src/server.ts",
     "test": "jest --passWithNoTests --testPathIgnorePatterns=\"e2e\"",
     "test:e2e:playwright": "playwright test",
     "test:e2e:cypress": "cypress open",

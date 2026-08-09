@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const ArticleCard = ({ article }) => {
   return (
@@ -8,16 +8,20 @@ const ArticleCard = ({ article }) => {
           {article.registry_section}
         </span>
       </div>
-      
+
       <h3 className="font-bold text-lg text-slate-900 mb-2 leading-tight group-hover:text-blue-600 transition-colors">
         {article.title}
       </h3>
-      
+
       <div className="text-xs text-slate-500 mb-4 flex flex-col gap-1">
-        <span><strong>Date:</strong> {article.date}</span>
-        <span><strong>Promotion:</strong> {article.promotion}</span>
+        <span>
+          <strong>Date:</strong> {article.date}
+        </span>
+        <span>
+          <strong>Promotion:</strong> {article.promotion}
+        </span>
       </div>
-      
+
       <p className="text-sm text-slate-700 mt-auto line-clamp-3">
         {article.summary}
       </p>

@@ -1,3 +1,11 @@
+---
+title: "The International Professional Wrestling Heritage Registry"
+date: "January 1, 2026"
+promotion: "IPWHR"
+significance: "Historical Significance"
+registry_section: "Registry of Excellence"
+---
+
 # **The International Professional Wrestling Heritage Registry** 
 
 ## **(Also known as "The Crabtree Catalogue")** 

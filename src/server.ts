@@ -1,10 +1,25 @@
-import express, { Request, Response, NextFunction } from "express";
+import express from "express";
+import type { Request, Response, NextFunction } from "express";
 import path from "path";
 import crypto from "crypto";
 import fsPromises from "fs/promises";
 import cookieParser from "cookie-parser";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 import csurf from "csurf";
 import { z } from "zod";
+import { Redis } from "@upstash/redis";
+
+// Only initialize Redis if credentials are provided
+export let redis: Redis | null = null;
+if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
+  redis = new Redis({
+    url: process.env.UPSTASH_REDIS_REST_URL,
+    token: process.env.UPSTASH_REDIS_REST_TOKEN,
+  });
+}
 
 export function generateSlug(title: string): string {
   return title
@@ -427,5 +442,13 @@ app.use((err: unknown, _req: Request, res: Response, _next: NextFunction) => {
   }
   res.status(500).json({ error: "Internal Server Error" });
 });
+
+const PORT = process.env.PORT || 3000;
+
+if (process.env.NODE_ENV !== "test") {
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+}
 
 export default app;

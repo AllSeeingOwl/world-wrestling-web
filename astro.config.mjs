@@ -11,7 +11,7 @@ export default defineConfig({
       ? `https://undefined`
       : "https://vercel.app"
     : "https://allseeingowl.github.io",
-  base: isVercel ? undefined : "/Fic-His-Arch",
+  base: isVercel ? undefined : "/world-wrestling-web",
   integrations: [react()],
   vite: {
     plugins: [tsconfigPaths(), tailwindcss()],

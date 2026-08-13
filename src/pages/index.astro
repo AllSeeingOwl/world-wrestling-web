@@ -11,26 +11,127 @@ const articles = allArchiveEntries.map(entry => ({
   title: entry.data.title,
   date: entry.data.date,
   promotion: entry.data.promotion,
+  era: entry.data.era || 'Unknown',
   significance: entry.data.significance,
   registry_section: entry.data.registry_section,
   summary: entry.body ? entry.body.substring(0, 150) + '...' : ''
 }));
+
+const promotions = [...new Set(articles.map(a => a.promotion))].sort();
+const eras = [...new Set(articles.map(a => a.era))].sort();
 ---
 
 <Layout title="Wrestling Heritage Registry">
-  <div class="mb-12 border-b border-slate-200 pb-6">
-    <h2 class="font-bold text-2xl mb-4">Registry Entries</h2>
-    <p class="text-sm text-slate-600">Preserving professional wrestling's most significant moments.</p>
+  <div class="mb-12 border-b border-registry-border pb-6">
+    <h2 class="font-bold text-2xl mb-4 text-registry-text">Registry Entries</h2>
+    <p class="text-sm text-registry-textMuted">Preserving professional wrestling's most significant moments.</p>
   </div>
+
+  <section
+    aria-label="Filter registry entries"
+    class="bg-registry-surface p-4 rounded-lg border border-registry-border flex flex-col md:flex-row gap-4 items-start md:items-center mb-8"
+  >
+    <div class="flex flex-col gap-2 w-full md:w-auto">
+      <label class="text-xs font-semibold text-registry-textMuted uppercase" id="promotion-label">Promotion</label>
+      <div class="flex flex-wrap gap-2" role="group" aria-labelledby="promotion-label">
+        <button
+          type="button"
+          class="promotion-btn active bg-registry-gold border border-registry-gold text-registry-background px-3 py-1 text-sm rounded font-medium focus:outline-none focus:ring-2 focus:ring-registry-gold focus:ring-offset-2 focus:ring-offset-registry-surface"
+          data-value="all"
+          aria-pressed="true"
+        >
+          All Promotions
+        </button>
+        {promotions.map((promo) => (
+          <button
+            type="button"
+            class="promotion-btn bg-registry-background border border-registry-border text-registry-text hover:border-registry-gold px-3 py-1 text-sm rounded font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-registry-gold focus:ring-offset-2 focus:ring-offset-registry-surface"
+            data-value={promo}
+            aria-pressed="false"
+          >
+            {promo}
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-1 w-full md:w-auto">
+      <label for="era-filter" class="text-xs font-semibold text-registry-textMuted uppercase">Era</label>
+      <select
+        id="era-filter"
+        class="bg-registry-background border border-registry-border text-registry-text text-sm rounded focus:ring-registry-gold focus:border-registry-gold block w-full p-2"
+        aria-label="Filter by era"
+      >
+        <option value="all">All Eras</option>
+        {eras.map((era) => (
+          <option value={era}>{era}</option>
+        ))}
+      </select>
+    </div>
+  </section>
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="article-grid">
     {articles.map((article) => (
       <a
         href={resolvePath(`/archive/${article.slug}`)}
-        class="block group article-item focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-50 rounded"
+        class="block group article-item focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold focus-visible:ring-offset-2 focus-visible:ring-offset-registry-background rounded"
+        data-promotion={article.promotion}
+        data-era={article.era}
       >
         <ArticleCard article={article} />
       </a>
     ))}
   </div>
 </Layout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const promotionBtns = document.querySelectorAll('.promotion-btn');
+    const eraFilter = document.getElementById('era-filter') as HTMLSelectElement;
+    const articles = document.querySelectorAll('.article-item');
+
+    let selectedPromotion = 'all';
+
+    function filterArticles() {
+      const selectedEra = eraFilter.value;
+
+      articles.forEach((article) => {
+        const articlePromotion = article.getAttribute('data-promotion');
+        const articleEra = article.getAttribute('data-era');
+
+        const matchPromotion = selectedPromotion === 'all' || articlePromotion === selectedPromotion;
+        const matchEra = selectedEra === 'all' || articleEra === selectedEra;
+
+        if (matchPromotion && matchEra) {
+          (article as HTMLElement).style.display = 'block';
+        } else {
+          (article as HTMLElement).style.display = 'none';
+        }
+      });
+    }
+
+    promotionBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const target = e.currentTarget as HTMLButtonElement;
+
+        // Update active state classes
+        promotionBtns.forEach(b => {
+          b.classList.remove('bg-registry-gold', 'border-registry-gold', 'text-registry-background');
+          b.classList.add('bg-registry-background', 'border-registry-border', 'text-registry-text');
+          b.setAttribute('aria-pressed', 'false');
+        });
+
+        target.classList.remove('bg-registry-background', 'border-registry-border', 'text-registry-text');
+        target.classList.add('bg-registry-gold', 'border-registry-gold', 'text-registry-background');
+        target.setAttribute('aria-pressed', 'true');
+
+        selectedPromotion = target.getAttribute('data-value') || 'all';
+        filterArticles();
+      });
+    });
+
+    if (eraFilter) {
+      eraFilter.addEventListener('change', filterArticles);
+    }
+  });
+</script>

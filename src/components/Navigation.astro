@@ -23,7 +23,7 @@ const links = [
 <nav class="relative z-50">
   <button
     id="hamburger-btn"
-    class="block text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-100 rounded p-2 -mr-2 hover:text-blue-600 transition-colors"
+    class="block text-registry-text focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold focus-visible:ring-offset-2 focus-visible:ring-offset-registry-surface rounded p-2 -mr-2 hover:text-registry-gold transition-colors"
     aria-label="Open menu"
     aria-expanded="false"
   >
@@ -35,7 +35,7 @@ const links = [
     </svg>
   </button>
 
-  <div id="mobile-menu" class="hidden absolute top-full right-0 mt-6 w-48 bg-slate-50 border border-slate-200 shadow-lg z-50">
+  <div id="mobile-menu" class="hidden absolute top-full right-0 mt-6 w-48 bg-registry-background border border-registry-border shadow-lg z-50">
     <ul class="flex flex-col p-2 space-y-1">
       {links.map((link) => {
         const active = isLinkActive(link.href);
@@ -44,10 +44,10 @@ const links = [
             <a
               href={resolvePath(link.href)}
               aria-current={active ? "page" : undefined}
-              class={`block px-4 py-2 font-sans text-sm uppercase tracking-widest transition-colors rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-inset ${
+              class={`block px-4 py-2 font-sans text-sm uppercase tracking-widest transition-colors rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold focus-visible:ring-inset ${
                 active
-                  ? 'bg-slate-200 text-blue-600 font-bold border-l-2 border-blue-600 -ml-[2px]'
-                  : 'text-slate-600 hover:bg-slate-100 hover:text-blue-600 border-l-2 border-transparent -ml-[2px]'
+                  ? 'bg-registry-surface text-registry-gold font-bold border-l-2 border-registry-gold -ml-[2px]'
+                  : 'text-registry-textMuted hover:bg-registry-surface hover:text-registry-gold border-l-2 border-transparent -ml-[2px]'
               }`}
             >
               {link.name}

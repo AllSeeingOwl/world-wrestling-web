@@ -1,12 +1,18 @@
-# International Professional Wrestling Heritage Registry (IPWHR) Template
+# World Wrestling Web
 
-A generic, neutral website template built for the "Crabtree Catalogue" - designed to identify, categorize, and preserve for future generations a definitive collection of professional wrestling's most significant moments.
+A definitive collection of professional wrestling's most significant moments, designed to identify, categorize, and preserve heritage for future generations.
+
+Please refer to the following documents for more details:
+- [Wrestling Handbook](wrestling_handbook.md)
+- [Platform Architecture](platform_architecture.md)
 
 ## 📖 Features
 
 - **Built with Astro & React:** Fast, static-first site generation with interactive React components.
 - **Tailwind CSS:** Neutral, generic styling ready to be customized.
 - **Content Collections:** Uses Astro Content Collections with a strict Zod schema for easy markdown management.
+- **Express Backend:** A dynamic backend server API to manage registry entries.
+- **Promotion & Era Filtering:** Features to filter and organize content based on wrestling promotion and era.
 
 ## 🚀 Setup & Installation
 
@@ -19,6 +25,10 @@ Requires **Node.js v22 or higher** and **pnpm**.
    ```
 
 2. **Start the development servers:**
+   - **Backend (Express):**
+     ```bash
+     pnpm run dev:server
+     ```
    - **Frontend (Astro):**
      ```bash
      npx astro dev

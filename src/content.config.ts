@@ -1,18 +1,18 @@
-import { z, defineCollection } from "astro:content";
-import { glob } from "astro/loaders";
+import { z, defineCollection } from 'astro:content';
+import { glob } from 'astro/loaders';
 
 // 🛡️ Sentinel: Prevent XSS via javascript: URIs
 export const safeUrlSchema = z.string().refine(
   (val) => {
-    if (val.startsWith("/") || val.startsWith("#")) return true;
+    if (val.startsWith('/') || val.startsWith('#')) return true;
     try {
       const url = new URL(val);
-      return url.protocol === "http:" || url.protocol === "https:";
+      return url.protocol === 'http:' || url.protocol === 'https:';
     } catch {
       return false;
     }
   },
-  { message: "Must be a safe URL (http/https) or relative path" },
+  { message: 'Must be a safe URL (http/https) or relative path' }
 );
 
 export const archiveSchema = z.object({
@@ -20,21 +20,21 @@ export const archiveSchema = z.object({
   date: z.string(),
   promotion: z.string(),
   significance: z.enum([
-    "Cultural Significance",
-    "Historical Significance",
-    "Aesthetic Significance",
-    "Conceptual Failure",
-    "Technical Failure",
-    "Contextual Failure",
+    'Cultural Significance',
+    'Historical Significance',
+    'Aesthetic Significance',
+    'Conceptual Failure',
+    'Technical Failure',
+    'Contextual Failure',
     "So Bad It's Good",
-    "Cautionary Archive",
-    "Homage & Influence",
+    'Cautionary Archive',
+    'Homage & Influence',
   ]),
   registry_section: z.enum([
-    "Registry of Excellence",
-    "Registry of Infamy - Division A",
-    "Registry of Infamy - Division B",
-    "Registry of Homage & Influence",
+    'Registry of Excellence',
+    'Registry of Infamy - Division A',
+    'Registry of Infamy - Division B',
+    'Registry of Homage & Influence',
   ]),
   image_url: safeUrlSchema.optional(),
   external_links: z
@@ -42,13 +42,13 @@ export const archiveSchema = z.object({
       z.object({
         name: z.string(),
         url: safeUrlSchema,
-      }),
+      })
     )
     .optional(),
 });
 
 const archiveCollection = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/archive" }),
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/archive' }),
   schema: archiveSchema,
 });
 

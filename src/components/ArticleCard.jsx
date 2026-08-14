@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const ArticleCard = ({ article }) => {
   return (
@@ -14,16 +14,17 @@ const ArticleCard = ({ article }) => {
 
       <div className="text-xs font-mono text-registry-textMuted mb-4 flex flex-col gap-1">
         <span>
-          <time dateTime={new Date(article.date).toISOString()}>{new Date(article.date).toLocaleDateString()}</time> &bull; Significance: {article.significance}
+          <time dateTime={new Date(article.date).toISOString()}>
+            {new Date(article.date).toLocaleDateString()}
+          </time>{' '}
+          &bull; Significance: {article.significance}
         </span>
         <span>
           <strong>Section:</strong> {article.registry_section}
         </span>
       </div>
 
-      <p className="text-sm font-sans text-registry-text mt-auto line-clamp-3">
-        {article.summary}
-      </p>
+      <p className="text-sm font-sans text-registry-text mt-auto line-clamp-3">{article.summary}</p>
     </article>
   );
 };

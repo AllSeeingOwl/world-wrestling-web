@@ -20,19 +20,19 @@ module.exports = {
       colors: {
         registry: {
           background: '#0F172A', // Slate 900 - Deep dark slate
-          surface: '#1E293B',    // Slate 800 - Slightly lighter for cards
+          surface: '#1E293B', // Slate 800 - Slightly lighter for cards
           surfaceHover: '#334155', // Slate 700 - Hover states
-          text: '#F8FAFC',       // Slate 50 - Primary text
-          textMuted: '#94A3B8',  // Slate 400 - Secondary text/metadata
-          gold: '#F59E0B',       // Amber 500 - Championship Gold
-          goldHover: '#D97706',  // Amber 600 - Gold hover
-          red: '#DC2626',        // Red 600 - Intensity Red
-          border: '#334155',     // Slate 700 - Subtle borders
-        }
-      }
-    }
-  }
-}
+          text: '#F8FAFC', // Slate 50 - Primary text
+          textMuted: '#94A3B8', // Slate 400 - Secondary text/metadata
+          gold: '#F59E0B', // Amber 500 - Championship Gold
+          goldHover: '#D97706', // Amber 600 - Gold hover
+          red: '#DC2626', // Red 600 - Intensity Red
+          border: '#334155', // Slate 700 - Subtle borders
+        },
+      },
+    },
+  },
+};
 ```
 
 ## 2. Typography
@@ -53,10 +53,10 @@ module.exports = {
         heading: ['Merriweather', 'serif'],
         sans: ['Inter', 'system-ui', 'sans-serif'],
         mono: ['JetBrains Mono', 'monospace'],
-      }
-    }
-  }
-}
+      },
+    },
+  },
+};
 ```
 
 ## 3. Component Descriptions & Examples
@@ -64,6 +64,7 @@ module.exports = {
 Below are descriptions and React + Tailwind CSS examples for the core components of the registry.
 
 ### RegistryCard
+
 Displays individual wrestling moments. Includes the title, date, promotion, and significance level.
 
 ```tsx
@@ -83,17 +84,17 @@ const RegistryCard = ({ title, date, promotion, significance, summary }) => {
         </span>
       </div>
       <p className="text-sm font-mono text-registry-textMuted mb-3">
-        <time dateTime={date}>{new Date(date).toLocaleDateString()}</time> &bull; Significance: {significance}/10
+        <time dateTime={date}>{new Date(date).toLocaleDateString()}</time> &bull; Significance:{' '}
+        {significance}/10
       </p>
-      <p className="font-sans text-registry-text line-clamp-3">
-        {summary}
-      </p>
+      <p className="font-sans text-registry-text line-clamp-3">{summary}</p>
     </article>
   );
 };
 ```
 
 ### RegistryFilters
+
 Allows users to narrow down the archive by promotion, era, wrestler, or significance level.
 
 ```tsx
@@ -106,7 +107,12 @@ const RegistryFilters = () => {
       className="bg-registry-surface p-4 rounded-lg border border-registry-border flex flex-wrap gap-4 items-center"
     >
       <div className="flex flex-col gap-1">
-        <label htmlFor="promotion-filter" className="text-xs font-semibold text-registry-textMuted uppercase">Promotion</label>
+        <label
+          htmlFor="promotion-filter"
+          className="text-xs font-semibold text-registry-textMuted uppercase"
+        >
+          Promotion
+        </label>
         <select
           id="promotion-filter"
           className="bg-registry-background border border-registry-border text-registry-text text-sm rounded focus:ring-registry-gold focus:border-registry-gold block w-full p-2"
@@ -130,6 +136,7 @@ const RegistryFilters = () => {
 ```
 
 ### CitationBlock
+
 Footer element for entries displaying source and date information to maintain the "historical archive" aesthetic.
 
 ```tsx
@@ -138,15 +145,22 @@ import React from 'react';
 const CitationBlock = ({ source, retrievedDate, author }) => {
   return (
     <footer className="mt-8 pt-4 border-t border-registry-border text-xs text-registry-textMuted font-mono bg-registry-surface/50 p-4 rounded">
-      <p className="mb-1"><strong>Source:</strong> {source}</p>
-      <p className="mb-1"><strong>Archivist:</strong> {author}</p>
-      <p><strong>Retrieved:</strong> {new Date(retrievedDate).toLocaleDateString()}</p>
+      <p className="mb-1">
+        <strong>Source:</strong> {source}
+      </p>
+      <p className="mb-1">
+        <strong>Archivist:</strong> {author}
+      </p>
+      <p>
+        <strong>Retrieved:</strong> {new Date(retrievedDate).toLocaleDateString()}
+      </p>
     </footer>
   );
 };
 ```
 
 ### TimelineView
+
 A visual representation of wrestling history by era.
 
 ```tsx
@@ -160,7 +174,9 @@ const TimelineEvent = ({ year, title, isMajor }) => {
         {year}
       </div>
       {/* Timeline Node */}
-      <div className={`absolute left-0 sm:left-28 top-7 w-3 h-3 rounded-full border-2 ${isMajor ? 'bg-registry-gold border-registry-gold' : 'bg-registry-background border-registry-textMuted'} group-hover:border-registry-gold group-hover:bg-registry-gold transition-colors`}></div>
+      <div
+        className={`absolute left-0 sm:left-28 top-7 w-3 h-3 rounded-full border-2 ${isMajor ? 'bg-registry-gold border-registry-gold' : 'bg-registry-background border-registry-textMuted'} group-hover:border-registry-gold group-hover:bg-registry-gold transition-colors`}
+      ></div>
       <div className="bg-registry-surface p-4 rounded-lg border border-registry-border group-hover:border-registry-gold transition-colors">
         <h4 className="font-heading font-bold text-lg text-registry-text">{title}</h4>
       </div>

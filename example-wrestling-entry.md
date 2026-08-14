@@ -1,16 +1,16 @@
 ---
-title: "The Montreal Screwjob"
+title: 'The Montreal Screwjob'
 date: 1997-11-09
-promotion: "WWF"
-significance: "Historical Significance"
-registry_section: "Registry of Infamy - Division A"
+promotion: 'WWF'
+significance: 'Historical Significance'
+registry_section: 'Registry of Infamy - Division A'
 wrestlers_involved:
-  - "Bret Hart"
-  - "Shawn Michaels"
-  - "Vince McMahon"
-event_name: "Survivor Series 1997"
-era: "Attitude Era"
-description: "The infamous real-life double-cross of Bret Hart by Vince McMahon at Survivor Series 1997, forever altering the landscape of professional wrestling."
+  - 'Bret Hart'
+  - 'Shawn Michaels'
+  - 'Vince McMahon'
+event_name: 'Survivor Series 1997'
+era: 'Attitude Era'
+description: 'The infamous real-life double-cross of Bret Hart by Vince McMahon at Survivor Series 1997, forever altering the landscape of professional wrestling.'
 ---
 
 # The Montreal Screwjob: A Night That Changed Wrestling Forever
@@ -19,7 +19,7 @@ On November 9, 1997, the landscape of professional wrestling was irrevocably alt
 
 ## The Context
 
-Heading into the 1997 *Survivor Series*, Bret Hart had secretly signed a lucrative contract with rival promotion World Championship Wrestling (WCW). WWF owner Vince McMahon, concerned that Hart would take the WWF Championship to WCW television, demanded that Hart drop the title to Michaels in Montreal. Hart, citing a creative control clause in his contract and his bitter real-life rivalry with Michaels, refused to lose the title in his home country of Canada, though he agreed to forfeit or lose the belt later.
+Heading into the 1997 _Survivor Series_, Bret Hart had secretly signed a lucrative contract with rival promotion World Championship Wrestling (WCW). WWF owner Vince McMahon, concerned that Hart would take the WWF Championship to WCW television, demanded that Hart drop the title to Michaels in Montreal. Hart, citing a creative control clause in his contract and his bitter real-life rivalry with Michaels, refused to lose the title in his home country of Canada, though he agreed to forfeit or lose the belt later.
 
 ## The Incident
 
@@ -35,6 +35,6 @@ The incident not only propelled the WWF to unprecedented financial success but a
 
 ## Sources & Citations
 
-- Meltzer, Dave. *Wrestling Observer Newsletter* (November 17, 1997).
-- Hart, Bret. *Hitman: My Real Life in the Cartoon World of Wrestling*. Grand Central Publishing, 2007.
-- *Wrestling with Shadows* (Documentary, directed by Paul Jay, 1998).
+- Meltzer, Dave. _Wrestling Observer Newsletter_ (November 17, 1997).
+- Hart, Bret. _Hitman: My Real Life in the Cartoon World of Wrestling_. Grand Central Publishing, 2007.
+- _Wrestling with Shadows_ (Documentary, directed by Paul Jay, 1998).

@@ -8,7 +8,7 @@
     "test": "jest --passWithNoTests --testPathIgnorePatterns=\"e2e\"",
     "test:e2e:playwright": "playwright test",
     "test:e2e:cypress": "cypress open",
-    "lint": "NODE_OPTIONS=\"--require ./patch-eslint.cjs\" eslint . --ignore-pattern '.astro/'",
+    "lint": "eslint . --ignore-pattern '.astro/'",
     "format": "prettier --write .",
     "typecheck": "tsc --noEmit",
     "build:astro": "astro build"
@@ -43,9 +43,6 @@
     "@types/node": "^26.1.2",
     "@types/supertest": "^7.2.1",
     "@types/yaml": "^1.9.7",
-    "@typescript-eslint/eslint-plugin": "^8.65.0",
-    "@typescript-eslint/parser": "^8.65.0",
-    "@typescript/typescript6": "^6.0.2",
     "axe-core": "^4.11.4",
     "csv-parse": "^7.0.1",
     "csv-stringify": "^6.8.1",
@@ -66,7 +63,6 @@
     "ts-node": "^10.9.2",
     "tsx": "^4.23.12",
     "typescript": "~7.0.2",
-    "typescript-eslint": "^8.65.0",
     "vite": "^8.2.0",
     "vite-tsconfig-paths": "^6.1.1"
   },
@@ -93,10 +89,6 @@
       "cypress",
       "unrs-resolver",
       "esbuild"
-    ],
-    "overrides": {
-      "typescript-eslint>typescript": "npm:@typescript/typescript6@^6.0.2",
-      "@typescript-eslint/*>typescript": "npm:@typescript/typescript6@^6.0.2"
-    }
+    ]
   }
 }

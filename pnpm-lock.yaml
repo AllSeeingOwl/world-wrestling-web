@@ -156,9 +156,6 @@ importers:
       tsx:
         specifier: ^4.23.12
         version: 4.23.12
-      typescript:
-        specifier: ~7.0.2
-        version: 7.0.2
       typescript-eslint:
         specifier: ^8.65.0
         version: 8.66.0(eslint@10.8.1(jiti@2.7.0))(typescript@7.0.2)

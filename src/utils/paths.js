@@ -2,8 +2,8 @@
 // to prevent repetitive string manipulation and environment checking on every call to resolvePath.
 const base =
   typeof import.meta !== 'undefined' && import.meta.env
-    ? import.meta.env.BASE_URL || '/Fic-His-Arch/'
-    : '/Fic-His-Arch/';
+    ? import.meta.env.BASE_URL || '/world-wrestling-web/'
+    : '/world-wrestling-web/';
 
 const cleanBase = base === '/' ? '' : base.endsWith('/') ? base.slice(0, -1) : base;
 

@@ -13,6 +13,19 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
+
+const formattedDate = (() => {
+  try {
+    return new Date(entry.data.date).toLocaleDateString(undefined, {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      timeZone: 'UTC',
+    });
+  } catch {
+    return entry.data.date;
+  }
+})();
 ---
 
 <Layout title={`${entry.data.title} | Wrestling Heritage Registry`}>
@@ -25,16 +38,58 @@ const { Content } = await render(entry);
       <div class="flex flex-wrap gap-2 mb-4">
         <span class="px-2 py-1 bg-registry-background text-registry-textMuted text-xs font-bold rounded border border-registry-border">{entry.data.registry_section}</span>
         <span class="px-2 py-1 bg-registry-gold text-registry-background text-xs font-bold rounded">{entry.data.significance}</span>
+        {entry.data.era && (
+          <span class="px-2 py-1 bg-registry-background text-registry-gold text-xs font-bold rounded border border-registry-gold">{entry.data.era}</span>
+        )}
       </div>
       <h1 class="text-3xl font-heading font-bold text-registry-text mb-2">{entry.data.title}</h1>
-      <div class="text-sm font-mono text-registry-textMuted flex flex-col sm:flex-row sm:gap-4">
-        <span><strong>Date:</strong> <time dateTime={new Date(entry.data.date).toISOString()}>{new Date(entry.data.date).toLocaleDateString()}</time></span>
+      {entry.data.event_name && (
+        <p class="text-lg text-registry-gold font-medium mb-3">{entry.data.event_name}</p>
+      )}
+      <div class="text-sm font-mono text-registry-textMuted flex flex-wrap gap-x-6 gap-y-2 mb-4">
+        <span><strong>Date:</strong> <time dateTime={entry.data.date}>{formattedDate}</time></span>
         <span><strong>Promotion:</strong> {entry.data.promotion}</span>
       </div>
+      {entry.data.wrestlers_involved && entry.data.wrestlers_involved.length > 0 && (
+        <div class="text-xs font-sans text-registry-textMuted flex flex-wrap items-center gap-2 mt-2">
+          <strong class="font-mono">Wrestlers Involved:</strong>
+          {entry.data.wrestlers_involved.map((wrestler) => (
+            <span class="px-2 py-0.5 bg-registry-background text-registry-text rounded border border-registry-border">
+              {wrestler}
+            </span>
+          ))}
+        </div>
+      )}
+      {entry.data.description && (
+        <p class="mt-4 text-sm font-sans text-registry-text text-registry-textMuted italic border-l-2 border-registry-gold pl-3 py-1">
+          {entry.data.description}
+        </p>
+      )}
     </header>
+
+    {entry.data.image_url && (
+      <div class="mb-8 overflow-hidden rounded-lg border border-registry-border max-h-96">
+        <img src={entry.data.image_url} alt={entry.data.title} class="w-full object-cover" />
+      </div>
+    )}
 
     <div class="prose prose-invert prose-slate max-w-none text-registry-text">
       <Content />
     </div>
+
+    {entry.data.external_links && entry.data.external_links.length > 0 && (
+      <footer class="mt-8 pt-6 border-t border-registry-border">
+        <h3 class="text-sm font-bold uppercase tracking-wider text-registry-textMuted mb-3">External Links & References</h3>
+        <ul class="flex flex-col gap-2">
+          {entry.data.external_links.map((link) => (
+            <li>
+              <a href={link.url} target="_blank" rel="noopener noreferrer" class="text-sm text-registry-gold hover:underline flex items-center gap-1">
+                {link.name} &rarr;
+              </a>
+            </li>
+          ))}
+        </ul>
+      </footer>
+    )}
   </article>
 </Layout>

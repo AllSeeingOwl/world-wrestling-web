@@ -36,6 +36,10 @@ export const archiveSchema = z.object({
     'Registry of Infamy - Division B',
     'Registry of Homage & Influence',
   ]),
+  wrestlers_involved: z.array(z.string()).optional(),
+  event_name: z.string().optional(),
+  era: z.string().optional(),
+  description: z.string().optional(),
   image_url: safeUrlSchema.optional(),
   external_links: z
     .array(

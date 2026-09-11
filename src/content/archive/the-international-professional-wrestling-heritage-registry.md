@@ -1,9 +1,11 @@
 ---
 title: 'The International Professional Wrestling Heritage Registry'
-date: 'January 1, 2026'
+date: '2026-01-01'
 promotion: 'IPWHR'
 significance: 'Historical Significance'
 registry_section: 'Registry of Excellence'
+era: 'Modern Era'
+description: 'Official Charter & Guidelines of the International Professional Wrestling Heritage Registry.'
 ---
 
 # **The International Professional Wrestling Heritage Registry**

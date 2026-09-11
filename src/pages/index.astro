@@ -14,7 +14,9 @@ const articles = allArchiveEntries.map(entry => ({
   era: entry.data.era || 'Unknown',
   significance: entry.data.significance,
   registry_section: entry.data.registry_section,
-  summary: entry.body ? entry.body.substring(0, 150) + '...' : ''
+  event_name: entry.data.event_name,
+  wrestlers_involved: entry.data.wrestlers_involved,
+  summary: entry.data.description || (entry.body ? entry.body.substring(0, 150) + '...' : '')
 }));
 
 const promotions = [...new Set(articles.map(a => a.promotion))].sort();
@@ -73,7 +75,7 @@ const eras = [...new Set(articles.map(a => a.era))].sort();
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="article-grid">
     {articles.map((article) => (
       <a
-        href={resolvePath(`/archive/${article.slug}`)}
+        href={resolvePath(`/${article.slug}`)}
         class="block group article-item focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold focus-visible:ring-offset-2 focus-visible:ring-offset-registry-background rounded"
         data-promotion={article.promotion}
         data-era={article.era}

@@ -1,9 +1,16 @@
 ---
 title: 'WrestleMania X-Seven: Stone Cold vs. The Rock'
-date: 'April 1, 2001'
+date: '2001-04-01'
 promotion: 'World Wrestling Federation (WWF)'
 significance: 'Historical Significance'
 registry_section: 'Registry of Excellence'
+event_name: 'WrestleMania X-Seven'
+era: 'Attitude Era'
+wrestlers_involved:
+  - 'Stone Cold Steve Austin'
+  - 'The Rock'
+  - 'Vince McMahon'
+description: 'The main event of WrestleMania X-Seven marking the end of the Attitude Era.'
 ---
 
 The main event of WrestleMania X-Seven, pitting Stone Cold Steve Austin against The Rock in a No Disqualification match for the WWF Championship, is widely considered the zenith of professional wrestling's "Attitude Era."

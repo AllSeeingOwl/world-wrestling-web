@@ -3,6 +3,7 @@
 A definitive collection of professional wrestling's most significant moments, designed to identify, categorize, and preserve heritage for future generations.
 
 Please refer to the following documents for more details:
+
 - [Wrestling Handbook](wrestling_handbook.md)
 - [Platform Architecture](platform_architecture.md)
 

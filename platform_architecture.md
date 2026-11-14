@@ -20,7 +20,7 @@ The project follows a standard Astro directory structure:
 
 ### Loading Markdown Files
 
-Entries in the wrestling registry are stored as flat markdown files in `src/content/archive/`. Astro uses its **Content Collections** API to load, parse, and validate these files against a defined Zod schema (configured in `src/content.config.ts`).
+Entries in the wrestling registry are stored as flat markdown files in `src/content/archive/`. Astro uses its **Content Collections** API to load, parse, and validate these files against a Zod schema defined in `src/schema/archive.ts` and registered in `src/content.config.ts`. The same schema is used by the Contribute form and the CSV sync script.
 
 ### Index Page Query
 
@@ -32,7 +32,9 @@ Individual entry pages are generated using dynamic routing (`src/pages/[slug].as
 
 ### Backend API
 
-The Express backend (`src/server.ts`) functions as an API layer that can dynamically add, update, or remove the static markdown files located in `src/content/archive/`. It utilizes `@upstash/redis` for data and session management.
+The Express backend (`src/server.ts`) provides admin login (`POST /api/admin/verify`), a CSRF token endpoint, and an admin-only endpoint that deletes an entry's Markdown file (`DELETE /api/articles/:slug`). It utilizes `@upstash/redis` for data and session management.
+
+New entries are not created through the server. Contributors use the Contribute page (`/contribute`), which builds the Markdown file in the browser and submits it as a GitHub pull request, so every entry is reviewed before it reaches the site.
 
 ### Deployment Flow
 

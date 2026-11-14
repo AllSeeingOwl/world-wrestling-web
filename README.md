@@ -12,7 +12,7 @@ Please refer to the following documents for more details:
 - **Built with Astro & React:** Fast, static-first site generation with interactive React components.
 - **Tailwind CSS:** Neutral, generic styling ready to be customized.
 - **Content Collections:** Uses Astro Content Collections with a strict Zod schema for easy markdown management.
-- **Express Backend:** A dynamic backend server API to manage registry entries.
+- **Contribute Form:** Contributors propose entries from the site; each one arrives as a GitHub pull request for review.
 - **Promotion & Era Filtering:** Features to filter and organize content based on wrestling promotion and era.
 
 ## 🚀 Setup & Installation
@@ -25,15 +25,11 @@ Requires **Node.js v22 or higher** and **pnpm**.
    pnpm install
    ```
 
-2. **Start the development servers:**
-   - **Backend (Express):**
-     ```bash
-     pnpm run dev:server
-     ```
-   - **Frontend (Astro):**
-     ```bash
-     npx astro dev
-     ```
+2. **Start the development server:**
+
+   ```bash
+   npx astro dev
+   ```
 
 3. **Testing & Verification:**
 

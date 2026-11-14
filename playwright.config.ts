@@ -18,7 +18,8 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'npm run build:astro && npx serve dist -p 3000',
+    // Build with a root base path so the served pages load their CSS and scripts.
+    command: 'npm run build:test && npx serve dist -p 3000',
     url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
   },

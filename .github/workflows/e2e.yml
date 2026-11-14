@@ -1,0 +1,39 @@
+name: End-to-end Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  playwright:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install pnpm
+        run: npm install -g pnpm@9
+      - name: Install dependencies
+        run: pnpm install
+        env:
+          # The Cypress binary is large and none of these jobs use it.
+          CYPRESS_INSTALL_BINARY: '0'
+      - name: Install Playwright browser
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Run Playwright tests
+        run: pnpm run test:e2e:playwright
+      - name: Upload Playwright report
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30

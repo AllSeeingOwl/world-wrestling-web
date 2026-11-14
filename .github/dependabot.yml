@@ -1,0 +1,22 @@
+version: 2
+updates:
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+    groups:
+      npm-dependencies:
+        patterns:
+          - '*'
+    ignore:
+      # TypeScript majors often need code changes; update those by hand.
+      - dependency-name: 'typescript'
+        update-types: ['version-update:semver-major']
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+    groups:
+      actions-dependencies:
+        patterns:
+          - '*'

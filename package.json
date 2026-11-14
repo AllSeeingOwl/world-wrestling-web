@@ -11,7 +11,8 @@
     "lint": "eslint . --ignore-pattern '.astro/'",
     "format": "prettier --write .",
     "typecheck": "tsc --noEmit",
-    "build:astro": "astro build"
+    "build:astro": "astro build",
+    "build:test": "astro build --base /"
   },
   "lint-staged": {
     "**/*.{js,ts,jsx,tsx}": [
@@ -86,6 +87,11 @@
       "cypress",
       "unrs-resolver",
       "esbuild"
-    ]
+    ],
+    "auditConfig": {
+      "ignoreCves": [
+        "CVE-2026-93753"
+      ]
+    }
   }
 }

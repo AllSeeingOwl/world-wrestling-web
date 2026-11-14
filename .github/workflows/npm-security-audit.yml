@@ -1,0 +1,29 @@
+name: Security Audit
+
+on:
+  schedule:
+    - cron: '0 6 * * 4' # Thursdays 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install pnpm
+        run: npm install -g pnpm@9
+      - name: Install dependencies
+        run: pnpm install
+        env:
+          # The Cypress binary is large and none of these jobs use it.
+          CYPRESS_INSTALL_BINARY: '0'
+      - name: Audit dependencies
+        # Fails on moderate or worse advisories that have a fixed version available.
+        run: pnpm audit --audit-level moderate --ignore-unfixable

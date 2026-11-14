@@ -1,0 +1,32 @@
+name: Unused Code & Dependency Report
+
+on:
+  schedule:
+    - cron: '0 6 * * 2' # Tuesdays 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  knip:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install pnpm
+        run: npm install -g pnpm@9
+      - name: Install dependencies
+        run: pnpm install
+        env:
+          # The Cypress binary is large and none of these jobs use it.
+          CYPRESS_INSTALL_BINARY: '0'
+      - name: Run Knip
+        # Report only: findings appear in the job log and summary but never fail the run.
+        run: |
+          pnpm exec knip --reporter markdown > knip-report.md || true
+          cat knip-report.md
+          cat knip-report.md >> "$GITHUB_STEP_SUMMARY"

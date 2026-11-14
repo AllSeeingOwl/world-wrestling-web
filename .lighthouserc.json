@@ -1,0 +1,13 @@
+{
+  "ci": {
+    "collect": {
+      "staticDistDir": "./dist",
+      "url": [
+        "http://localhost/index.html",
+        "http://localhost/directory/index.html",
+        "http://localhost/handbook/index.html",
+        "http://localhost/montreal-screwjob/index.html"
+      ]
+    }
+  }
+}

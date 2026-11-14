@@ -14,45 +14,21 @@
     "build:test": "astro build --base /",
     "sync:csv": "tsx scripts/sync-csv.ts"
   },
-  "lint-staged": {
-    "**/*.{js,ts,jsx,tsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "**/*.{json,css,md}": [
-      "prettier --write"
-    ]
-  },
-  "knip": {
-    "ignoreBinaries": [
-      "wait-on"
-    ]
-  },
   "devDependencies": {
-    "@axe-core/playwright": "^4.14.0",
     "@eslint/js": "^10.0.1",
-    "@jest/globals": "^30.5.2",
     "@playwright/test": "^1.65.1",
     "@tailwindcss/vite": "^4.3.5",
     "@types/jest": "^30.0.0",
     "@types/node": "^26.6.6",
     "@types/yaml": "^1.9.7",
-    "axe-core": "^4.14.0",
-    "csv-parse": "^7.0.3",
     "csv-stringify": "^6.9.0",
     "cypress": "^16.3.0",
     "eslint": "^10.15.0",
-    "eslint-plugin-jest": "^29.17.0",
     "globals": "^17.14.0",
-    "husky": "^9.1.7",
     "jest": "^30.5.2",
-    "jest-environment-jsdom": "^30.5.2",
     "knip": "^6.45.1",
-    "lint-staged": "^17.6.0",
     "playwright": "^1.65.1",
     "prettier": "^3.10.1",
-    "ts-jest": "^29.4.15",
-    "ts-node": "^10.9.2",
     "tsx": "^4.23.15",
     "typescript": "~7.0.2",
     "vite": "^8.3.8",
@@ -62,8 +38,6 @@
     "@astrojs/react": "^7.1.7",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
-    "@vercel/analytics": "^2.0.1",
-    "@vercel/speed-insights": "^2.1.0",
     "astro": "^7.4.12",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",

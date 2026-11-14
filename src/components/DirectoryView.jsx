@@ -443,14 +443,14 @@ export default function DirectoryView({ entries = [] }) {
                           />
                           <article className="bg-registry-surface border border-registry-border rounded-lg p-4 sm:p-5 hover:border-registry-gold transition-colors">
                             <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-4 mb-2">
-                              <h3 className="font-bold text-lg leading-snug">
+                              <h2 className="font-bold text-lg leading-snug">
                                 <a
                                   href={entry.url}
                                   className="text-registry-text hover:text-registry-gold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold rounded"
                                 >
                                   {entry.title}
                                 </a>
-                              </h3>
+                              </h2>
                               <time
                                 dateTime={entry.date}
                                 className="shrink-0 font-mono text-xs text-registry-gold"

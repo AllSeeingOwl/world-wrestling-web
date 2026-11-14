@@ -1,6 +1,6 @@
 ---
 title: 'The Montreal Screwjob'
-date: 1997-11-09
+date: '1997-11-09'
 promotion: 'WWF'
 significance: 'Historical Significance'
 registry_section: 'Registry of Infamy - Division A'

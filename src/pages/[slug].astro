@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import { resolvePath } from '../utils/paths.js';
+import CitationBlock from '../components/CitationBlock.jsx';
 
 export async function getStaticPaths() {
   const archiveEntries = await getCollection('archive');
@@ -77,19 +78,6 @@ const formattedDate = (() => {
       <Content />
     </div>
 
-    {entry.data.external_links && entry.data.external_links.length > 0 && (
-      <footer class="mt-8 pt-6 border-t border-registry-border">
-        <h3 class="text-sm font-bold uppercase tracking-wider text-registry-textMuted mb-3">External Links & References</h3>
-        <ul class="flex flex-col gap-2">
-          {entry.data.external_links.map((link) => (
-            <li>
-              <a href={link.url} target="_blank" rel="noopener noreferrer" class="text-sm text-registry-gold hover:underline flex items-center gap-1">
-                {link.name} &rarr;
-              </a>
-            </li>
-          ))}
-        </ul>
-      </footer>
-    )}
+    <CitationBlock citation={entry.data} />
   </article>
 </Layout>

@@ -6,7 +6,6 @@
   "scripts": {
     "test": "jest --passWithNoTests --testPathIgnorePatterns=\"e2e\"",
     "test:e2e:playwright": "playwright test",
-    "test:e2e:cypress": "cypress open",
     "lint": "eslint . --ignore-pattern '.astro/'",
     "format": "prettier --write .",
     "typecheck": "tsc --noEmit",
@@ -22,7 +21,6 @@
     "@types/node": "^26.6.6",
     "@types/yaml": "^1.9.7",
     "csv-stringify": "^6.9.0",
-    "cypress": "^16.3.0",
     "eslint": "^10.15.0",
     "globals": "^17.14.0",
     "jest": "^30.5.2",
@@ -48,7 +46,6 @@
   },
   "pnpm": {
     "onlyBuiltDependencies": [
-      "cypress",
       "unrs-resolver",
       "esbuild"
     ],

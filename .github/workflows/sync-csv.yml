@@ -34,8 +34,6 @@ jobs:
         run: npm install -g pnpm@9
       - name: Install dependencies
         run: pnpm install
-        env:
-          CYPRESS_INSTALL_BINARY: '0'
       - name: Regenerate the CSV
         run: pnpm run sync:csv
       - name: Commit the CSV if it changed

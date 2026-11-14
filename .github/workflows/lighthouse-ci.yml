@@ -23,9 +23,6 @@ jobs:
         run: npm install -g pnpm@9
       - name: Install dependencies
         run: pnpm install
-        env:
-          # The Cypress binary is large and none of these jobs use it.
-          CYPRESS_INSTALL_BINARY: '0'
       - name: Build with a root base path
         # Lighthouse serves ./dist at the root, so build without the
         # /world-wrestling-web base or every CSS and script request 404s.

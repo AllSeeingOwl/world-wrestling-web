@@ -23,9 +23,6 @@ jobs:
         run: npm install -g pnpm@9
       - name: Install dependencies
         run: pnpm install
-        env:
-          # The Cypress binary is large and none of these jobs use it.
-          CYPRESS_INSTALL_BINARY: '0'
       - name: Install Playwright browser
         run: pnpm exec playwright install --with-deps chromium
       - name: Run Playwright tests

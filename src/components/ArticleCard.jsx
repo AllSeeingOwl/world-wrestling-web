@@ -18,9 +18,9 @@ const ArticleCard = ({ article }) => {
     <article className="h-full flex flex-col bg-registry-surface border border-registry-border p-6 hover:border-registry-gold transition-colors focus-within:ring-2 focus-within:ring-registry-gold focus-within:ring-offset-2 focus-within:ring-offset-registry-background rounded-lg">
       <div className="flex justify-between items-start mb-4">
         <div>
-          <h3 className="font-heading text-xl font-bold text-registry-text mb-1 group-hover:text-registry-gold transition-colors">
+          <h2 className="font-heading text-xl font-bold text-registry-text mb-1 group-hover:text-registry-gold transition-colors">
             {article.title}
-          </h3>
+          </h2>
           {article.event_name && (
             <p className="text-xs text-registry-gold font-medium mb-1">{article.event_name}</p>
           )}

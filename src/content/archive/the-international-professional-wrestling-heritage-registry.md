@@ -8,8 +8,6 @@ era: 'Modern Era'
 description: 'Official Charter & Guidelines of the International Professional Wrestling Heritage Registry.'
 ---
 
-# **The International Professional Wrestling Heritage Registry**
-
 ## **(Also known as "The Crabtree Catalogue")**
 
 ### **Official Charter & Guidelines**
@@ -32,7 +30,7 @@ In recognition of professional wrestling as a unique global art form, a medium f
 
 This is the celebratory branch of the IPWHR, dedicated to preserving moments of outstanding artistic, historical, and cultural achievement. Induction into this registry signifies a moment's enduring importance to the fabric of professional wrestling.
 
-##### **Criteria for Induction:**
+#### **Criteria for Induction:**
 
 An entry must be deemed significant in at least one of the following three categories:
 
@@ -74,7 +72,7 @@ This is the most solemn and important division of the IPWHR. Its purpose is to d
 
 This special registry documents the significant and demonstrable influence of professional wrestling on other forms of popular culture. Its purpose is to archive the many ways wrestling's unique aesthetic, characters, and narrative structures have "seeped into" and shaped video games, animation, film, and other media.
 
-##### **Criteria for Induction:**
+#### **Criteria for Induction:**
 
 An entry must be a work from outside the wrestling industry that contains a clear, significant, and demonstrable element directly influenced by or paying homage to professional wrestling. This includes:
 

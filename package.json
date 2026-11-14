@@ -87,11 +87,6 @@
       "cypress",
       "unrs-resolver",
       "esbuild"
-    ],
-    "auditConfig": {
-      "ignoreCves": [
-        "CVE-2026-93753"
-      ]
-    }
+    ]
   }
 }

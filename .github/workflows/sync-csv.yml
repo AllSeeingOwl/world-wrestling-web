@@ -1,0 +1,54 @@
+name: Sync Registry CSV
+
+# Keeps data/registry-entries.csv in step with the Markdown entries. It runs after
+# changes reach main, so contributors (including those using the Contribute form)
+# never need to regenerate the CSV themselves.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/content/archive/**'
+      - 'src/schema/archive.ts'
+      - 'scripts/sync-csv.ts'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# One sync at a time, so two quick merges can't race each other's commits.
+concurrency:
+  group: sync-registry-csv
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Use Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+      - name: Install pnpm
+        run: npm install -g pnpm@9
+      - name: Install dependencies
+        run: pnpm install
+        env:
+          CYPRESS_INSTALL_BINARY: '0'
+      - name: Regenerate the CSV
+        run: pnpm run sync:csv
+      - name: Commit the CSV if it changed
+        run: |
+          if git diff --quiet -- data/registry-entries.csv && \
+             ! git ls-files --others --exclude-standard --error-unmatch data/registry-entries.csv >/dev/null 2>&1; then
+            echo "CSV already up to date."
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/registry-entries.csv
+          git commit -m 'chore: sync registry CSV with entries'
+          # main may have moved on while this ran; replay the commit on top before pushing.
+          git pull --rebase origin main
+          git push origin HEAD:main

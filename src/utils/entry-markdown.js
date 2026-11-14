@@ -8,10 +8,16 @@ export function slugify(text) {
     .replace(/(^-|-$)+/g, '');
 }
 
-// Single-quoted YAML scalar, matching the style of existing entries. Whitespace
-// (including pasted newlines) is collapsed because every front-matter field is one line.
+// Quoted YAML scalar, written exactly as Prettier would format it, so submitted
+// entries pass the CI formatting check: single quotes by default, double quotes
+// when the value contains an apostrophe but no double quote or backslash (the
+// characters that would need escaping inside double quotes). Whitespace, including
+// pasted newlines, is collapsed because every front-matter field is one line.
 function yamlString(value) {
   const clean = String(value).replace(/\s+/g, ' ').trim();
+  if (clean.includes("'") && !clean.includes('"') && !clean.includes('\\')) {
+    return `"${clean}"`;
+  }
   return `'${clean.replace(/'/g, "''")}'`;
 }
 

@@ -32,9 +32,9 @@ Individual entry pages are generated using dynamic routing (`src/pages/[slug].as
 
 ### Backend API
 
-The Express backend (`src/server.ts`) provides admin login (`POST /api/admin/verify`), a CSRF token endpoint, and an admin-only endpoint that deletes an entry's Markdown file (`DELETE /api/articles/:slug`). It utilizes `@upstash/redis` for data and session management.
+The Express backend (`src/server.ts`) currently only sets security headers, serves `public/`, and issues CSRF tokens (`GET /api/csrf-token`) for any future endpoints that change data. It can connect to `@upstash/redis` when credentials are provided.
 
-New entries are not created through the server. Contributors use the Contribute page (`/contribute`), which builds the Markdown file in the browser and submits it as a GitHub pull request, so every entry is reviewed before it reaches the site.
+Entries are not created, changed or removed through the server. Contributors use the Contribute page (`/contribute`), which builds the Markdown file in the browser and submits it as a GitHub pull request; editing or removing an entry is likewise a pull request that changes or deletes its file. Every change is reviewed before it reaches the site.
 
 ### Deployment Flow
 

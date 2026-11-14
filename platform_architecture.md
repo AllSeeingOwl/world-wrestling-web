@@ -14,13 +14,14 @@ The project follows a standard Astro directory structure:
   - `[slug].astro` handles dynamic routing for individual archive entries.
 - **`src/content/archive/`**: The markdown database. Contains `.md` files representing the wrestling registry entries.
 - **`public/`**: Static assets like images, icons, and client-side scripts that are served as-is at the root path.
-- **`src/server.ts`**: The entry point for the Express backend, providing an API to manage the static markdown files dynamically.
+- **`src/schema/archive.ts`**: The Zod schema every entry must satisfy, shared by the site build, the Contribute form and the CSV sync.
+- **`scripts/`**: Maintenance scripts, such as `sync-csv.ts`, which regenerates `data/registry-entries.csv`.
 
 ## 2. Data Flow
 
 ### Loading Markdown Files
 
-Entries in the wrestling registry are stored as flat markdown files in `src/content/archive/`. Astro uses its **Content Collections** API to load, parse, and validate these files against a defined Zod schema (configured in `src/content.config.ts`).
+Entries in the wrestling registry are stored as flat markdown files in `src/content/archive/`. Astro uses its **Content Collections** API to load, parse, and validate these files against a Zod schema defined in `src/schema/archive.ts` and registered in `src/content.config.ts`. The same schema is used by the Contribute form and the CSV sync script.
 
 ### Index Page Query
 
@@ -30,9 +31,9 @@ The homepage (`src/pages/index.astro`) uses the `getCollection('archive')` funct
 
 Individual entry pages are generated using dynamic routing (`src/pages/[slug].astro`). Astro's `getStaticPaths()` queries the collection and generates a static HTML page for each markdown file based on its slug.
 
-### Backend API
+### Contributions
 
-The Express backend (`src/server.ts`) functions as an API layer that can dynamically add, update, or remove the static markdown files located in `src/content/archive/`. It utilizes `@upstash/redis` for data and session management.
+The site is fully static; there is no backend server. Contributors use the Contribute page (`/contribute`), which builds the Markdown file in the browser and submits it as a GitHub pull request; editing or removing an entry is likewise a pull request that changes or deletes its file. Every change is reviewed before it reaches the site.
 
 ### Deployment Flow
 
@@ -43,8 +44,7 @@ The repository is configured for a dual deployment strategy. It can be deployed 
 - **Astro**: Core framework for static site generation (SSG). Provides fast load times by shipping zero JavaScript by default.
 - **React**: Used within Astro for interactive UI components where client-side state is necessary.
 - **Tailwind CSS**: Utility-first CSS framework for rapid and neutral styling.
-- **TypeScript**: Provides static typing across the entire codebase (frontend and backend) to catch errors early.
-- **Express Backend**: A Node.js backend (using `tsx` for execution) providing an API for managing markdown files dynamically.
+- **TypeScript**: Provides static typing across the site and scripts to catch errors early.
 
 ## 4. Key Design Decisions
 
@@ -62,15 +62,7 @@ The project uses `pnpm` for dependency management.
    pnpm install
    ```
 
-2. **Start Backend Server**:
-
-   ```bash
-   pnpm run dev:server
-   ```
-
-   Runs the Express API using `nodemon` and `tsx`.
-
-3. **Start Frontend Development Server**:
+2. **Start the Development Server**:
 
    ```bash
    npx astro dev
@@ -78,7 +70,7 @@ The project uses `pnpm` for dependency management.
 
    Starts the Astro dev server for frontend development.
 
-4. **Production Build**:
+3. **Production Build**:
    ```bash
    pnpm run build:astro
    ```

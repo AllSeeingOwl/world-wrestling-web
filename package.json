@@ -4,7 +4,6 @@
   "type": "module",
   "description": "World Wrestling Web website",
   "scripts": {
-    "dev:server": "nodemon --exec tsx src/server.ts",
     "test": "jest --passWithNoTests --testPathIgnorePatterns=\"e2e\"",
     "test:e2e:playwright": "playwright test",
     "test:e2e:cypress": "cypress open",
@@ -35,12 +34,8 @@
     "@jest/globals": "^30.5.2",
     "@playwright/test": "^1.65.1",
     "@tailwindcss/vite": "^4.3.5",
-    "@types/cookie-parser": "^1.4.10",
-    "@types/csurf": "^1.11.5",
-    "@types/express": "^5.0.6",
     "@types/jest": "^30.0.0",
     "@types/node": "^26.6.6",
-    "@types/supertest": "^7.2.1",
     "@types/yaml": "^1.9.7",
     "axe-core": "^4.14.0",
     "csv-parse": "^7.0.3",
@@ -54,10 +49,8 @@
     "jest-environment-jsdom": "^30.5.2",
     "knip": "^6.45.1",
     "lint-staged": "^17.6.0",
-    "nodemon": "^3.1.14",
     "playwright": "^1.65.1",
     "prettier": "^3.10.1",
-    "supertest": "^7.3.2",
     "ts-jest": "^29.4.15",
     "ts-node": "^10.9.2",
     "tsx": "^4.23.15",
@@ -69,13 +62,9 @@
     "@astrojs/react": "^7.1.7",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
-    "@upstash/redis": "^1.41.0",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.1.0",
     "astro": "^7.4.12",
-    "cookie-parser": "^1.4.7",
-    "csurf": "^1.11.0",
-    "express": "^5.3.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "serve": "^14.2.8",
@@ -90,7 +79,6 @@
       "esbuild"
     ],
     "overrides": {
-      "cookie@<0.7.0": "^0.7.2",
       "glob@>=9.0.0 <14.0.2": "^14.0.2",
       "minimatch@>=7.0.0 <11.0.1": "^11.0.1"
     }

@@ -1,0 +1,99 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ContributeForm from '../components/ContributeForm.jsx';
+import { getCollection } from 'astro:content';
+import { resolvePath } from '../utils/paths.js';
+import { slugify } from '../utils/entry-markdown.js';
+
+const REPO = 'AllSeeingOwl/world-wrestling-web';
+
+const entries = await getCollection('archive');
+// File names don't always match titles (montreal-screwjob.md is "The Montreal Screwjob"),
+// so check new titles against both to catch duplicates and file-name clashes.
+const existingSlugs = [
+  ...new Set(entries.flatMap((entry) => [entry.id, slugify(entry.data.title)])),
+];
+
+// Suggestions: names already in use (so filters group entries together),
+// plus the promotions and eras named in the Editorial Handbook.
+const unique = (values: (string | undefined)[]) =>
+  [...new Set(values.filter((v): v is string => Boolean(v)))].sort((a, b) => a.localeCompare(b));
+const promotions = unique([
+  ...entries.map((e) => e.data.promotion),
+  'WWE',
+  'WCW',
+  'ECW',
+  'NWA',
+  'NJPW',
+  'AJPW',
+  'ROH',
+  'TNA/Impact',
+  'AEW',
+]);
+const eras = unique([
+  ...entries.map((e) => e.data.era),
+  'The Golden Era',
+  'The Monday Night Wars',
+  'Attitude Era',
+  'Ruthless Aggression Era',
+]);
+---
+
+<Layout title="Contribute | Wrestling Heritage Registry">
+  <div class="mb-8 border-b border-registry-border pb-6">
+    <h1 class="font-bold text-2xl mb-2 text-registry-text">Contribute an Entry</h1>
+    <p class="text-sm text-registry-textMuted max-w-2xl">
+      Propose a moment for the registry. Fill in the form, check it, and submit the entry as a pull
+      request on GitHub. An editor reviews every submission before it goes live.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-[1fr_15rem] gap-8 items-start">
+    <div>
+      <noscript>
+        <p
+          class="mb-6 p-4 bg-registry-surface border-l-4 border-registry-gold text-sm text-registry-text"
+        >
+          The form needs JavaScript. You can still contribute by copying <code
+            >example-wrestling-entry.md</code
+          > from the repository and opening a pull request.
+        </p>
+      </noscript>
+      <ContributeForm
+        client:load
+        repo={REPO}
+        existingSlugs={existingSlugs}
+        promotions={promotions}
+        eras={eras}
+      />
+    </div>
+
+    <aside
+      class="order-first lg:order-last lg:sticky lg:top-6 space-y-4 text-sm"
+      aria-label="Before you start"
+    >
+      <div class="bg-registry-surface border border-registry-border rounded-lg p-4 space-y-3">
+        <h2 class="font-mono text-[10px] uppercase tracking-widest text-registry-textMuted">
+          Before you start
+        </h2>
+        <ul class="space-y-2 text-registry-textMuted">
+          <li>
+            <strong class="text-registry-text">Be accurate.</strong> Check dates, results and names.
+          </li>
+          <li>
+            <strong class="text-registry-text">Write as a historian,</strong> not a fan. Keep the tone
+            objective.
+          </li>
+          <li>
+            <strong class="text-registry-text">Cite your sources</strong> and explain why the moment matters.
+          </li>
+        </ul>
+        <a
+          href={resolvePath('/handbook')}
+          class="inline-block text-registry-gold underline underline-offset-2 hover:text-registry-goldHover focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold rounded"
+          >Read the Editorial Handbook</a
+        >
+      </div>
+    </aside>
+  </div>
+</Layout>

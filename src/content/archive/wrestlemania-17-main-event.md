@@ -11,6 +11,8 @@ wrestlers_involved:
   - 'The Rock'
   - 'Vince McMahon'
 description: 'The main event of WrestleMania X-Seven marking the end of the Attitude Era.'
+source_material: 'WWF WrestleMania X-Seven pay-per-view broadcast, Reliant Astrodome, Houston, Texas'
+context_statement: "Stone Cold Steve Austin's heel turn alongside Mr. McMahon in the main event closed the Attitude Era's defining rivalry, days after the WWF's purchase of WCW."
 ---
 
 The main event of WrestleMania X-Seven, pitting Stone Cold Steve Austin against The Rock in a No Disqualification match for the WWF Championship, is widely considered the zenith of professional wrestling's "Attitude Era."

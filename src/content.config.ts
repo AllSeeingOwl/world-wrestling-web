@@ -41,6 +41,10 @@ export const archiveSchema = z.object({
   era: z.string().optional(),
   description: z.string().optional(),
   image_url: safeUrlSchema.optional(),
+  // Citation fields (see wrestling_handbook.md, section 4)
+  source_material: z.string().optional(),
+  air_date: z.string().optional(),
+  context_statement: z.string().optional(),
   external_links: z
     .array(
       z.object({

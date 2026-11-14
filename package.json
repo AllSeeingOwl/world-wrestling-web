@@ -12,7 +12,8 @@
     "format": "prettier --write .",
     "typecheck": "tsc --noEmit",
     "build:astro": "astro build",
-    "build:test": "astro build --base /"
+    "build:test": "astro build --base /",
+    "sync:csv": "tsx scripts/sync-csv.ts"
   },
   "lint-staged": {
     "**/*.{js,ts,jsx,tsx}": [

@@ -47,3 +47,16 @@ Requires **Node.js v22 or higher** and **pnpm**.
    ```bash
    pnpm run build:astro
    ```
+
+## 📊 Data Export
+
+[`data/registry-entries.csv`](data/registry-entries.csv) lists every registry entry, one row per entry, for spreadsheets, backups and analysis. It is generated from the Markdown files in `src/content/archive/`, which remain the source of truth, so don't edit the CSV by hand.
+
+The **Sync Registry CSV** workflow regenerates it automatically whenever entry changes reach `main`. To regenerate it locally:
+
+```bash
+pnpm run sync:csv           # update the CSV
+pnpm run sync:csv --check   # only report whether it is out of date
+```
+
+The script validates every entry against the site's schema and stops with a list of problems if any entry is invalid.

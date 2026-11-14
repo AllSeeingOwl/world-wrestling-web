@@ -1,0 +1,47 @@
+---
+import Layout from '../layouts/Layout.astro';
+import DirectoryView from '../components/DirectoryView.jsx';
+import { getCollection } from 'astro:content';
+import { resolvePath } from '../utils/paths.js';
+
+const archiveEntries = await getCollection('archive');
+
+// Pass only the fields the directory needs, so the page ships a small payload.
+const entries = archiveEntries.map((entry) => ({
+  slug: entry.id,
+  url: resolvePath(`/${entry.id}`),
+  title: entry.data.title,
+  date: entry.data.date,
+  promotion: entry.data.promotion,
+  era: entry.data.era,
+  event_name: entry.data.event_name,
+  registry_section: entry.data.registry_section,
+  description: entry.data.description,
+  wrestlers_involved: entry.data.wrestlers_involved,
+}));
+---
+
+<Layout title="Directory & Timeline | Wrestling Heritage Registry">
+  <div class="mb-8 border-b border-registry-border pb-6">
+    <h2 class="font-bold text-2xl mb-2 text-registry-text">Directory &amp; Timeline</h2>
+    <p class="text-sm text-registry-textMuted max-w-2xl">
+      Every entry in the registry. Use the master list to sort and compare, or switch to the
+      timeline to follow wrestling history in order. Filter by promotion, era or registry section,
+      and group by decade as the <a
+        href={resolvePath('/handbook')}
+        class="text-registry-gold hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold rounded"
+        >Editorial Handbook</a
+      > recommends.
+    </p>
+  </div>
+
+  <noscript>
+    <p
+      class="mb-6 p-4 bg-registry-surface border-l-4 border-registry-gold text-sm text-registry-text"
+    >
+      Sorting, filters and the timeline need JavaScript. The full list is shown below.
+    </p>
+  </noscript>
+
+  <DirectoryView entries={entries} client:idle />
+</Layout>

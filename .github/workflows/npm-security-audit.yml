@@ -22,5 +22,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Audit dependencies
-        # Fails on moderate or worse advisories that have a fixed version available.
-        run: pnpm audit --audit-level moderate --ignore-unfixable
+        # Fails on moderate or worse advisories.
+        # Note: pnpm 9 has no --ignore-unfixable flag (passing it aborts with
+        # "Unknown option"), and in pnpm 10 that flag rewrites package.json
+        # instead of auditing, so it must not be used here.
+        run: pnpm audit --audit-level moderate

@@ -8,6 +8,9 @@ import { buildMarkdown, countWords, slugify } from '../utils/entry-markdown.js';
 
 // Which significance types belong to which section, per the IPWHR charter
 // ("The International Professional Wrestling Heritage Registry" Google Doc).
+// The Cautionary Archive (Registry of Infamy - Division B) is left out on purpose:
+// the charter says it is not open to public nomination, and the Preservation Board
+// chooses its inductees privately. Editors add those entries directly.
 const SECTIONS = [
   {
     value: 'Registry of Excellence',
@@ -23,13 +26,6 @@ const SECTIONS = [
       'Contextual Failure',
       "So Bad It's Good",
     ],
-  },
-  {
-    value: 'Registry of Infamy - Division B',
-    hint: 'The Cautionary Archive: profound ethical failures, safety breaches, exploitation.',
-    significance: ['Cautionary Archive'],
-    notice:
-      'The Cautionary Archive is not open to public nomination because of the sensitive and often traumatic nature of these events. Its inductees are chosen by the Preservation Board in private deliberation, so an editor is likely to decline a public submission here.',
   },
   {
     value: 'Registry of Homage & Influence',
@@ -53,8 +49,6 @@ const SIGNIFICANCE_DETAILS = {
     'It misjudged the audience, the cultural climate or the story so far, and came across as tone-deaf or counterproductive.',
   "So Bad It's Good":
     'It failed so spectacularly at what it set out to do that it looped back around to become iconic and beloved.',
-  'Cautionary Archive':
-    'Exploitation of real-life tragedy, a breach of performer safety and trust, or systemic failure and negligence within the industry.',
   'Homage & Influence':
     "A character homage, a story built on wrestling tropes (tournament arcs, heel turns, stable warfare), wrestling's visual language, or a direct parody of the wrestling world.",
 };
@@ -198,6 +192,11 @@ function validate(fields, links, existingSlugs) {
     add('air_date', 'The broadcast date cannot be before the event or taping date.');
 
   const section = SECTIONS.find((s) => s.value === entry.registry_section);
+  if (entry.registry_section && !section)
+    add(
+      'registry_section',
+      'This section is not open to public nomination. Choose another section.'
+    );
   if (section && entry.significance && !section.significance.includes(entry.significance))
     add('significance', `This type of significance doesn't belong in the ${section.value}.`);
 
@@ -285,7 +284,13 @@ export default function ContributeForm({
   useEffect(() => {
     const draft = readDraft();
     if (draft?.fields) {
-      setFields({ ...EMPTY, ...draft.fields });
+      const restored = { ...EMPTY, ...draft.fields };
+      // Drafts saved before Division B was removed may still hold it.
+      if (!SECTIONS.some((s) => s.value === restored.registry_section)) {
+        restored.registry_section = '';
+        restored.significance = '';
+      }
+      setFields(restored);
       setLinks(Array.isArray(draft.links) ? draft.links : []);
       setDraftRestored(true);
     }
@@ -558,14 +563,6 @@ export default function ContributeForm({
               ))}
             </select>
           </Field>
-          {section?.notice && (
-            <p
-              role="note"
-              className="p-3 bg-registry-background border-l-4 border-registry-red text-sm text-registry-text"
-            >
-              {section.notice}
-            </p>
-          )}
           <Field
             id={fieldId('significance')}
             label="Significance"

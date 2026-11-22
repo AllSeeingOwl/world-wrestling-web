@@ -16,8 +16,8 @@ const ArticleCard = ({ article }) => {
 
   return (
     <article className="h-full flex flex-col bg-registry-surface border border-registry-border p-6 hover:border-registry-gold transition-colors focus-within:ring-2 focus-within:ring-registry-gold focus-within:ring-offset-2 focus-within:ring-offset-registry-background rounded-lg">
-      <div className="flex justify-between items-start mb-4">
-        <div>
+      <div className="flex flex-col-reverse sm:flex-row sm:justify-between items-start gap-2 mb-4">
+        <div className="min-w-0">
           <h2 className="font-heading text-xl font-bold text-registry-text mb-1 group-hover:text-registry-gold transition-colors">
             {article.title}
           </h2>
@@ -25,7 +25,7 @@ const ArticleCard = ({ article }) => {
             <p className="text-xs text-registry-gold font-medium mb-1">{article.event_name}</p>
           )}
         </div>
-        <span className="bg-registry-gold text-registry-background text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider text-center shrink-0 ml-2">
+        <span className="bg-registry-gold text-registry-background text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider text-center max-w-full sm:max-w-[45%]">
           {article.promotion}
         </span>
       </div>

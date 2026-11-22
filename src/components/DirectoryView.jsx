@@ -17,7 +17,8 @@ const GROUP_OPTIONS = [
 const COLUMNS = [
   { field: 'title', label: 'Entry' },
   { field: 'date', label: 'Date' },
-  { field: 'promotion', label: 'Promotion / creator' },
+  // On phones the promotion moves under the entry title, so the table fits without scrolling.
+  { field: 'promotion', label: 'Promotion / creator', className: 'hidden sm:table-cell' },
   { field: 'era', label: 'Era', className: 'hidden md:table-cell' },
   { field: 'registry_section', label: 'Section', className: 'hidden lg:table-cell' },
 ];
@@ -369,7 +370,7 @@ export default function DirectoryView({ entries = [] }) {
                         key={entry.slug}
                         className="hover:bg-registry-background transition-colors"
                       >
-                        <td className="px-4 py-3 min-w-[12rem]">
+                        <td className="px-4 py-3 sm:min-w-[12rem]">
                           <a
                             href={entry.url}
                             className="font-medium text-registry-gold hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold rounded"
@@ -381,11 +382,14 @@ export default function DirectoryView({ entries = [] }) {
                               {entry.event_name}
                             </span>
                           )}
+                          <span className="block text-xs text-registry-text mt-0.5 sm:hidden">
+                            {entry.promotion}
+                          </span>
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap font-mono text-xs text-registry-textMuted">
                           <time dateTime={entry.date}>{formatDate(entry.date)}</time>
                         </td>
-                        <td className="px-4 py-3">{entry.promotion}</td>
+                        <td className="px-4 py-3 hidden sm:table-cell">{entry.promotion}</td>
                         <td className="px-4 py-3 hidden md:table-cell text-registry-textMuted">
                           {entry.era || '—'}
                         </td>

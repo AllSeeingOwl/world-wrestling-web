@@ -18,3 +18,65 @@
   --color-blue-600: #2563eb;
   --color-blue-700: #1d4ed8;
 }
+
+/* Long-form documents rendered from Markdown: the charter (About) and the handbook. */
+.doc-prose {
+  color: #f8fafc;
+  line-height: 1.7;
+}
+.doc-prose h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #334155;
+}
+.doc-prose h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #f59e0b;
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+  scroll-margin-top: 1.5rem;
+}
+.doc-prose h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #f8fafc;
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+  scroll-margin-top: 1.5rem;
+}
+.doc-prose p {
+  color: #cbd5e1;
+  margin-bottom: 1rem;
+}
+.doc-prose ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+  margin-bottom: 1rem;
+}
+.doc-prose ol {
+  list-style: decimal;
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.doc-prose ul ul,
+.doc-prose ol ul {
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+}
+.doc-prose li {
+  color: #cbd5e1;
+  margin-bottom: 0.5rem;
+}
+.doc-prose li::marker {
+  color: #f59e0b;
+}
+.doc-prose strong {
+  color: #f8fafc;
+}
+.doc-prose em {
+  color: #e2e8f0;
+}

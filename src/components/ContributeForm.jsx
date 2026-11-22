@@ -170,10 +170,10 @@ function validate(fields, links, existingSlugs) {
   // Rules from the handbook and schema.md that the schema leaves optional.
   if (!entry.title) add('title', 'Give the entry a title.');
   if (!entry.date) add('date', 'Enter the date of the event.');
-  if (!entry.promotion) add('promotion', 'Name the promotion.');
+  if (!entry.promotion) add('promotion', 'Name the promotion or creator.');
   if (!entry.registry_section) add('registry_section', 'Choose a registry section.');
   if (!entry.significance) add('significance', 'Choose the type of significance.');
-  if (!entry.wrestlers_involved.length) add('wrestlers', 'List at least one wrestler.');
+  if (!entry.wrestlers_involved.length) add('wrestlers', 'List at least one person involved.');
   if (!entry.description) add('description', 'Write a one-sentence summary.');
   else if (entry.description.length > MAX_DESCRIPTION)
     add('description', `Keep the summary under ${MAX_DESCRIPTION} characters.`);
@@ -504,10 +504,10 @@ export default function ContributeForm({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <Field
               id={fieldId('promotion')}
-              label="Promotion"
+              label="Promotion or creator"
               required
               error={errors.promotion}
-              hint="Match the name used by existing entries so they group together."
+              hint="The promotion, or for works outside wrestling the studio, publisher, network or channel. Match names used by existing entries so they group together."
             >
               <input
                 type="text"
@@ -537,10 +537,10 @@ export default function ContributeForm({
           </datalist>
           <Field
             id={fieldId('wrestlers')}
-            label="Wrestlers involved"
+            label="People involved"
             required
             error={errors.wrestlers}
-            hint="One name per line. Include key non-wrestlers, such as owners or referees."
+            hint="One name per line. Wrestlers, plus key owners, referees, commentators or creators. For Homage & Influence, the wrestlers referenced and the creators responsible."
           >
             <textarea rows={4} className={inputClass} {...bind('wrestlers')} />
           </Field>

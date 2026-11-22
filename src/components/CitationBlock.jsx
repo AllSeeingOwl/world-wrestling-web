@@ -64,7 +64,7 @@ export default function CitationBlock({ citation }) {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 font-mono text-sm">
           <dl className="space-y-3">
-            <Field label="Promotion & Event">
+            <Field label="Promotion / Creator & Event">
               {promotion}
               {event_name ? ` — ${event_name}` : ''}
             </Field>

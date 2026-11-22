@@ -41,7 +41,7 @@ const ArticleCard = ({ article }) => {
         </span>
         {article.wrestlers_involved && article.wrestlers_involved.length > 0 && (
           <div className="mt-1 flex flex-wrap gap-1">
-            <span className="font-sans font-semibold text-registry-textMuted">Wrestlers:</span>
+            <span className="font-sans font-semibold text-registry-textMuted">People:</span>
             {article.wrestlers_involved.map((wrestler, idx) => (
               <span
                 key={idx}

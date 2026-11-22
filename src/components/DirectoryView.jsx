@@ -10,14 +10,14 @@ const GROUP_OPTIONS = [
   { value: 'none', label: 'None' },
   { value: 'decade', label: 'Decade' },
   { value: 'era', label: 'Era' },
-  { value: 'promotion', label: 'Promotion' },
+  { value: 'promotion', label: 'Promotion / creator' },
   { value: 'registry_section', label: 'Registry Section' },
 ];
 
 const COLUMNS = [
   { field: 'title', label: 'Entry' },
   { field: 'date', label: 'Date' },
-  { field: 'promotion', label: 'Promotion' },
+  { field: 'promotion', label: 'Promotion / creator' },
   { field: 'era', label: 'Era', className: 'hidden md:table-cell' },
   { field: 'registry_section', label: 'Section', className: 'hidden lg:table-cell' },
 ];
@@ -226,7 +226,7 @@ export default function DirectoryView({ entries = [] }) {
                 type="search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Entry, event or wrestler"
+                placeholder="Entry, event or person"
                 className="bg-registry-background border border-registry-border rounded px-3 py-2 text-sm text-registry-text placeholder:text-registry-textMuted focus:outline-none focus:border-registry-gold focus-visible:ring-2 focus-visible:ring-registry-gold"
               />
             </div>
@@ -239,11 +239,11 @@ export default function DirectoryView({ entries = [] }) {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
             <SelectControl
               id="directory-promotion"
-              label="Promotion"
+              label="Promotion / creator"
               value={promotion}
               onChange={setPromotion}
               options={[
-                { value: 'all', label: 'All promotions' },
+                { value: 'all', label: 'All promotions & creators' },
                 ...filterOptions.promotions.map((v) => ({ value: v, label: v })),
               ]}
             />

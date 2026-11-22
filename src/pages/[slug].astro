@@ -49,11 +49,11 @@ const formattedDate = (() => {
       )}
       <div class="text-sm font-mono text-registry-textMuted flex flex-wrap gap-x-6 gap-y-2 mb-4">
         <span><strong>Date:</strong> <time dateTime={entry.data.date}>{formattedDate}</time></span>
-        <span><strong>Promotion:</strong> {entry.data.promotion}</span>
+        <span><strong>Promotion / Creator:</strong> {entry.data.promotion}</span>
       </div>
       {entry.data.wrestlers_involved && entry.data.wrestlers_involved.length > 0 && (
         <div class="text-xs font-sans text-registry-textMuted flex flex-wrap items-center gap-2 mt-2">
-          <strong class="font-mono">Wrestlers Involved:</strong>
+          <strong class="font-mono">People Involved:</strong>
           {entry.data.wrestlers_involved.map((wrestler) => (
             <span class="px-2 py-0.5 bg-registry-background text-registry-text rounded border border-registry-border">
               {wrestler}

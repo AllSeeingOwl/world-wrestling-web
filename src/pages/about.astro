@@ -1,26 +1,56 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { resolvePath } from '../utils/paths.js';
+// The page renders the repo's charter Markdown directly (the same approach as the
+// handbook), so edits to charter.md show up on the site automatically.
+import { Content, getHeadings } from '../../charter.md';
+
+const sections = getHeadings().filter((heading) => heading.depth === 2);
 ---
 
-<Layout title="About - Wrestling Heritage Registry">
-  <div class="mb-12 border-b border-slate-200 pb-6">
-    <h1 class="font-bold text-2xl mb-4">About the Registry</h1>
-    <p class="text-sm text-slate-600">The International Professional Wrestling Heritage Registry (IPWHR)</p>
-  </div>
+<Layout title="About | Wrestling Heritage Registry">
+  <div class="grid grid-cols-1 lg:grid-cols-[1fr_12rem] gap-8 items-start">
+    <article
+      class="doc-prose bg-registry-surface border border-registry-border rounded-lg p-6 sm:p-8 shadow-sm"
+    >
+      <Content />
+    </article>
 
-  <article class="prose max-w-none text-slate-800 leading-relaxed">
-    <p>
-      In recognition of professional wrestling as a unique global art form, a medium for athletic storytelling, and a significant cultural force, the International Professional Wrestling Heritage Registry (IPWHR) is established. 
-    </p>
-    <p>
-      The mission of the IPWHR is to identify, categorize, and preserve for future generations a definitive collection of wrestling's most significant moments—both triumphant and tragic. This registry will serve not only as a "hall of fame" for singular achievements but also as a vital educational archive, providing context for the industry's evolution and crucial lessons from its past.
-    </p>
-    <h2 class="font-bold text-xl mt-8 mb-4">Governing Principles</h2>
-    <ul class="list-disc pl-5 space-y-2">
-      <li><strong>Impartiality:</strong> The Registry will operate independently of any single promotion, era, or style. Significance is the sole metric for consideration.</li>
-      <li><strong>Global Scope:</strong> Wrestling is a worldwide phenomenon. The Registry will actively seek and preserve significant moments from promotions across the globe.</li>
-      <li><strong>Historical Integrity:</strong> The Registry is committed to presenting an honest and complete history of the industry, acknowledging its greatest artistic achievements alongside its most profound ethical failures.</li>
-      <li><strong>Educational Purpose:</strong> The primary function of this archive is to provide context and insight for fans, performers, and historians, ensuring the lessons of the past inform the future.</li>
-    </ul>
-  </article>
+    <nav
+      aria-label="Charter sections"
+      class="order-first lg:order-last lg:sticky lg:top-6 bg-registry-surface border border-registry-border rounded-lg p-4 space-y-4"
+    >
+      <div>
+        <h2 class="font-mono text-[10px] uppercase tracking-widest text-registry-textMuted mb-3">
+          Charter
+        </h2>
+        <ol class="space-y-2 text-sm">
+          {
+            sections.map((section) => (
+              <li>
+                <a
+                  href={`#${section.slug}`}
+                  class="text-registry-text hover:text-registry-gold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold rounded"
+                >
+                  {section.text}
+                </a>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+      <div class="border-t border-registry-border pt-4 space-y-2 text-sm">
+        <a
+          href={resolvePath('/handbook')}
+          class="block text-registry-gold underline underline-offset-2 hover:text-registry-goldHover focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold rounded"
+          >Editorial Handbook</a
+        >
+        <a
+          href={resolvePath('/contribute')}
+          class="block text-registry-gold underline underline-offset-2 hover:text-registry-goldHover focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold rounded"
+          >Contribute an entry</a
+        >
+      </div>
+    </nav>
+  </div>
 </Layout>

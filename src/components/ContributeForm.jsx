@@ -6,16 +6,20 @@ import { buildMarkdown, countWords, slugify } from '../utils/entry-markdown.js';
 // the form validates against the same schema as the site build, then hands the
 // contributor a ready-made Markdown file to submit as a pull request.
 
-// Which significance types belong to which section, per the IPWHR charter.
+// Which significance types belong to which section, per the IPWHR charter
+// ("The International Professional Wrestling Heritage Registry" Google Doc).
+// The Cautionary Archive (Registry of Infamy - Division B) is left out on purpose:
+// the charter says it is not open to public nomination, and the Preservation Board
+// chooses its inductees privately. Editors add those entries directly.
 const SECTIONS = [
   {
     value: 'Registry of Excellence',
-    hint: 'Outstanding artistic, historical or cultural achievement.',
+    hint: 'Outstanding artistic, historical or cultural achievement. The entry must be significant in at least one of the three ways below.',
     significance: ['Cultural Significance', 'Historical Significance', 'Aesthetic Significance'],
   },
   {
     value: 'Registry of Infamy - Division A',
-    hint: 'Failures in craft: creative, technical or conceptual.',
+    hint: 'Failures in craft: creative, technical or conceptual. These are case studies for performers, bookers and producers, not a chance to mock.',
     significance: [
       'Conceptual Failure',
       'Technical Failure',
@@ -24,16 +28,39 @@ const SECTIONS = [
     ],
   },
   {
-    value: 'Registry of Infamy - Division B',
-    hint: 'The Cautionary Archive: profound ethical failures, safety breaches, exploitation.',
-    significance: ['Cautionary Archive'],
-  },
-  {
     value: 'Registry of Homage & Influence',
-    hint: 'Works outside wrestling that show its clear influence.',
+    hint: 'A work from outside the wrestling industry (a video game, cartoon, film or other media) with a clear, demonstrable element taken from or paying homage to wrestling.',
     significance: ['Homage & Influence'],
   },
 ];
+
+// What each type of significance means, from the charter.
+const SIGNIFICANCE_DETAILS = {
+  'Cultural Significance':
+    'It crossed over into the wider public consciousness, reflecting or influencing the values, trends and conversations of its time.',
+  'Historical Significance':
+    'It fundamentally changed the industry: a pivotal business decision, a debut that launched a new era, an influential event or a definitive "passing of the torch".',
+  'Aesthetic Significance':
+    'It is recognised for exceptional artistic and athletic merit: brilliant in-ring storytelling, innovative technique, unique character work or masterful execution.',
+  'Conceptual Failure': 'The idea was fundamentally flawed, bizarre or nonsensical from the start.',
+  'Technical Failure':
+    'The execution of a move, promo or segment collapsed through error, accident or poor planning.',
+  'Contextual Failure':
+    'It misjudged the audience, the cultural climate or the story so far, and came across as tone-deaf or counterproductive.',
+  "So Bad It's Good":
+    'It failed so spectacularly at what it set out to do that it looped back around to become iconic and beloved.',
+  'Homage & Influence':
+    "A character homage, a story built on wrestling tropes (tournament arcs, heel turns, stable warfare), wrestling's visual language, or a direct parody of the wrestling world.",
+};
+
+// The charter: a work must be at least five years old so its legacy can be understood.
+const MIN_AGE_YEARS = 5;
+
+function latestEligibleDate(now = new Date()) {
+  const d = new Date(now);
+  d.setFullYear(d.getFullYear() - MIN_AGE_YEARS);
+  return d.toISOString().slice(0, 10);
+}
 
 const MIN_WORDS = 100;
 const MAX_WORDS = 2000;
@@ -143,10 +170,10 @@ function validate(fields, links, existingSlugs) {
   // Rules from the handbook and schema.md that the schema leaves optional.
   if (!entry.title) add('title', 'Give the entry a title.');
   if (!entry.date) add('date', 'Enter the date of the event.');
-  if (!entry.promotion) add('promotion', 'Name the promotion.');
+  if (!entry.promotion) add('promotion', 'Name the promotion or creator.');
   if (!entry.registry_section) add('registry_section', 'Choose a registry section.');
   if (!entry.significance) add('significance', 'Choose the type of significance.');
-  if (!entry.wrestlers_involved.length) add('wrestlers', 'List at least one wrestler.');
+  if (!entry.wrestlers_involved.length) add('wrestlers', 'List at least one person involved.');
   if (!entry.description) add('description', 'Write a one-sentence summary.');
   else if (entry.description.length > MAX_DESCRIPTION)
     add('description', `Keep the summary under ${MAX_DESCRIPTION} characters.`);
@@ -156,10 +183,20 @@ function validate(fields, links, existingSlugs) {
 
   const today = new Date().toISOString().slice(0, 10);
   if (entry.date && entry.date > today) add('date', 'The date cannot be in the future.');
+  else if (entry.date && entry.date > latestEligibleDate())
+    add(
+      'date',
+      `Works must be at least ${MIN_AGE_YEARS} years old to be nominated, so their legacy can be judged.`
+    );
   if (entry.air_date && entry.date && entry.air_date < entry.date)
     add('air_date', 'The broadcast date cannot be before the event or taping date.');
 
   const section = SECTIONS.find((s) => s.value === entry.registry_section);
+  if (entry.registry_section && !section)
+    add(
+      'registry_section',
+      'This section is not open to public nomination. Choose another section.'
+    );
   if (section && entry.significance && !section.significance.includes(entry.significance))
     add('significance', `This type of significance doesn't belong in the ${section.value}.`);
 
@@ -247,7 +284,13 @@ export default function ContributeForm({
   useEffect(() => {
     const draft = readDraft();
     if (draft?.fields) {
-      setFields({ ...EMPTY, ...draft.fields });
+      const restored = { ...EMPTY, ...draft.fields };
+      // Drafts saved before Division B was removed may still hold it.
+      if (!SECTIONS.some((s) => s.value === restored.registry_section)) {
+        restored.registry_section = '';
+        restored.significance = '';
+      }
+      setFields(restored);
       setLinks(Array.isArray(draft.links) ? draft.links : []);
       setDraftRestored(true);
     }
@@ -427,7 +470,7 @@ export default function ContributeForm({
             label="Entry title"
             required
             error={errors.title}
-            hint="e.g. 'WrestleMania X-Seven: Stone Cold vs. The Rock'"
+            hint="e.g. 'WrestleMania X-Seven: Stone Cold vs. The Rock'. For a composite work (a match trilogy, a tournament, a whole feud), name the full scope, e.g. 'Flair vs. Steamboat: The 1989 Trilogy'."
           >
             <input type="text" className={inputClass} {...bind('title')} />
           </Field>
@@ -445,7 +488,7 @@ export default function ContributeForm({
               label="Event date"
               required
               error={errors.date}
-              hint="If taped, the taping date."
+              hint={`If taped, the taping date. For a composite work, the date it began. Must be at least ${MIN_AGE_YEARS} years ago.`}
             >
               <input type="date" className={inputClass} {...bind('date')} />
             </Field>
@@ -461,10 +504,10 @@ export default function ContributeForm({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <Field
               id={fieldId('promotion')}
-              label="Promotion"
+              label="Promotion or creator"
               required
               error={errors.promotion}
-              hint="Match the name used by existing entries so they group together."
+              hint="The promotion, or for works outside wrestling the studio, publisher, network or channel. Match names used by existing entries so they group together."
             >
               <input
                 type="text"
@@ -494,10 +537,10 @@ export default function ContributeForm({
           </datalist>
           <Field
             id={fieldId('wrestlers')}
-            label="Wrestlers involved"
+            label="People involved"
             required
             error={errors.wrestlers}
-            hint="One name per line. Include key non-wrestlers, such as owners or referees."
+            hint="One name per line. Wrestlers, plus key owners, referees, commentators or creators. For Homage & Influence, the wrestlers referenced and the creators responsible."
           >
             <textarea rows={4} className={inputClass} {...bind('wrestlers')} />
           </Field>
@@ -526,9 +569,10 @@ export default function ContributeForm({
             required
             error={errors.significance}
             hint={
-              section
+              SIGNIFICANCE_DETAILS[fields.significance] ||
+              (section
                 ? 'The options depend on the section you chose.'
-                : 'Choose a registry section first.'
+                : 'Choose a registry section first.')
             }
           >
             <select className={inputClass} disabled={!section} {...bind('significance')}>
@@ -545,7 +589,7 @@ export default function ContributeForm({
             label="One-sentence summary"
             required
             error={errors.description}
-            hint={`Shown on cards and in the directory. ${fields.description.trim().length}/${MAX_DESCRIPTION} characters.`}
+            hint={`Say what it is and why it matters. Significance counts, not star ratings. Shown on cards and in the directory. ${fields.description.trim().length}/${MAX_DESCRIPTION} characters.`}
           >
             <textarea rows={2} className={inputClass} {...bind('description')} />
           </Field>
@@ -557,7 +601,7 @@ export default function ContributeForm({
             label="Source material"
             required
             error={errors.source_material}
-            hint="Broadcasts, databases (Cagematch, ProFightDB), books, documentaries or verified interviews."
+            hint="Broadcasts, databases (Cagematch, ProFightDB), books, documentaries or verified interviews. The work must have aired, streamed or been distributed on a professional, publicly accessible platform."
           >
             <textarea rows={2} className={inputClass} {...bind('source_material')} />
           </Field>

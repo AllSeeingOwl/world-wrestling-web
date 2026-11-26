@@ -12,7 +12,7 @@ event_name: 'Survivor Series 1997'
 era: 'Attitude Era'
 description: 'The infamous real-life double-cross of Bret Hart by Vince McMahon at Survivor Series 1997, forever altering the landscape of professional wrestling.'
 source_material: 'WWF Survivor Series 1997 pay-per-view broadcast, Molson Centre, Montreal; Wrestling Observer Newsletter (November 17, 1997); Bret Hart, Hitman (2007); Wrestling with Shadows (1998)'
-context_statement: "Vince McMahon's secret order to end the match against his champion's will was a breach of trust between promotion and performer on live pay-per-view, and its fallout gave rise to the Mr. McMahon character at the centre of the Attitude Era."
+context_statement: "Vince McMahon's secret order to end the match against his champion's will became the most notorious finish in wrestling history, and its fallout gave rise to the Mr. McMahon character at the centre of the Attitude Era."
 ---
 
 On November 9, 1997, the landscape of professional wrestling was irrevocably altered inside the Molson Centre in Montreal, Quebec, Canada. What was billed as a standard World Wrestling Federation (WWF) Championship defense between defending champion Bret "The Hitman" Hart and challenger Shawn Michaels instead culminated in one of the most controversial unscripted moments in sports entertainment history—an event now universally known as the "Montreal Screwjob."

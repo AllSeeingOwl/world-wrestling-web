@@ -773,7 +773,10 @@ export default function ContributeForm({
                 <code>src/content/archive</code> through a pull request.
               </li>
             )}
-            <li>An editor will review it against the handbook before it goes live.</li>
+            <li>
+              An editor will review it against the charter and the Editorial Handbook, and it goes
+              live once the pull request is merged.
+            </li>
           </ol>
 
           <details className="group">

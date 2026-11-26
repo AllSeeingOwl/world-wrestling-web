@@ -48,6 +48,33 @@ const eras = unique([
     </p>
   </div>
 
+  <section
+    aria-labelledby="selection-heading"
+    class="mb-8 bg-registry-surface border border-registry-border rounded-lg p-4 sm:p-5 text-sm space-y-3"
+  >
+    <h2 id="selection-heading" class="font-bold text-registry-text">How selection works</h2>
+    <ul class="list-disc pl-5 space-y-2 text-registry-textMuted">
+      <li>
+        <strong class="text-registry-text">The charter's yearly cycle is the goal.</strong> The <a
+          href={resolvePath('/about')}
+          class="text-registry-gold underline underline-offset-2 hover:text-registry-goldHover focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold rounded"
+          >Registry Charter</a
+        > describes a public nomination period each year, review by a Preservation Board, and a class
+        of inductees announced on the first Monday of the year: up to 25 for Excellence, 10 for
+        Failures in Craft and 5 for Homage &amp; Influence.
+      </li>
+      <li>
+        <strong class="text-registry-text">For now, editors review each submission.</strong> That
+        cycle isn't running yet. Until it is, an editor checks every pull request against the
+        charter and the Editorial Handbook, and an accepted entry is published when its pull request is merged.
+      </li>
+      <li>
+        <strong class="text-registry-text">The Cautionary Archive isn't open to nominations.</strong>{' '}
+        Its inductees are chosen privately by the Board.
+      </li>
+    </ul>
+  </section>
+
   <div class="grid grid-cols-1 lg:grid-cols-[1fr_15rem] gap-8 items-start">
     <div>
       <noscript>

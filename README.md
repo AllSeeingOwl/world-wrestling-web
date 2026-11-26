@@ -1,10 +1,11 @@
-# World Wrestling Web
+# Wrestling Heritage Registry
 
-A definitive collection of professional wrestling's most significant moments, designed to identify, categorize, and preserve heritage for future generations.
+The website of the International Professional Wrestling Heritage Registry (IPWHR), also known as "The Crabtree Catalogue". A definitive collection of professional wrestling's most significant moments, designed to identify, categorize, and preserve heritage for future generations.
 
 Please refer to the following documents for more details:
 
-- [Wrestling Handbook](wrestling_handbook.md)
+- [Registry Charter](charter.md)
+- [Editorial Handbook](wrestling_handbook.md)
 - [Platform Architecture](platform_architecture.md)
 
 ## 📖 Features

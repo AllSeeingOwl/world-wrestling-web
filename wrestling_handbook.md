@@ -1,6 +1,6 @@
-# The World Wrestling Web Editorial Handbook
+# The Wrestling Heritage Registry Editorial Handbook
 
-Welcome to the World Wrestling Web. This handbook outlines the editorial standards and guidelines for contributing to our professional wrestling registry. Our goal is to maintain a high-quality, historically accurate, and engaging archive of professional wrestling's rich history.
+Welcome to the Wrestling Heritage Registry. This handbook outlines the editorial standards and guidelines for contributing to our professional wrestling registry. Our goal is to maintain a high-quality, historically accurate, and engaging archive of professional wrestling's rich history.
 
 ## 1. Core Principles
 
@@ -47,7 +47,7 @@ Certain types of historical moments require specific handling to fully capture t
 
 ## 5. Citation Requirements
 
-Proper sourcing is essential for maintaining the credibility of the World Wrestling Web. All entries must include the following:
+Proper sourcing is essential for maintaining the credibility of the Wrestling Heritage Registry. All entries must include the following:
 
 - **Source Material:** Indicate where the information originates. This could be a specific television broadcast, a pay-per-view event, a recognized wrestling database (e.g., Cagematch, ProFightDB), an official promotion website, or a verified shoot interview/autobiography.
 - **Air Date / Event Date:** Provide the exact date (Month, Day, Year) the event occurred or was broadcast. If the event was taped prior to airing, provide both the taping date and the broadcast date if relevant.

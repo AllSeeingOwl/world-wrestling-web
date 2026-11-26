@@ -1,4 +1,4 @@
-# Wrestling Registry Entry Schema
+# Wrestling Heritage Registry Entry Schema
 
 This document defines the frontmatter data structure required for wrestling content entries in the registry.
 

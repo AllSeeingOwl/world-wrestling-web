@@ -2,7 +2,7 @@
   "name": "wrestling-registry",
   "version": "1.0.0",
   "type": "module",
-  "description": "World Wrestling Web website",
+  "description": "Wrestling Heritage Registry website",
   "scripts": {
     "test": "jest --passWithNoTests --testPathIgnorePatterns=\"e2e\"",
     "test:e2e:playwright": "playwright test",

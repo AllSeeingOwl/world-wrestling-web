@@ -50,6 +50,18 @@ test.describe('Contribute form', () => {
     await expect(sidebar).toContainText('at least five years old');
   });
 
+  test('explains how selection works', async ({ page }) => {
+    await openForm(page);
+    const note = page.getByRole('region', { name: 'How selection works' });
+    await expect(note).toContainText("The charter's yearly cycle is the goal.");
+    await expect(note).toContainText('For now, editors review each submission.');
+    await expect(note).toContainText("The Cautionary Archive isn't open to nominations.");
+    await expect(note.getByRole('link', { name: 'Registry Charter' })).toHaveAttribute(
+      'href',
+      /\/about$/
+    );
+  });
+
   test('lists every missing required field when submitted empty', async ({ page }) => {
     await openForm(page);
     await submit(page);

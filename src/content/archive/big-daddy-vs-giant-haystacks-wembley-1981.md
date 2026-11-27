@@ -32,3 +32,7 @@ Wrestling was a fixture of ITV's _World of Sport_ on Saturday afternoons. For ma
 The match represents the peak of wrestling's place in British popular culture. Audience figures of 16 to 18 million are often quoted for its broadcast, although these are not supported by official ratings data for 1981, and the true figure is uncertain. Even so, the feud was among the best-known television rivalries in the country.
 
 The match also illustrates the limits of the era's approach. Big Daddy's matches were deliberately short and simple, built around his popularity rather than athletic contests, and critics have argued that this style, and the reliance on a small number of ageing stars, contributed to British wrestling's decline through the 1980s. ITV dropped wrestling from its schedules in 1988.
+
+## A Note on the Registry's Name
+
+This registry's nickname, "The Crabtree Catalogue", is named after Shirley Crabtree, the man who wrestled as Big Daddy.

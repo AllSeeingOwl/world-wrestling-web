@@ -13,7 +13,12 @@ const sections = getHeadings().filter((heading) => heading.depth === 2);
     <div class="space-y-4">
       <p class="text-sm text-registry-textMuted">
         The Wrestling Heritage Registry is the website of the International Professional Wrestling
-        Heritage Registry (IPWHR), also known as “The Crabtree Catalogue”. Its charter is below.
+        Heritage Registry (IPWHR), also known as “The Crabtree Catalogue” after Shirley Crabtree,
+        who wrestled as <a
+          href={resolvePath('/big-daddy-vs-giant-haystacks-wembley-1981')}
+          class="text-registry-gold underline underline-offset-2 hover:text-registry-goldHover focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold rounded"
+          >Big Daddy</a
+        >. Its charter is below.
       </p>
       <article
         class="doc-prose bg-registry-surface border border-registry-border rounded-lg p-6 sm:p-8 shadow-sm"

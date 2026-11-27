@@ -33,7 +33,7 @@ const ArticleCard = ({ article }) => {
       <div className="text-xs font-mono text-registry-textMuted mb-4 flex flex-col gap-1">
         <span>
           <time dateTime={article.date}>{formattedDate}</time>
-          {article.era && article.era !== 'Unknown' && ` • ${article.era}`}
+          {article.era && ` • ${article.era}`}
           {` • ${article.significance}`}
         </span>
         <span>

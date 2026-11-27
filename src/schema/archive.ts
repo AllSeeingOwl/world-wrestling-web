@@ -50,7 +50,12 @@ export const archiveSchema = z.object({
   registry_section: z.enum(REGISTRY_SECTIONS),
   wrestlers_involved: z.array(z.string()).optional(),
   event_name: z.string().optional(),
-  era: z.string().optional(),
+  // The decade, e.g. '1990s'. Named eras (the Attitude Era, the joshi boom) differ by promotion
+  // and country, so they belong in the article; see wrestling_handbook.md, section 3.
+  era: z
+    .string()
+    .regex(/^\d{3}0s$/, { message: "Use a decade, like '1990s'" })
+    .optional(),
   description: z.string().optional(),
   image_url: safeUrlSchema.optional(),
   // Citation fields (see wrestling_handbook.md, section 4)

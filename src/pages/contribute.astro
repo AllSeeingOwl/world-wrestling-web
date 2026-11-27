@@ -15,7 +15,7 @@ const existingSlugs = [
 ];
 
 // Suggestions: names already in use (so filters group entries together),
-// plus the promotions and eras named in the Editorial Handbook.
+// plus the promotions named in the Editorial Handbook and every decade of televised wrestling.
 const unique = (values: (string | undefined)[]) =>
   [...new Set(values.filter((v): v is string => Boolean(v)))].sort((a, b) => a.localeCompare(b));
 const promotions = unique([
@@ -32,10 +32,7 @@ const promotions = unique([
 ]);
 const eras = unique([
   ...entries.map((e) => e.data.era),
-  'The Golden Era',
-  'The Monday Night Wars',
-  'Attitude Era',
-  'Ruthless Aggression Era',
+  ...['1940s', '1950s', '1960s', '1970s', '1980s', '1990s', '2000s', '2010s', '2020s'],
 ]);
 ---
 

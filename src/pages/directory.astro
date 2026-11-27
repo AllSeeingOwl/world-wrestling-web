@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import DirectoryView from '../components/DirectoryView.jsx';
 import { getCollection } from 'astro:content';
 import { resolvePath } from '../utils/paths.js';
+import { entryDecade } from '../utils/decade.js';
 
 const archiveEntries = await getCollection('archive');
 
@@ -13,7 +14,7 @@ const entries = archiveEntries.map((entry) => ({
   title: entry.data.title,
   date: entry.data.date,
   promotion: entry.data.promotion,
-  era: entry.data.era,
+  era: entryDecade(entry.data),
   event_name: entry.data.event_name,
   registry_section: entry.data.registry_section,
   description: entry.data.description,
@@ -26,7 +27,7 @@ const entries = archiveEntries.map((entry) => ({
     <h1 class="font-bold text-2xl mb-2 text-registry-text">Directory &amp; Timeline</h1>
     <p class="text-sm text-registry-textMuted max-w-2xl">
       Every entry in the registry. Use the master list to sort and compare, or switch to the
-      timeline to follow wrestling history in order. Filter by promotion, era or registry section,
+      timeline to follow wrestling history in order. Filter by promotion, decade or registry section,
       and group by decade as the <a
         href={resolvePath('/handbook')}
         class="text-registry-gold underline underline-offset-2 hover:text-registry-goldHover focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold rounded"

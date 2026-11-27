@@ -4,24 +4,25 @@ This document defines the frontmatter data structure required for wrestling cont
 
 ## Frontmatter Fields
 
-| Field                | Type   | Required | Description                                                           | Example                                                                     |
-| -------------------- | ------ | -------- | --------------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| `title`              | string | Yes      | Entry title                                                           | WrestleMania X-Seven: Stone Cold vs. The Rock                               |
-| `date`               | string | Yes      | Date of event (must be YYYY-MM-DD format)                             | 2001-04-01                                                                  |
-| `promotion`          | string | Yes      | Promotion, or the creator of a work from outside wrestling            | WWE                                                                         |
-| `significance`       | string | Yes      | Why this moment matters                                               | Historical Significance                                                     |
-| `registry_section`   | string | Yes      | Category/classification                                               | Registry of Excellence                                                      |
-| `wrestlers_involved` | array  | Yes      | Key people: wrestlers, plus owners, referees or creators              | ["Stone Cold Steve Austin", "The Rock"]                                     |
-| `event_name`         | string | No       | Name of the event/show (if applicable)                                | WrestleMania X-Seven                                                        |
-| `era`                | string | No       | Decade or wrestling era (Attitude Era, Ruthless Aggression Era, etc.) | Attitude Era                                                                |
-| `description`        | string | Yes      | Short summary                                                         | The main event of WrestleMania X-Seven marking the end of the Attitude Era. |
-| `source_material`    | string | No       | Where the information comes from (broadcast, database, interview)     | WWF WrestleMania X-Seven pay-per-view broadcast                             |
-| `air_date`           | string | No       | Broadcast date (YYYY-MM-DD) if the event was taped before it aired    | 1999-01-04                                                                  |
-| `context_statement`  | string | No       | One sentence on why this moment is historically significant           | This match closed the Attitude Era's defining rivalry.                      |
+| Field                | Type   | Required | Description                                                        | Example                                                                     |
+| -------------------- | ------ | -------- | ------------------------------------------------------------------ | --------------------------------------------------------------------------- |
+| `title`              | string | Yes      | Entry title                                                        | WrestleMania X-Seven: Stone Cold vs. The Rock                               |
+| `date`               | string | Yes      | Date of event (must be YYYY-MM-DD format)                          | 2001-04-01                                                                  |
+| `promotion`          | string | Yes      | Promotion, or the creator of a work from outside wrestling         | WWE                                                                         |
+| `significance`       | string | Yes      | Why this moment matters                                            | Historical Significance                                                     |
+| `registry_section`   | string | Yes      | Category/classification                                            | Registry of Excellence                                                      |
+| `wrestlers_involved` | array  | Yes      | Key people: wrestlers, plus owners, referees or creators           | ["Stone Cold Steve Austin", "The Rock"]                                     |
+| `event_name`         | string | No       | Name of the event/show (if applicable)                             | WrestleMania X-Seven                                                        |
+| `era`                | string | No       | Decade, in the form `1990s`                                        | 2000s                                                                       |
+| `description`        | string | Yes      | Short summary                                                      | The main event of WrestleMania X-Seven marking the end of the Attitude Era. |
+| `source_material`    | string | No       | Where the information comes from (broadcast, database, interview)  | WWF WrestleMania X-Seven pay-per-view broadcast                             |
+| `air_date`           | string | No       | Broadcast date (YYYY-MM-DD) if the event was taped before it aired | 1999-01-04                                                                  |
+| `context_statement`  | string | No       | One sentence on why this moment is historically significant        | This match closed the Attitude Era's defining rivalry.                      |
 
 ## Validation Rules
 
 - **`date`**: Must be a valid date string in `YYYY-MM-DD` format.
+- **`era`**: If given, must be a decade such as `1980s` or `2010s`. Named eras (the Attitude Era, the Monday Night Wars) belong in the article text, because they differ by promotion and country.
 - **`promotion`**: The wrestling promotion (e.g., WWE, WWF, WCW, ECW, NWA, NJPW, AJPW, ROH, TNA/Impact, AEW). For Homage & Influence entries and other media, the creator instead: the studio, publisher, network, channel or outlet (e.g., Namco). The field keeps the name `promotion` so existing entries still build.
 - **`significance`**: Must be one of the following:
   - Cultural Significance

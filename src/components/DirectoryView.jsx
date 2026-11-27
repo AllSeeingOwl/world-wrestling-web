@@ -2,14 +2,13 @@ import React, { useMemo, useState, useEffect } from 'react';
 
 // Adapted from Fic-His-Arch's DirectoryView: a sortable master list plus a
 // chronological timeline, with grouping and filters tuned for the wrestling
-// registry (decade, era, promotion, registry section).
+// registry (decade, promotion, registry section).
 
 const collator = new Intl.Collator('en', { numeric: true, sensitivity: 'base' });
 
 const GROUP_OPTIONS = [
   { value: 'none', label: 'None' },
   { value: 'decade', label: 'Decade' },
-  { value: 'era', label: 'Era' },
   { value: 'promotion', label: 'Promotion / creator' },
   { value: 'registry_section', label: 'Registry Section' },
 ];
@@ -19,7 +18,7 @@ const COLUMNS = [
   { field: 'date', label: 'Date' },
   // On phones the promotion moves under the entry title, so the table fits without scrolling.
   { field: 'promotion', label: 'Promotion / creator', className: 'hidden sm:table-cell' },
-  { field: 'era', label: 'Era', className: 'hidden md:table-cell' },
+  { field: 'era', label: 'Decade', className: 'hidden md:table-cell' },
   { field: 'registry_section', label: 'Section', className: 'hidden lg:table-cell' },
 ];
 
@@ -250,11 +249,11 @@ export default function DirectoryView({ entries = [] }) {
             />
             <SelectControl
               id="directory-era"
-              label="Era"
+              label="Decade"
               value={era}
               onChange={setEra}
               options={[
-                { value: 'all', label: 'All eras' },
+                { value: 'all', label: 'All decades' },
                 ...filterOptions.eras.map((v) => ({ value: v, label: v })),
               ]}
             />

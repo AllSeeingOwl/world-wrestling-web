@@ -102,7 +102,8 @@ export default function DirectoryView({ entries = [] }) {
 
   const filterOptions = useMemo(
     () => ({
-      promotions: uniqueSorted(entries.map((e) => e.promotion)),
+      // WWWF, WWF and WWE are one company: filter them as one (see src/utils/promotion.js).
+      promotions: uniqueSorted(entries.map((e) => e.promotion_group || e.promotion)),
       eras: uniqueSorted(entries.map((e) => e.era)),
       sections: uniqueSorted(entries.map((e) => e.registry_section)),
     }),
@@ -112,7 +113,8 @@ export default function DirectoryView({ entries = [] }) {
   const filtered = useMemo(() => {
     const needle = query.trim().toLowerCase();
     return entries.filter((entry) => {
-      if (promotion !== 'all' && entry.promotion !== promotion) return false;
+      if (promotion !== 'all' && (entry.promotion_group || entry.promotion) !== promotion)
+        return false;
       if (era !== 'all' && entry.era !== era) return false;
       if (section !== 'all' && entry.registry_section !== section) return false;
       if (!needle) return true;
@@ -136,7 +138,12 @@ export default function DirectoryView({ entries = [] }) {
     if (groupBy === 'none') return [{ name: 'All entries', items: sorted }];
     const map = new Map();
     for (const entry of sorted) {
-      const key = groupBy === 'decade' ? getDecade(entry.date) : entry[groupBy] || 'Unclassified';
+      const key =
+        groupBy === 'decade'
+          ? getDecade(entry.date)
+          : groupBy === 'promotion'
+            ? entry.promotion_group || entry.promotion
+            : entry[groupBy] || 'Unclassified';
       if (!map.has(key)) map.set(key, []);
       map.get(key).push(entry);
     }
@@ -367,6 +374,7 @@ export default function DirectoryView({ entries = [] }) {
                     items.map((entry) => (
                       <tr
                         key={entry.slug}
+                        data-promotion-group={entry.promotion_group || entry.promotion}
                         className="hover:bg-registry-background transition-colors"
                       >
                         <td className="px-4 py-3 sm:min-w-[12rem]">

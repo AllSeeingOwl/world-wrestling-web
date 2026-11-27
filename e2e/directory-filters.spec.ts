@@ -43,9 +43,12 @@ test.describe('Directory filters', () => {
       .getAttribute('value');
     await select.selectOption(promotion!);
 
-    const promotions = await rows(page).locator('td:nth-child(3)').allInnerTexts();
-    expect(promotions.length).toBeGreaterThan(0);
-    expect(promotions.every((p) => p.trim() === promotion)).toBe(true);
+    // Filtering works on promotion groups (WWWF, WWF and WWE count as one).
+    const groups = await rows(page).evaluateAll((els) =>
+      els.map((el) => el.getAttribute('data-promotion-group'))
+    );
+    expect(groups.length).toBeGreaterThan(0);
+    expect(groups.every((g) => g === promotion)).toBe(true);
   });
 
   test('search finds an entry by title, and Clear filters resets', async ({ page }) => {

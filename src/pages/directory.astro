@@ -4,6 +4,7 @@ import DirectoryView from '../components/DirectoryView.jsx';
 import { getCollection } from 'astro:content';
 import { resolvePath } from '../utils/paths.js';
 import { entryDecade } from '../utils/decade.js';
+import { promotionGroup } from '../utils/promotion.js';
 
 const archiveEntries = await getCollection('archive');
 
@@ -14,6 +15,7 @@ const entries = archiveEntries.map((entry) => ({
   title: entry.data.title,
   date: entry.data.date,
   promotion: entry.data.promotion,
+  promotion_group: promotionGroup(entry.data.promotion),
   era: entryDecade(entry.data),
   event_name: entry.data.event_name,
   registry_section: entry.data.registry_section,

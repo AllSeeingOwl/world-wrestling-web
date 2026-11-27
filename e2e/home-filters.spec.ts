@@ -53,22 +53,41 @@ test.describe('Home page filters', () => {
     await expect(page.locator('#no-results')).toBeHidden();
   });
 
-  test('promotion buttons show only that promotion', async ({ page }) => {
+  test('the promotion filter shows only that promotion', async ({ page }) => {
     await openHome(page);
     const total = await cards(page).count();
-    const button = page.locator('.promotion-btn:not([data-value="all"])').first();
-    const promotion = await button.getAttribute('data-value');
+    const filter = page.locator('#promotion-filter');
+    const promotion = await filter
+      .locator('option:not([value="all"])')
+      .first()
+      .getAttribute('value');
 
-    await button.click();
-    await expect(button).toHaveAttribute('aria-pressed', 'true');
+    await filter.selectOption(promotion!);
     const shown = await visibleCards(page).evaluateAll((els) =>
       els.map((el) => el.getAttribute('data-promotion'))
     );
     expect(shown.length).toBeGreaterThan(0);
     expect(shown.every((p) => p === promotion)).toBe(true);
 
-    await page.locator('.promotion-btn[data-value="all"]').click();
+    await filter.selectOption('all');
     await expect(visibleCards(page)).toHaveCount(total);
+  });
+
+  test('WWWF, WWF and WWE are one choice in the promotion filter', async ({ page }) => {
+    await openHome(page);
+    const options = await page.locator('#promotion-filter option').allInnerTexts();
+    expect(options.some((o) => /\((WWWF|WWF|WWE)\)$/.test(o))).toBe(false);
+    const wwe = options.filter((o) => o.startsWith('WWE (including'));
+    expect(wwe.length).toBeLessThanOrEqual(1);
+  });
+
+  test('entries are listed oldest first', async ({ page }) => {
+    await openHome(page);
+    const dates = await page
+      .locator('.article-item time')
+      .evaluateAll((els) => els.map((el) => el.getAttribute('datetime') || ''));
+    expect(dates.length).toBeGreaterThan(1);
+    expect(dates).toEqual([...dates].sort());
   });
 
   test('era filter shows only that era', async ({ page }) => {
@@ -94,7 +113,7 @@ test.describe('Home page filters', () => {
     const promotion = await first.getAttribute('data-promotion');
     const section = await first.getAttribute('data-section');
 
-    await page.locator(`.promotion-btn[data-value="${promotion}"]`).click();
+    await page.locator('#promotion-filter').selectOption(promotion!);
     await page.locator('#section-filter').selectOption(section!);
     await expect(first).toBeVisible();
 

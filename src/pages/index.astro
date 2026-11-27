@@ -18,6 +18,7 @@ const articles = allArchiveEntries.map(entry => ({
   registry_section: entry.data.registry_section,
   event_name: entry.data.event_name,
   wrestlers_involved: entry.data.wrestlers_involved,
+  parts: entry.data.components?.length ?? 0,
   summary: entry.data.description || (entry.body ? entry.body.substring(0, 150) + '...' : '')
 }));
 

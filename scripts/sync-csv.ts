@@ -40,6 +40,15 @@ const COLUMNS: [header: string, value: (entry: Row) => string | undefined][] = [
   ['context_statement', (e) => e.context_statement],
   ['image_url', (e) => e.image_url],
   ['external_links', (e) => e.external_links?.map((l) => `${l.name} (${l.url})`).join('; ')],
+  // Composite works: each part as "date title (event)".
+  [
+    'components',
+    (e) =>
+      e.components
+        ?.map((c) => `${c.date} ${c.title}${c.event_name ? ` (${c.event_name})` : ''}`)
+        .join('; '),
+  ],
+  ['proposed_individual_merit', (e) => e.proposed_individual_merit],
 ];
 
 function readEntries(): { rows: Row[]; errors: string[] } {

@@ -36,14 +36,14 @@ To ensure our archive is easily navigable and organized, entries must be classif
 - **People Involved:** List the key people in the work: wrestlers, plus owners, referees, commentators, hosts or creators where they matter. For Homage & Influence entries, list the wrestlers being referenced and the creators responsible.
 - **Entry Types:**
   - **Single Work Entries:** A specific match, promo, angle, television segment, pay-per-view, business decision or piece of media. Detail the context leading up to it, what occurred, and the aftermath.
-  - **Composite Work Entries:** A series of interconnected works (a match trilogy, a tournament, a complete feud) nominated as one entry because their collective significance is greater than the sum of their parts. The title and article must clearly define the scope: which works are included, and over what dates.
+  - **Composite Work Entries:** A series of interconnected works (a match trilogy, a tournament, a complete feud) nominated as one entry because their collective significance is greater than the sum of their parts. Define the scope by listing each part, with its title, date and event, in the entry's composite-work fields (the submit form's "Composite work" section); the site shows them as a list on the entry page. The entry's date is the date of the first part.
 
 ## 4. Special Features
 
 Certain types of historical moments require specific handling to fully capture their significance.
 
 - **Cross-Promotion Moments:** When a wrestler or event spans multiple promotions (e.g., the WCW/ECW Invasion, the NWA Worlds Heavyweight Championship being defended in TNA, or the "Forbidden Door" crossover events), clearly document the participating entities. Explain the business or narrative context that allowed the crossover to occur.
-- **Legacy Documentation:** Every entry should assess the work's lasting influence on the industry and on later generations of performers. For composite works, note any single component (a match, promo or segment) that stands out on its own; the Preservation Board may give it a "Citation for Individual Merit".
+- **Legacy Documentation:** Every entry should assess the work's lasting influence on the industry and on later generations of performers. For composite works, note any single component (a match, promo or segment) that stands out on its own, and propose it for a "Citation for Individual Merit" in the entry's fields. Only the Preservation Board can issue the citation, so the site presents it as a proposal.
 
 ## 5. Citation Requirements
 

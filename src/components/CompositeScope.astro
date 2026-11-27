@@ -1,0 +1,62 @@
+---
+// The scope of a composite work (charter section IV, eligibility rule 6): each part the entry
+// covers, in date order, with the part proposed for a Citation for Individual Merit marked.
+import type { ArchiveComponent } from '../schema/archive';
+import { formatLongDate } from '../utils/dates.js';
+
+interface Props {
+  components: ArchiveComponent[];
+  proposedMerit?: string;
+}
+
+const { components, proposedMerit } = Astro.props;
+const parts = [...components].sort((a, b) => a.date.localeCompare(b.date));
+---
+
+<section
+  aria-labelledby="composite-scope-heading"
+  class="mb-8 bg-registry-background border border-registry-border rounded-lg p-4 sm:p-5"
+>
+  <h2
+    id="composite-scope-heading"
+    class="font-mono text-xs uppercase tracking-widest text-registry-gold mb-1"
+  >
+    Scope of this composite work
+  </h2>
+  <p class="text-sm text-registry-textMuted mb-4">
+    This entry covers {parts.length} connected works, nominated together because their combined significance
+    is greater than that of any one of them.
+  </p>
+  <ol class="space-y-3">
+    {
+      parts.map((part, index) => (
+        <li class="flex gap-3 text-sm">
+          <span class="font-mono text-registry-gold shrink-0 w-5" aria-hidden="true">
+            {index + 1}.
+          </span>
+          <div class="min-w-0">
+            <p class="font-semibold text-registry-text">{part.title}</p>
+            <p class="text-xs text-registry-textMuted">
+              <time datetime={part.date}>{formatLongDate(part.date)}</time>
+              {part.event_name && ` · ${part.event_name}`}
+            </p>
+            {part.title === proposedMerit && (
+              <p class="mt-1 inline-block text-[11px] font-semibold text-registry-background bg-registry-gold rounded px-2 py-0.5">
+                Proposed for a Citation for Individual Merit
+              </p>
+            )}
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+  {
+    proposedMerit && (
+      <p class="mt-4 text-xs text-registry-textMuted">
+        Under the charter, the Preservation Board may issue a Citation for Individual Merit to one
+        part of a composite work. This entry proposes the part marked above; the citation itself is
+        the Board's decision.
+      </p>
+    )
+  }
+</section>

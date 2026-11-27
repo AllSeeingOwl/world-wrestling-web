@@ -5,14 +5,21 @@ import { getCollection } from 'astro:content';
 import { resolvePath } from '../utils/paths.js';
 import { REGISTRY_SECTIONS } from '../schema/archive';
 import { entryDecade } from '../utils/decade.js';
+import { promotionGroup } from '../utils/promotion.js';
 
 const allArchiveEntries = await getCollection('archive');
 
-const articles = allArchiveEntries.map(entry => ({
+// Oldest first, so the Home page reads as a history.
+const sortedEntries = [...allArchiveEntries].sort(
+  (a, b) => a.data.date.localeCompare(b.data.date) || a.data.title.localeCompare(b.data.title)
+);
+
+const articles = sortedEntries.map(entry => ({
   slug: entry.id,
   title: entry.data.title,
   date: entry.data.date,
   promotion: entry.data.promotion,
+  promotion_group: promotionGroup(entry.data.promotion),
   era: entryDecade(entry.data),
   significance: entry.data.significance,
   registry_section: entry.data.registry_section,
@@ -22,7 +29,7 @@ const articles = allArchiveEntries.map(entry => ({
   summary: entry.data.description || (entry.body ? entry.body.substring(0, 150) + '...' : '')
 }));
 
-const promotions = [...new Set(articles.map(a => a.promotion))].sort();
+const promotions = [...new Set(articles.map(a => a.promotion_group))].sort((a, b) => a.localeCompare(b));
 const eras = [...new Set(articles.map(a => a.era))].sort();
 // Every section in charter order, with a count, so visitors see the registry's full shape
 // even before a section has entries.
@@ -40,30 +47,19 @@ const sections = REGISTRY_SECTIONS.map((value) => ({
 
   <section
     aria-label="Filter registry entries"
-    class="bg-registry-surface p-4 rounded-lg border border-registry-border flex flex-col md:flex-row gap-4 items-start md:items-center mb-8"
+    class="bg-registry-surface p-4 rounded-lg border border-registry-border flex flex-col md:flex-row gap-4 items-start md:items-end mb-8"
   >
-    <div class="flex flex-col gap-2 w-full md:w-auto">
-      <label class="text-xs font-semibold text-registry-textMuted uppercase" id="promotion-label">Promotion / Creator</label>
-      <div class="flex flex-wrap gap-2" role="group" aria-labelledby="promotion-label">
-        <button
-          type="button"
-          class="promotion-btn active bg-registry-gold border border-registry-gold text-registry-background px-3 py-1 text-sm rounded font-medium focus:outline-none focus:ring-2 focus:ring-registry-gold focus:ring-offset-2 focus:ring-offset-registry-surface"
-          data-value="all"
-          aria-pressed="true"
-        >
-          All
-        </button>
+    <div class="flex flex-col gap-1 w-full md:w-auto md:max-w-xs">
+      <label for="promotion-filter" class="text-xs font-semibold text-registry-textMuted uppercase">Promotion / Creator</label>
+      <select
+        id="promotion-filter"
+        class="bg-registry-background border border-registry-border text-registry-text text-sm rounded focus:ring-registry-gold focus:border-registry-gold block w-full p-2"
+      >
+        <option value="all">All Promotions &amp; Creators</option>
         {promotions.map((promo) => (
-          <button
-            type="button"
-            class="promotion-btn bg-registry-background border border-registry-border text-registry-text hover:border-registry-gold px-3 py-1 text-sm rounded font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-registry-gold focus:ring-offset-2 focus:ring-offset-registry-surface"
-            data-value={promo}
-            aria-pressed="false"
-          >
-            {promo}
-          </button>
+          <option value={promo}>{promo}</option>
         ))}
-      </div>
+      </select>
     </div>
 
     <div class="flex flex-col gap-1 w-full md:w-auto">
@@ -98,7 +94,7 @@ const sections = REGISTRY_SECTIONS.map((value) => ({
       <a
         href={resolvePath(`/${article.slug}`)}
         class="block group article-item focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold focus-visible:ring-offset-2 focus-visible:ring-offset-registry-background rounded"
-        data-promotion={article.promotion}
+        data-promotion={article.promotion_group}
         data-era={article.era}
         data-section={article.registry_section}
       >
@@ -118,15 +114,14 @@ const sections = REGISTRY_SECTIONS.map((value) => ({
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const promotionBtns = document.querySelectorAll('.promotion-btn');
+    const promotionFilter = document.getElementById('promotion-filter') as HTMLSelectElement;
     const eraFilter = document.getElementById('era-filter') as HTMLSelectElement;
     const sectionFilter = document.getElementById('section-filter') as HTMLSelectElement;
     const noResults = document.getElementById('no-results');
     const articles = document.querySelectorAll('.article-item');
 
-    let selectedPromotion = 'all';
-
     function filterArticles() {
+      const selectedPromotion = promotionFilter.value;
       const selectedEra = eraFilter.value;
       const selectedSection = sectionFilter.value;
       let visible = 0;
@@ -151,25 +146,9 @@ const sections = REGISTRY_SECTIONS.map((value) => ({
       noResults?.classList.toggle('hidden', visible > 0);
     }
 
-    promotionBtns.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const target = e.currentTarget as HTMLButtonElement;
-
-        // Update active state classes
-        promotionBtns.forEach(b => {
-          b.classList.remove('bg-registry-gold', 'border-registry-gold', 'text-registry-background');
-          b.classList.add('bg-registry-background', 'border-registry-border', 'text-registry-text');
-          b.setAttribute('aria-pressed', 'false');
-        });
-
-        target.classList.remove('bg-registry-background', 'border-registry-border', 'text-registry-text');
-        target.classList.add('bg-registry-gold', 'border-registry-gold', 'text-registry-background');
-        target.setAttribute('aria-pressed', 'true');
-
-        selectedPromotion = target.getAttribute('data-value') || 'all';
-        filterArticles();
-      });
-    });
+    if (promotionFilter) {
+      promotionFilter.addEventListener('change', filterArticles);
+    }
 
     if (eraFilter) {
       eraFilter.addEventListener('change', filterArticles);

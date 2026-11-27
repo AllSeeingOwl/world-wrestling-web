@@ -5,19 +5,38 @@ import { resolvePath } from '../utils/paths.js';
 
 interface Props {
   title: string;
+  // Shown in search results and link previews. Entry pages pass their own summary.
+  description?: string;
+  // 'article' for registry entries, 'website' for everything else.
+  type?: 'website' | 'article';
 }
 
-const { title } = Astro.props;
+const DEFAULT_DESCRIPTION =
+  "The Wrestling Heritage Registry preserves professional wrestling's most significant moments, both triumphant and tragic.";
+
+const { title, description = DEFAULT_DESCRIPTION, type = 'website' } = Astro.props;
+// Absolute address of this page, for search engines and link previews.
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
 ---
 
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="The Wrestling Heritage Registry preserves professional wrestling's most significant moments, both triumphant and tragic." />
+    <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href={resolvePath('/favicon.svg')} />
     <title>{title}</title>
+    {canonical && <link rel="canonical" href={canonical} />}
+    <link rel="sitemap" type="application/xml" href={resolvePath('/sitemap.xml')} />
+    <meta property="og:site_name" content="Wrestling Heritage Registry" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={type} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
   </head>
   <body class="bg-registry-background text-registry-text font-sans min-h-screen selection:bg-registry-gold selection:text-registry-background">
     <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-registry-surface focus:text-registry-gold focus:border focus:border-registry-gold focus:top-0 focus:left-0">

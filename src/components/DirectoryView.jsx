@@ -1,4 +1,5 @@
 import React, { useMemo, useState, useEffect } from 'react';
+import { sectionStyle } from '../utils/sections.js';
 
 // Adapted from Fic-His-Arch's DirectoryView: a sortable master list plus a
 // chronological timeline, with grouping and filters tuned for the wrestling
@@ -37,25 +38,6 @@ function formatDate(date) {
     timeZone: 'UTC',
   });
 }
-
-// Excellence entries get the championship gold; Infamy entries get the red.
-function sectionTone(section) {
-  if (section?.startsWith('Registry of Infamy')) return 'infamy';
-  if (section === 'Registry of Excellence') return 'excellence';
-  return 'other';
-}
-
-const toneDot = {
-  excellence: 'bg-registry-gold border-registry-gold',
-  infamy: 'bg-registry-red border-registry-red',
-  other: 'bg-registry-background border-registry-textMuted',
-};
-
-const toneText = {
-  excellence: 'text-registry-gold',
-  infamy: 'text-red-400',
-  other: 'text-registry-textMuted',
-};
 
 function uniqueSorted(values) {
   return [...new Set(values.filter(Boolean))].sort(collator.compare);
@@ -401,7 +383,7 @@ export default function DirectoryView({ entries = [] }) {
                           {entry.era || '—'}
                         </td>
                         <td
-                          className={`px-4 py-3 hidden lg:table-cell text-xs ${toneText[sectionTone(entry.registry_section)]}`}
+                          className={`px-4 py-3 hidden lg:table-cell text-xs ${sectionStyle(entry.registry_section).text}`}
                         >
                           {entry.registry_section}
                         </td>
@@ -445,12 +427,12 @@ export default function DirectoryView({ entries = [] }) {
                     className="relative border-l-2 border-registry-border ml-2 sm:ml-3"
                   >
                     {items.map((entry) => {
-                      const tone = sectionTone(entry.registry_section);
+                      const style = sectionStyle(entry.registry_section);
                       return (
                         <li key={entry.slug} className="relative pl-6 sm:pl-8 pb-6 last:pb-0">
                           <span
                             aria-hidden="true"
-                            className={`absolute -left-[9px] top-5 w-4 h-4 rounded-full border-2 ${toneDot[tone]}`}
+                            className={`absolute -left-[9px] top-5 w-4 h-4 rounded-full border-2 ${style.dot}`}
                           />
                           <article className="bg-registry-surface border border-registry-border rounded-lg p-4 sm:p-5 hover:border-registry-gold transition-colors">
                             <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-4 mb-2">
@@ -464,7 +446,7 @@ export default function DirectoryView({ entries = [] }) {
                               </h2>
                               <time
                                 dateTime={entry.date}
-                                className="shrink-0 font-mono text-xs text-registry-gold"
+                                className="shrink-0 font-mono text-xs text-registry-textMuted"
                               >
                                 {formatDate(entry.date)}
                               </time>
@@ -479,7 +461,7 @@ export default function DirectoryView({ entries = [] }) {
                                 {entry.description}
                               </p>
                             )}
-                            <p className={`text-xs font-semibold ${toneText[tone]}`}>
+                            <p className={`text-xs font-semibold ${style.text}`}>
                               {entry.registry_section}
                             </p>
                           </article>

@@ -1,0 +1,89 @@
+---
+// A key to the registry section colours (see src/utils/sections.js).
+//
+// With `filterId`, each colour is also a button that sets that page's section filter (the
+// <select> with that id), and clicking it again clears the filter. `counts` disables sections
+// with no entries yet. Without `filterId`, the key is just a key.
+import { REGISTRY_SECTIONS } from '../schema/archive';
+import { sectionStyle } from '../utils/sections.js';
+
+interface Props {
+  filterId?: string;
+  counts?: Record<string, number>;
+}
+
+const { filterId, counts } = Astro.props;
+const labelId = `section-legend-label${filterId ? `-${filterId}` : ''}`;
+---
+
+<div
+  class="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-registry-textMuted"
+  data-legend-for={filterId}
+>
+  <span class="font-semibold uppercase tracking-wider" id={labelId}>
+    {filterId ? 'Colour key (select to filter)' : 'Colour key'}
+  </span>
+  <ul class="contents" aria-labelledby={labelId}>
+    {
+      REGISTRY_SECTIONS.map((section) => {
+        const style = sectionStyle(section);
+        const empty = counts !== undefined && !counts[section];
+        return (
+          <li class="inline-flex items-center">
+            {filterId ? (
+              <button
+                type="button"
+                data-section={section}
+                aria-pressed="false"
+                disabled={empty}
+                title={empty ? 'No entries in this section yet' : `Show only ${style.short}`}
+                class="inline-flex items-center gap-2 rounded px-1.5 py-0.5 border border-transparent aria-pressed:border-registry-textMuted aria-pressed:bg-registry-surface disabled:opacity-50 disabled:cursor-not-allowed hover:enabled:bg-registry-surface focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold"
+              >
+                <span class={`inline-block w-3 h-3 rounded-sm ${style.swatch}`} aria-hidden="true" />
+                <span class={style.text}>{style.short}</span>
+              </button>
+            ) : (
+              <span class="inline-flex items-center gap-2">
+                <span class={`inline-block w-3 h-3 rounded-sm ${style.swatch}`} aria-hidden="true" />
+                <span class={style.text}>{style.short}</span>
+              </span>
+            )}
+          </li>
+        );
+      })
+    }
+  </ul>
+</div>
+
+<script>
+  // Connects each clickable key to its page's section filter, in both directions.
+  document.querySelectorAll<HTMLElement>('[data-legend-for]').forEach((legend) => {
+    const filterId = legend.dataset.legendFor;
+    if (!filterId) return;
+    const buttons = legend.querySelectorAll<HTMLButtonElement>('button[data-section]');
+
+    const sync = () => {
+      const select = document.getElementById(filterId) as HTMLSelectElement | null;
+      buttons.forEach((button) => {
+        button.setAttribute('aria-pressed', String(select?.value === button.dataset.section));
+      });
+    };
+
+    legend.addEventListener('click', (event) => {
+      const button = (event.target as HTMLElement).closest<HTMLButtonElement>('button[data-section]');
+      // The Directory's filter appears once its component has loaded.
+      const select = document.getElementById(filterId) as HTMLSelectElement | null;
+      if (!button || !select) return;
+      const next = select.value === button.dataset.section ? 'all' : button.dataset.section!;
+      if (![...select.options].some((option) => option.value === next)) return;
+      select.value = next;
+      select.dispatchEvent(new Event('change', { bubbles: true }));
+      sync();
+    });
+
+    // Keep the key in step when the filter is changed directly.
+    document.addEventListener('change', (event) => {
+      if ((event.target as HTMLElement).id === filterId) sync();
+    });
+  });
+</script>

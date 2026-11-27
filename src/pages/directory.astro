@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import DirectoryView from '../components/DirectoryView.jsx';
+import SectionLegend from '../components/SectionLegend.astro';
 import { getCollection } from 'astro:content';
 import { resolvePath } from '../utils/paths.js';
 import { entryDecade } from '../utils/decade.js';
@@ -22,9 +23,18 @@ const entries = archiveEntries.map((entry) => ({
   description: entry.data.description,
   wrestlers_involved: entry.data.wrestlers_involved,
 }));
+
+// For the colour key: sections with no entries can't be selected.
+const sectionCounts = entries.reduce<Record<string, number>>((counts, entry) => {
+  counts[entry.registry_section] = (counts[entry.registry_section] ?? 0) + 1;
+  return counts;
+}, {});
 ---
 
-<Layout title="Directory & Timeline | Wrestling Heritage Registry">
+<Layout
+  title="Directory & Timeline | Wrestling Heritage Registry"
+  description="Every entry in the Wrestling Heritage Registry, as a sortable list or a timeline, filterable by promotion, decade and registry section."
+>
   <div class="mb-8 border-b border-registry-border pb-6">
     <h1 class="font-bold text-2xl mb-2 text-registry-text">Directory &amp; Timeline</h1>
     <p class="text-sm text-registry-textMuted max-w-2xl">
@@ -45,6 +55,10 @@ const entries = archiveEntries.map((entry) => ({
       Sorting, filters and the timeline need JavaScript. The full list is shown below.
     </p>
   </noscript>
+
+  <div class="mb-4">
+    <SectionLegend filterId="directory-section" counts={sectionCounts} />
+  </div>
 
   <DirectoryView entries={entries} client:idle />
 </Layout>

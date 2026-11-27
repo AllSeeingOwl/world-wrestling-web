@@ -62,6 +62,14 @@ test.describe('Contribute form', () => {
     );
   });
 
+  test('offers a quick nomination through a GitHub issue form', async ({ page }) => {
+    await openForm(page);
+    const link = page.getByRole('link', { name: /Send a quick nomination/ });
+    await expect(link).toHaveAttribute('href', /\/issues\/new\?template=nomination\.yml$/);
+    await page.getByRole('link', { name: 'Go to the form' }).click();
+    await expect(page).toHaveURL(/#contribute-form$/);
+  });
+
   test('lists every missing required field when submitted empty', async ({ page }) => {
     await openForm(page);
     await submit(page);

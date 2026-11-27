@@ -31,7 +31,7 @@ function joinNames(names) {
  * @param {{ id: string, data: object }} entry  the entry being shown
  * @param {{ id: string, data: object }[]} all  every entry in the registry
  * @param {number} limit  how many to return
- * @returns {{ id: string, title: string, reason: string }[]}
+ * @returns {{ id: string, title: string, section: string, reason: string }[]}
  */
 export function relatedEntries(entry, all, limit = 3) {
   const mine = people(entry.data);
@@ -60,11 +60,18 @@ export function relatedEntries(entry, all, limit = 3) {
 
     // Ties go to the entry closest in time.
     const gap = Math.abs(Date.parse(other.data.date) - Date.parse(entry.data.date));
-    scored.push({ id: other.id, title: other.data.title, reason, score, gap });
+    scored.push({
+      id: other.id,
+      title: other.data.title,
+      section: other.data.registry_section,
+      reason,
+      score,
+      gap,
+    });
   }
 
   return scored
     .sort((a, b) => b.score - a.score || a.gap - b.gap || a.title.localeCompare(b.title))
     .slice(0, limit)
-    .map(({ id, title, reason }) => ({ id, title, reason }));
+    .map(({ id, title, section, reason }) => ({ id, title, section, reason }));
 }

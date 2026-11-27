@@ -35,7 +35,8 @@
 .doc-prose h2 {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #f59e0b;
+  /* Not gold: on this site gold marks the Registry of Excellence (src/utils/sections.js). */
+  color: #f8fafc;
   margin-top: 2.5rem;
   margin-bottom: 0.75rem;
   scroll-margin-top: 1.5rem;
@@ -72,7 +73,7 @@
   margin-bottom: 0.5rem;
 }
 .doc-prose li::marker {
-  color: #f59e0b;
+  color: #94a3b8;
 }
 .doc-prose strong {
   color: #f8fafc;

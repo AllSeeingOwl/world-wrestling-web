@@ -23,6 +23,12 @@ const entries = archiveEntries.map((entry) => ({
   description: entry.data.description,
   wrestlers_involved: entry.data.wrestlers_involved,
 }));
+
+// For the colour key: sections with no entries can't be selected.
+const sectionCounts = entries.reduce<Record<string, number>>((counts, entry) => {
+  counts[entry.registry_section] = (counts[entry.registry_section] ?? 0) + 1;
+  return counts;
+}, {});
 ---
 
 <Layout
@@ -51,7 +57,7 @@ const entries = archiveEntries.map((entry) => ({
   </noscript>
 
   <div class="mb-4">
-    <SectionLegend />
+    <SectionLegend filterId="directory-section" counts={sectionCounts} />
   </div>
 
   <DirectoryView entries={entries} client:idle />

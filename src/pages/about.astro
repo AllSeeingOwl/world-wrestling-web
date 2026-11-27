@@ -4,8 +4,19 @@ import { resolvePath } from '../utils/paths.js';
 // The page renders the repo's charter Markdown directly (the same approach as the
 // handbook), so edits to charter.md show up on the site automatically.
 import { Content, getHeadings } from '../../charter.md';
+import SectionLegend from '../components/SectionLegend.astro';
+import { CHARTER_HEADINGS, sectionStyle } from '../utils/sections.js';
 
 const sections = getHeadings().filter((heading) => heading.depth === 2);
+
+// Colour the charter's section headings with the registry's section colours: a bar on the
+// left and the heading text in the section's colour. Built from the shared colour definitions.
+const headingCss = Object.entries(CHARTER_HEADINGS)
+  .map(([slug, section]) => {
+    const { hex } = sectionStyle(section);
+    return `.doc-prose #${slug} { color: ${hex.text}; border-left: 4px solid ${hex.bar}; padding-left: 0.75rem; }`;
+  })
+  .join('\n');
 ---
 
 <Layout
@@ -23,6 +34,8 @@ const sections = getHeadings().filter((heading) => heading.depth === 2);
           >Big Daddy</a
         >. Its charter is below.
       </p>
+      <Fragment set:html={`<style>${headingCss}</style>`} />
+      <SectionLegend />
       <article
         class="doc-prose bg-registry-surface border border-registry-border rounded-lg p-6 sm:p-8 shadow-sm"
       >
@@ -41,7 +54,15 @@ const sections = getHeadings().filter((heading) => heading.depth === 2);
         <ol class="space-y-2 text-sm">
           {
             sections.map((section) => (
-              <li>
+              <li class="flex items-start gap-2">
+                {CHARTER_HEADINGS[section.slug] ? (
+                  <span
+                    class={`mt-1.5 inline-block w-2.5 h-2.5 rounded-sm shrink-0 ${sectionStyle(CHARTER_HEADINGS[section.slug]).swatch}`}
+                    aria-hidden="true"
+                  />
+                ) : (
+                  <span class="mt-1.5 inline-block w-2.5 h-2.5 shrink-0" aria-hidden="true" />
+                )}
                 <a
                   href={`#${section.slug}`}
                   class="text-registry-text hover:text-registry-gold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold rounded"

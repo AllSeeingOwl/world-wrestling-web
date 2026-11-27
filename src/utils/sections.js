@@ -7,6 +7,8 @@
 // Class names are written out in full so Tailwind can find them when building the CSS.
 export const SECTION_STYLES = {
   'Registry of Excellence': {
+    // The same colours as plain values, for places Tailwind classes can't reach (Markdown).
+    hex: { bar: '#fbbf24', text: '#fcd34d' },
     short: 'Excellence',
     stripe: 'border-l-amber-400',
     band: 'border-t-amber-400',
@@ -17,6 +19,8 @@ export const SECTION_STYLES = {
     swatch: 'bg-amber-400',
   },
   'Registry of Infamy - Division A': {
+    // The same colours as plain values, for places Tailwind classes can't reach (Markdown).
+    hex: { bar: '#fb7185', text: '#fda4af' },
     short: 'Infamy: Failures in Craft',
     stripe: 'border-l-rose-400',
     band: 'border-t-rose-400',
@@ -27,6 +31,8 @@ export const SECTION_STYLES = {
     swatch: 'bg-rose-400',
   },
   'Registry of Infamy - Division B': {
+    // The same colours as plain values, for places Tailwind classes can't reach (Markdown).
+    hex: { bar: '#ef4444', text: '#fca5a5' },
     short: 'Infamy: Cautionary Archive',
     stripe: 'border-l-red-500',
     band: 'border-t-red-500',
@@ -37,6 +43,8 @@ export const SECTION_STYLES = {
     swatch: 'bg-red-500',
   },
   'Registry of Homage & Influence': {
+    // The same colours as plain values, for places Tailwind classes can't reach (Markdown).
+    hex: { bar: '#38bdf8', text: '#7dd3fc' },
     short: 'Homage & Influence',
     stripe: 'border-l-sky-400',
     band: 'border-t-sky-400',
@@ -62,3 +70,13 @@ const FALLBACK = {
 export function sectionStyle(section) {
   return SECTION_STYLES[section] ?? FALLBACK;
 }
+
+// The charter's headings for each section, by their anchors on the About page, so the
+// charter can show the same colours without changing its text (see src/pages/about.astro).
+export const CHARTER_HEADINGS = {
+  'section-i-the-registry-of-excellence': 'Registry of Excellence',
+  'section-ii-the-registry-of-infamy': 'Registry of Infamy - Division A',
+  'division-a-failures-in-craft': 'Registry of Infamy - Division A',
+  'division-b-the-cautionary-archive': 'Registry of Infamy - Division B',
+  'section-iii-the-registry-of-homage--influence': 'Registry of Homage & Influence',
+};

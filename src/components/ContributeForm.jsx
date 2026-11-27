@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { archiveSchema } from '../schema/archive';
 import { buildMarkdown, countWords, slugify } from '../utils/entry-markdown.js';
+import { sectionStyle } from '../utils/sections.js';
 
 // Adapted from Fic-His-Arch's ContributeForm. Everything happens in the browser:
 // the form validates against the same schema as the site build, then hands the
@@ -734,6 +735,21 @@ export default function ContributeForm({
               ))}
             </select>
           </Field>
+          {section && (
+            // How the entry will be marked on the site, in its section's colour.
+            <p
+              className="flex flex-wrap items-center gap-2 text-xs text-registry-textMuted -mt-2"
+              aria-live="polite"
+              data-testid="section-preview"
+            >
+              On the site, your entry will be marked
+              <span
+                className={`px-2 py-0.5 rounded uppercase tracking-wider font-semibold text-[11px] ${sectionStyle(section.value).chip}`}
+              >
+                {sectionStyle(section.value).short}
+              </span>
+            </p>
+          )}
           <Field
             id={fieldId('significance')}
             label="Significance"

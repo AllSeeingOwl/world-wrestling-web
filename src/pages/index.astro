@@ -91,7 +91,10 @@ const sections = REGISTRY_SECTIONS.map((value) => ({
   </section>
 
   <div class="mb-6">
-    <SectionLegend />
+    <SectionLegend
+      filterId="section-filter"
+      counts={Object.fromEntries(sections.map((s) => [s.value, s.count]))}
+    />
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="article-grid">

@@ -518,9 +518,9 @@ export default function ContributeForm({
             </Field>
             <Field
               id={fieldId('era')}
-              label="Era"
+              label="Decade"
               error={errors.era}
-              hint="e.g. 'Attitude Era', 'Monday Night Wars'."
+              hint="e.g. '1990s'. Mention named eras, like the Attitude Era, in the article."
             >
               <input type="text" list="contribute-eras" className={inputClass} {...bind('era')} />
             </Field>

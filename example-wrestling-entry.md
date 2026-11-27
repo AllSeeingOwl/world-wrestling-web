@@ -9,7 +9,7 @@ wrestlers_involved:
   - 'Shawn Michaels'
   - 'Vince McMahon'
 event_name: 'Survivor Series 1997'
-era: 'Attitude Era'
+era: '1990s'
 description: 'The infamous real-life double-cross of Bret Hart by Vince McMahon at Survivor Series 1997, forever altering the landscape of professional wrestling.'
 ---
 

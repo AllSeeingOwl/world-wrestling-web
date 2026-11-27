@@ -124,6 +124,17 @@ test.describe('Contribute form', () => {
     );
   });
 
+  test('accepts only a decade in the Decade field', async ({ page }) => {
+    await openForm(page);
+    await page.getByLabel('Decade').fill('Attitude Era');
+    await submit(page);
+    await expect(page.locator('#contribute-era-error')).toHaveText("Use a decade, like '1990s'");
+
+    await page.getByLabel('Decade').fill('1990s');
+    await submit(page);
+    await expect(page.locator('#contribute-era-error')).toHaveCount(0);
+  });
+
   test('rejects a title that is already in the registry', async ({ page }) => {
     await page.goto('/');
     const existingTitle = (await page.locator('.article-item h2').first().innerText()).trim();

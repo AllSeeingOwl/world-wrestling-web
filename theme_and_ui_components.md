@@ -200,7 +200,7 @@ const TimelineView = ({ events }) => {
 The user interface will support several interactive features to help users explore the archive:
 
 - **Filter by Promotion:** Users can filter entries to view history specific to WWF/WWE, WCW, NJPW, AEW, ECW, or regional territories.
-- **Filter by Era:** Filter by recognized historical eras (e.g., The Golden Era (1980s), The New Generation (early 90s), The Attitude Era (late 90s), Ruthless Aggression, PG Era, Modern Era).
+- **Filter by Era:** Filter by decade (e.g., 1980s, 1990s, 2000s). Named eras such as the Attitude Era are specific to one promotion, so they are described in entry text rather than used as filters.
 - **Search Functionality:** A robust text search targeting entry titles, wrestler names, and event summaries.
 - **Timeline Navigation:** An interactive timeline allowing users to jump to specific decades or major paradigm-shifting events in wrestling history.
 

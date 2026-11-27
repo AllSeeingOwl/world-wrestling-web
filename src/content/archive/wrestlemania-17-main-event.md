@@ -5,7 +5,7 @@ promotion: 'World Wrestling Federation (WWF)'
 significance: 'Historical Significance'
 registry_section: 'Registry of Excellence'
 event_name: 'WrestleMania X-Seven'
-era: 'Attitude Era'
+era: '2000s'
 wrestlers_involved:
   - 'Stone Cold Steve Austin'
   - 'The Rock'

@@ -5,16 +5,17 @@ import { resolvePath } from '../utils/paths.js';
 import CitationBlock from '../components/CitationBlock.jsx';
 import CompositeScope from '../components/CompositeScope.astro';
 import { formatLongDate } from '../utils/dates.js';
+import { relatedEntries } from '../utils/related.js';
 
 export async function getStaticPaths() {
   const archiveEntries = await getCollection('archive');
   return archiveEntries.map(entry => ({
     params: { slug: entry.id },
-    props: { entry },
+    props: { entry, related: relatedEntries(entry, archiveEntries) },
   }));
 }
 
-const { entry } = Astro.props;
+const { entry, related } = Astro.props;
 const { Content } = await render(entry);
 
 const components = entry.data.components ?? [];
@@ -83,5 +84,24 @@ const formattedDate =
     </div>
 
     <CitationBlock citation={entry.data} />
+
+    {related.length > 0 && (
+      <nav aria-labelledby="see-also-heading" class="mt-8 pt-6 border-t border-registry-border">
+        <h2 id="see-also-heading" class="font-mono text-xs uppercase tracking-widest text-registry-gold mb-3">See also</h2>
+        <ul class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {related.map((item) => (
+            <li>
+              <a
+                href={resolvePath(`/${item.id}`)}
+                class="block h-full bg-registry-background border border-registry-border rounded-lg p-3 hover:border-registry-gold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold"
+              >
+                <span class="block font-semibold text-sm text-registry-text">{item.title}</span>
+                <span class="block mt-1 text-xs text-registry-textMuted">{item.reason}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    )}
   </article>
 </Layout>

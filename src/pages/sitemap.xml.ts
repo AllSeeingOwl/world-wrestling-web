@@ -11,10 +11,11 @@ export const GET: APIRoute = async ({ site }) => {
   const origin = site ?? new URL('https://allseeingowl.github.io');
   const urls = [
     ...STATIC_PAGES.map((path) => resolvePath(path)),
+    // Typed explicitly: CI type-checks before Astro has generated the collection's types.
     ...entries
-      .map((entry) => entry.id)
+      .map((entry: { id: string }) => entry.id)
       .sort()
-      .map((id) => resolvePath(`/${id}/`)),
+      .map((id: string) => resolvePath(`/${id}/`)),
   ].map((path) => `  <url><loc>${new URL(path, origin).href}</loc></url>`);
 
   const xml = [

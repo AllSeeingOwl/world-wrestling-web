@@ -83,6 +83,7 @@ const EMPTY = {
   source_material: '',
   context_statement: '',
   image_url: '',
+  proposed_individual_merit: '',
   body: '',
 };
 
@@ -135,7 +136,14 @@ function Section({ title, children }) {
   );
 }
 
-function toEntry(fields, links) {
+// Composite-work parts with anything typed in them; a row left completely empty is ignored.
+function filledParts(parts) {
+  return parts
+    .map((p) => ({ title: p.title.trim(), date: p.date, event_name: p.event_name.trim() }))
+    .filter((p) => p.title || p.date || p.event_name);
+}
+
+function toEntry(fields, links, parts = []) {
   const optional = (v) => (v.trim() ? v.trim() : undefined);
   return {
     title: fields.title.trim(),
@@ -157,12 +165,18 @@ function toEntry(fields, links) {
     external_links: links
       .map((l) => ({ name: l.name.trim(), url: l.url.trim() }))
       .filter((l) => l.name || l.url),
+    components: filledParts(parts).map((p) => ({
+      title: p.title,
+      date: p.date,
+      event_name: p.event_name || undefined,
+    })),
+    proposed_individual_merit: optional(fields.proposed_individual_merit),
   };
 }
 
-function validate(fields, links, existingSlugs) {
+function validate(fields, links, parts, existingSlugs) {
   const errors = {};
-  const entry = toEntry(fields, links);
+  const entry = toEntry(fields, links, parts);
   const add = (key, message) => {
     if (!errors[key]) errors[key] = message;
   };
@@ -216,16 +230,43 @@ function validate(fields, links, existingSlugs) {
     if (name && !url) add(`link-url-${i}`, 'Add the link address.');
   });
 
+  // Composite works: checked here too, because the schema's cross-field checks only run once
+  // every other field is valid.
+  const filled = filledParts(parts);
+  parts.forEach((part, i) => {
+    if (!part.title.trim() && !part.date && !part.event_name.trim()) return;
+    if (!part.title.trim()) add(`part-title-${i}`, 'Give this part a title.');
+    if (!part.date) add(`part-date-${i}`, 'Enter the date of this part.');
+  });
+  if (filled.length === 1) add('parts', 'A composite work needs at least two parts.');
+  const earliest = filled
+    .map((p) => p.date)
+    .filter(Boolean)
+    .sort()[0];
+  if (filled.length > 1 && earliest && entry.date && entry.date !== earliest)
+    add('date', `For a composite work, use the date of its first part (${earliest}).`);
+  if (
+    entry.proposed_individual_merit &&
+    !filled.some((p) => p.title === entry.proposed_individual_merit)
+  )
+    add(
+      'proposed_individual_merit',
+      'The proposed Citation for Individual Merit must name one of the parts.'
+    );
+
   // Finally, the exact schema the site build uses.
   const result = archiveSchema.safeParse({
     ...entry,
     wrestlers_involved: entry.wrestlers_involved.length ? entry.wrestlers_involved : undefined,
     external_links: entry.external_links.length ? entry.external_links : undefined,
+    components: entry.components.length ? entry.components : undefined,
   });
   if (!result.success) {
     for (const issue of result.error.issues) {
       const [field, index, sub] = issue.path;
       if (field === 'external_links') add(`link-${sub}-${index}`, issue.message);
+      else if (field === 'components')
+        add(index === undefined ? 'parts' : `part-${sub}-${index}`, issue.message);
       else if (field === 'wrestlers_involved') add('wrestlers', issue.message);
       else add(String(field), issue.message);
     }
@@ -248,6 +289,8 @@ const FIELD_ORDER = [
   'source_material',
   'context_statement',
   'image_url',
+  'parts',
+  'proposed_individual_merit',
 ];
 
 function fieldId(key) {
@@ -272,6 +315,7 @@ export default function ContributeForm({
 }) {
   const [fields, setFields] = useState(EMPTY);
   const [links, setLinks] = useState([]);
+  const [parts, setParts] = useState([]);
   const [errors, setErrors] = useState({});
   const [result, setResult] = useState(null);
   const [draftRestored, setDraftRestored] = useState(false);
@@ -292,6 +336,7 @@ export default function ContributeForm({
       }
       setFields(restored);
       setLinks(Array.isArray(draft.links) ? draft.links : []);
+      setParts(Array.isArray(draft.parts) ? draft.parts : []);
       setDraftRestored(true);
     }
     setHydrated(true);
@@ -299,14 +344,15 @@ export default function ContributeForm({
 
   useEffect(() => {
     if (!hydrated) return;
-    const isEmpty = links.length === 0 && Object.values(fields).every((v) => !v.trim());
+    const isEmpty =
+      links.length === 0 && parts.length === 0 && Object.values(fields).every((v) => !v.trim());
     try {
       if (isEmpty) window.localStorage.removeItem(DRAFT_KEY);
-      else window.localStorage.setItem(DRAFT_KEY, JSON.stringify({ fields, links }));
+      else window.localStorage.setItem(DRAFT_KEY, JSON.stringify({ fields, links, parts }));
     } catch {
       // Storage unavailable (private mode, blocked): the form still works without drafts.
     }
-  }, [fields, links, hydrated]);
+  }, [fields, links, parts, hydrated]);
 
   const section = SECTIONS.find((s) => s.value === fields.registry_section);
   const significanceOptions = section ? section.significance : [];
@@ -341,10 +387,19 @@ export default function ContributeForm({
       setErrors((prev) => ({ ...prev, [`link-${key}-${index}`]: undefined }));
   };
 
+  const updatePart = (index, key, value) => {
+    setParts((prev) => prev.map((p, i) => (i === index ? { ...p, [key]: value } : p)));
+    setResult(null);
+    setErrors((prev) => ({ ...prev, [`part-${key}-${index}`]: undefined, parts: undefined }));
+  };
+
+  // Parts with a title, offered as choices for the proposed Citation for Individual Merit.
+  const partTitles = parts.map((p) => p.title.trim()).filter(Boolean);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setCopied(false);
-    const { errors: found, entry, slug } = validate(fields, links, existingSlugs);
+    const { errors: found, entry, slug } = validate(fields, links, parts, existingSlugs);
     const active = Object.fromEntries(Object.entries(found).filter(([, v]) => v));
     setErrors(active);
     if (Object.keys(active).length) {
@@ -356,6 +411,7 @@ export default function ContributeForm({
       ...entry,
       wrestlers_involved: entry.wrestlers_involved,
       external_links: entry.external_links.length ? entry.external_links : undefined,
+      components: entry.components.length ? entry.components : undefined,
     };
     const markdown = buildMarkdown(cleanEntry, fields.body);
     const filename = `${slug}.md`;
@@ -397,6 +453,7 @@ export default function ContributeForm({
     if (!window.confirm('Clear the whole form? Your saved draft will be deleted.')) return;
     setFields(EMPTY);
     setLinks([]);
+    setParts([]);
     setErrors({});
     setResult(null);
     setDraftRestored(false);
@@ -415,6 +472,14 @@ export default function ContributeForm({
         .map((k) => ({
           id: fieldId(`link-${k}-${i}`),
           message: `Link ${i + 1}: ${errors[`link-${k}-${i}`]}`,
+        }))
+    ),
+    ...parts.flatMap((_, i) =>
+      ['title', 'date']
+        .filter((k) => errors[`part-${k}-${i}`])
+        .map((k) => ({
+          id: fieldId(`part-${k}-${i}`),
+          message: `Part ${i + 1}: ${errors[`part-${k}-${i}`]}`,
         }))
     ),
     ...(errors.body ? [{ id: fieldId('body'), message: errors.body }] : []),
@@ -544,6 +609,112 @@ export default function ContributeForm({
           >
             <textarea rows={4} className={inputClass} {...bind('wrestlers')} />
           </Field>
+
+          <div
+            id={fieldId('parts')}
+            tabIndex={-1}
+            className="space-y-3 border-t border-registry-border pt-5 focus:outline-none"
+          >
+            <div>
+              <p className="text-sm font-semibold text-registry-text">
+                Composite work{' '}
+                <span className="font-normal text-registry-textMuted">(optional)</span>
+              </p>
+              <p className="text-xs text-registry-textMuted mt-1">
+                Only for a series nominated as one entry, such as a match trilogy, a tournament or a
+                feud. List each part; the event date above must be the date of the first part.
+              </p>
+              {errors.parts && (
+                <p className="text-xs font-semibold text-red-400 mt-1">{errors.parts}</p>
+              )}
+            </div>
+            {parts.map((part, i) => (
+              <div
+                key={i}
+                className="grid grid-cols-1 sm:grid-cols-[1.5fr_1fr] gap-3 items-start border-l-2 border-registry-border pl-3"
+              >
+                <Field
+                  id={fieldId(`part-title-${i}`)}
+                  label={`Part ${i + 1} title`}
+                  required
+                  error={errors[`part-title-${i}`]}
+                >
+                  <input
+                    type="text"
+                    className={inputClass}
+                    value={part.title}
+                    onChange={(e) => updatePart(i, 'title', e.target.value)}
+                  />
+                </Field>
+                <Field
+                  id={fieldId(`part-date-${i}`)}
+                  label={`Part ${i + 1} date`}
+                  required
+                  error={errors[`part-date-${i}`]}
+                >
+                  <input
+                    type="date"
+                    className={inputClass}
+                    value={part.date}
+                    onChange={(e) => updatePart(i, 'date', e.target.value)}
+                  />
+                </Field>
+                <Field id={fieldId(`part-event-${i}`)} label={`Part ${i + 1} event or show`}>
+                  <input
+                    type="text"
+                    className={inputClass}
+                    value={part.event_name}
+                    onChange={(e) => updatePart(i, 'event_name', e.target.value)}
+                  />
+                </Field>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setParts((prev) => prev.filter((_, j) => j !== i));
+                    setErrors({});
+                    setResult(null);
+                  }}
+                  className="sm:mt-6 text-sm text-registry-textMuted hover:text-red-400 underline underline-offset-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold rounded justify-self-start"
+                >
+                  Remove<span className="sr-only"> part {i + 1}</span>
+                </button>
+              </div>
+            ))}
+            <button
+              type="button"
+              onClick={() =>
+                setParts((prev) =>
+                  // Start with two rows: a composite work needs at least two parts.
+                  prev.length === 0
+                    ? [
+                        { title: '', date: '', event_name: '' },
+                        { title: '', date: '', event_name: '' },
+                      ]
+                    : [...prev, { title: '', date: '', event_name: '' }]
+                )
+              }
+              className="text-sm font-semibold text-registry-gold hover:text-registry-goldHover focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold rounded"
+            >
+              {parts.length === 0 ? '+ This is a composite work' : '+ Add a part'}
+            </button>
+            {partTitles.length > 1 && (
+              <Field
+                id={fieldId('proposed_individual_merit')}
+                label="Propose a Citation for Individual Merit"
+                error={errors.proposed_individual_merit}
+                hint="If one part stands out on its own, propose it. Under the charter, the Preservation Board decides whether to issue the citation."
+              >
+                <select className={inputClass} {...bind('proposed_individual_merit')}>
+                  <option value="">No proposal</option>
+                  {partTitles.map((t) => (
+                    <option key={t} value={t}>
+                      {t}
+                    </option>
+                  ))}
+                </select>
+              </Field>
+            )}
+          </div>
         </Section>
 
         <Section title="2. Classification">

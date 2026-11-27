@@ -20,11 +20,22 @@ external_links:
     url: 'https://www.wwe.com/classics/wcw/ric-flair-ricky-steamboat-trilogy-interview'
   - name: 'Chi-Town Rumble (Wikipedia)'
     url: 'https://en.wikipedia.org/wiki/Chi-Town_Rumble'
+components:
+  - title: 'Steamboat wins the championship'
+    date: '1989-02-20'
+    event_name: 'Chi-Town Rumble, UIC Pavilion, Chicago'
+  - title: 'The two-out-of-three-falls rematch'
+    date: '1989-04-02'
+    event_name: "Clash of the Champions VI: Ragin' Cajun, Louisiana Superdome, New Orleans"
+  - title: 'Flair regains the championship'
+    date: '1989-05-07'
+    event_name: "WrestleWar '89, Nashville"
+proposed_individual_merit: 'The two-out-of-three-falls rematch'
 ---
 
-Between February and May 1989, Ric Flair and Ricky Steamboat wrestled three matches for the National Wrestling Alliance (NWA) World Heavyweight Championship. This entry is a composite work: the three matches are nominated together, because their combined significance is greater than that of any one of them.
+Between February and May 1989, Ric Flair and Ricky Steamboat wrestled three matches for the National Wrestling Alliance (NWA) World Heavyweight Championship.
 
-## The Scope
+## The Matches
 
 1. **Chi-Town Rumble**, 20 February 1989, UIC Pavilion, Chicago. Steamboat won the championship by pinning Flair with a small package.
 2. **Clash of the Champions VI: Ragin' Cajun**, 2 April 1989, Louisiana Superdome, New Orleans. Steamboat retained in a two-out-of-three-falls match lasting about 55 minutes, broadcast on TBS.
@@ -40,4 +51,4 @@ The trilogy is a model of how to build a series. Each match escalated from the l
 
 The aftermath also shaped the year. After WrestleWar, Terry Funk attacked Flair, which launched a new feud that carried the NWA through the rest of 1989.
 
-Within the trilogy, the Clash of the Champions VI match stands out on its own. Its length, its three-fall structure, and its broadcast on free television make it a strong candidate for a Citation for Individual Merit.
+Within the trilogy, the Clash of the Champions VI rematch stands out on its own. Its length, its three-fall structure, and its broadcast on free television make it a strong candidate for a Citation for Individual Merit, and this entry proposes it for one.

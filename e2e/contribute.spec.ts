@@ -204,4 +204,38 @@ test.describe('Contribute form', () => {
     await expect(page.getByLabel('Registry section')).toHaveValue('');
     await expect(page.getByLabel('Significance')).toHaveValue('');
   });
+
+  test('composite works: checks the parts, then writes them to the entry', async ({ page }) => {
+    await openForm(page);
+    await fillValidEntry(page, `End-to-end Composite Entry ${Date.now()}`);
+
+    await page.getByRole('button', { name: '+ This is a composite work' }).click();
+    await page.getByLabel('Part 1 title').fill('First match');
+    await page.getByLabel('Part 1 date').fill('1990-05-01');
+    await submit(page);
+    await expect(page.getByRole('alert')).toContainText(
+      'A composite work needs at least two parts.'
+    );
+
+    // The entry date (1990-05-01) must be the earliest part's date.
+    await page.getByLabel('Part 2 title').fill('Second match');
+    await page.getByLabel('Part 2 date').fill('1990-04-01');
+    await submit(page);
+    await expect(page.locator('#contribute-date-error')).toHaveText(
+      'For a composite work, use the date of its first part (1990-04-01).'
+    );
+
+    await page.getByLabel('Part 2 date').fill('1990-06-01');
+    await page.getByLabel('Part 2 event or show').fill('Rematch Night');
+    await page.getByLabel('Propose a Citation for Individual Merit').selectOption('Second match');
+    await submit(page);
+
+    const ready = page.getByRole('region', { name: 'Your entry is ready' });
+    await expect(ready).toBeVisible();
+    await ready.getByText('Preview the Markdown').click();
+    const preview = ready.locator('pre');
+    await expect(preview).toContainText("components:\n  - title: 'First match'");
+    await expect(preview).toContainText("event_name: 'Rematch Night'");
+    await expect(preview).toContainText("proposed_individual_merit: 'Second match'");
+  });
 });

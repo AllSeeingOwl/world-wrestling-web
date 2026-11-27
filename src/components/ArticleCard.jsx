@@ -39,6 +39,7 @@ const ArticleCard = ({ article }) => {
         <span>
           <strong>Section:</strong> {article.registry_section}
         </span>
+        {article.parts > 1 && <span>Composite work · {article.parts} parts</span>}
         {article.wrestlers_involved && article.wrestlers_involved.length > 0 && (
           <div className="mt-1 flex flex-wrap gap-1">
             <span className="font-sans font-semibold text-registry-textMuted">People:</span>

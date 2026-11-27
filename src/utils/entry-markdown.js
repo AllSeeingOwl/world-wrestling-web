@@ -56,6 +56,17 @@ export function buildFrontmatter(entry) {
       lines.push(`    url: ${yamlString(link.url)}`);
     }
   }
+  if (entry.components?.length) {
+    lines.push('components:');
+    for (const part of entry.components) {
+      lines.push(`  - title: ${yamlString(part.title)}`);
+      lines.push(`    date: ${yamlString(part.date)}`);
+      if (part.event_name) lines.push(`    event_name: ${yamlString(part.event_name)}`);
+    }
+    if (entry.proposed_individual_merit) {
+      lines.push(`proposed_individual_merit: ${yamlString(entry.proposed_individual_merit)}`);
+    }
+  }
   lines.push('---');
   return lines.join('\n');
 }

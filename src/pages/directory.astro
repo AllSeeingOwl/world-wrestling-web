@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import DirectoryView from '../components/DirectoryView.jsx';
+import SectionLegend from '../components/SectionLegend.astro';
 import { getCollection } from 'astro:content';
 import { resolvePath } from '../utils/paths.js';
 import { entryDecade } from '../utils/decade.js';
@@ -48,6 +49,10 @@ const entries = archiveEntries.map((entry) => ({
       Sorting, filters and the timeline need JavaScript. The full list is shown below.
     </p>
   </noscript>
+
+  <div class="mb-4">
+    <SectionLegend />
+  </div>
 
   <DirectoryView entries={entries} client:idle />
 </Layout>

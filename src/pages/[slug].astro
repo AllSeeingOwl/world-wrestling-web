@@ -6,6 +6,7 @@ import CitationBlock from '../components/CitationBlock.jsx';
 import CompositeScope from '../components/CompositeScope.astro';
 import { formatLongDate } from '../utils/dates.js';
 import { relatedEntries } from '../utils/related.js';
+import { sectionStyle } from '../utils/sections.js';
 
 export async function getStaticPaths() {
   const archiveEntries = await getCollection('archive');
@@ -16,6 +17,7 @@ export async function getStaticPaths() {
 }
 
 const { entry, related } = Astro.props;
+const style = sectionStyle(entry.data.registry_section);
 const { Content } = await render(entry);
 
 const components = entry.data.components ?? [];
@@ -36,13 +38,13 @@ const formattedDate =
     <a href={resolvePath('/')} class="text-sm text-registry-gold hover:text-registry-goldHover transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold focus-visible:ring-offset-2 focus-visible:ring-offset-registry-background rounded px-1">&larr; Back to Registry</a>
   </div>
   
-  <article class="bg-registry-surface border border-registry-border rounded-lg p-8 shadow-sm">
+  <article class={`bg-registry-surface border border-registry-border border-t-4 ${style.band} rounded-lg p-8 shadow-sm`}>
     <header class="mb-8 border-b border-registry-border pb-6">
       <div class="flex flex-wrap gap-2 mb-4">
-        <span class="px-2 py-1 bg-registry-background text-registry-textMuted text-xs font-bold rounded border border-registry-border">{entry.data.registry_section}</span>
-        <span class="px-2 py-1 bg-registry-gold text-registry-background text-xs font-bold rounded">{entry.data.significance}</span>
+        <span class={`px-2 py-1 text-xs font-bold rounded ${style.chip}`}>{entry.data.registry_section}</span>
+        <span class={`px-2 py-1 bg-registry-background text-xs font-bold rounded border ${style.outline}`}>{entry.data.significance}</span>
         {entry.data.era && (
-          <span class="px-2 py-1 bg-registry-background text-registry-gold text-xs font-bold rounded border border-registry-gold">{entry.data.era}</span>
+          <span class="px-2 py-1 bg-registry-background text-registry-text text-xs font-bold rounded border border-registry-border">{entry.data.era}</span>
         )}
         {components.length > 1 && (
           <span class="px-2 py-1 bg-registry-background text-registry-text text-xs font-bold rounded border border-registry-border">Composite work · {components.length} parts</span>
@@ -50,7 +52,7 @@ const formattedDate =
       </div>
       <h1 class="text-3xl font-heading font-bold text-registry-text mb-2">{entry.data.title}</h1>
       {entry.data.event_name && (
-        <p class="text-lg text-registry-gold font-medium mb-3">{entry.data.event_name}</p>
+        <p class="text-lg text-registry-textMuted font-medium mb-3">{entry.data.event_name}</p>
       )}
       <div class="text-sm font-mono text-registry-textMuted flex flex-wrap gap-x-6 gap-y-2 mb-4">
         <span><strong>{components.length > 1 ? 'Dates' : 'Date'}:</strong> <time dateTime={entry.data.date}>{formattedDate}</time></span>
@@ -67,7 +69,7 @@ const formattedDate =
         </div>
       )}
       {entry.data.description && (
-        <p class="mt-4 text-sm font-sans text-registry-text text-registry-textMuted italic border-l-2 border-registry-gold pl-3 py-1">
+        <p class={`mt-4 text-sm font-sans text-registry-textMuted italic border-l-2 ${style.stripe} pl-3 py-1`}>
           {entry.data.description}
         </p>
       )}
@@ -97,7 +99,7 @@ const formattedDate =
             <li>
               <a
                 href={resolvePath(`/${item.id}`)}
-                class="block h-full bg-registry-background border border-registry-border rounded-lg p-3 hover:border-registry-gold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold"
+                class={`block h-full bg-registry-background border border-registry-border border-l-4 ${sectionStyle(item.section).stripe} rounded-lg p-3 hover:ring-1 hover:ring-registry-textMuted transition-shadow focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold`}
               >
                 <span class="block font-semibold text-sm text-registry-text">{item.title}</span>
                 <span class="block mt-1 text-xs text-registry-textMuted">{item.reason}</span>

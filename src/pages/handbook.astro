@@ -8,7 +8,10 @@ import { Content, getHeadings } from '../../wrestling_handbook.md';
 const sections = getHeadings().filter((heading) => heading.depth === 2);
 ---
 
-<Layout title="Editorial Handbook | Wrestling Heritage Registry">
+<Layout
+  title="Editorial Handbook | Wrestling Heritage Registry"
+  description="Editorial standards for the Wrestling Heritage Registry: eligibility, classification, citations and how to write an entry."
+>
   <div class="mb-6">
     <a
       href={resolvePath('/')}

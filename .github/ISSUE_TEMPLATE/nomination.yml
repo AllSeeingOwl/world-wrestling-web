@@ -1,0 +1,71 @@
+name: Quick nomination
+description: Suggest a work for the Wrestling Heritage Registry. No article or pull request needed.
+title: '[Nomination] '
+labels: ['nomination']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for nominating a work for the registry. The [Registry Charter](https://allseeingowl.github.io/world-wrestling-web/about/) asks for just four things: the work's name, its promotion or creator, an approximate date, and a sentence or two on why it matters. An editor will review your nomination and may write it up as an entry.
+
+        Want to write the full entry yourself? Use the [Contribute form](https://allseeingowl.github.io/world-wrestling-web/contribute/) instead.
+  - type: input
+    id: work
+    attributes:
+      label: Name of the work
+      description: The match, promo, angle, event, show, film, game or other work. For a trilogy, tournament or feud, name the whole series.
+      placeholder: 'e.g. Bret Hart vs. Shawn Michaels, WrestleMania XII Iron Man Match'
+    validations:
+      required: true
+  - type: input
+    id: promotion
+    attributes:
+      label: Promotion or creator
+      description: The wrestling promotion, or for works outside wrestling the studio, publisher, network or channel.
+    validations:
+      required: true
+  - type: input
+    id: date
+    attributes:
+      label: Approximate date
+      description: A year is enough. The work must be at least five years old.
+    validations:
+      required: true
+  - type: dropdown
+    id: section
+    attributes:
+      label: Registry section
+      description: The Cautionary Archive (Division B) isn't listed because the charter keeps it closed to public nomination.
+      options:
+        - Registry of Excellence
+        - 'Registry of Infamy - Division A (Failures in Craft)'
+        - Registry of Homage & Influence
+        - Not sure
+    validations:
+      required: true
+  - type: textarea
+    id: justification
+    attributes:
+      label: Why it matters
+      description: One or two sentences on its significance. Significance counts, not star ratings.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope (composite works only)
+      description: For a trilogy, tournament or feud, list the parts it includes, with dates if you know them.
+  - type: textarea
+    id: sources
+    attributes:
+      label: Sources (optional)
+      description: Where can an editor check the details? Broadcasts, databases such as Cagematch, books, documentaries or interviews.
+  - type: checkboxes
+    id: eligibility
+    attributes:
+      label: Eligibility
+      options:
+        - label: The work is at least five years old.
+          required: true
+        - label: It was televised, streamed or otherwise distributed on a professional, publicly accessible platform.
+          required: true

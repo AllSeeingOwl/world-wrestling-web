@@ -14,6 +14,8 @@ Please refer to the following documents for more details:
 - **Tailwind CSS:** Neutral, generic styling ready to be customized.
 - **Content Collections:** Uses Astro Content Collections with a strict Zod schema for easy markdown management.
 - **Contribute Form:** Contributors propose entries from the site; each one arrives as a GitHub pull request for review.
+- **Quick Nominations:** A GitHub issue form (`.github/ISSUE_TEMPLATE/nomination.yml`) asks only for the four details the charter requires. Nominations are labelled `nomination` once that label exists in the repository.
+- **Sharing & Search:** Each entry uses its own summary as its page description and link preview, and `/sitemap.xml` lists every page.
 - **Promotion & Era Filtering:** Features to filter and organize content based on wrestling promotion and era.
 
 ## 🚀 Setup & Installation

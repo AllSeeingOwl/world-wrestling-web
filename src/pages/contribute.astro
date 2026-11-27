@@ -6,6 +6,9 @@ import { resolvePath } from '../utils/paths.js';
 import { slugify } from '../utils/entry-markdown.js';
 
 const REPO = 'AllSeeingOwl/world-wrestling-web';
+// A GitHub issue form (.github/ISSUE_TEMPLATE/nomination.yml) with only the charter's four
+// required details, for people who don't want to write a full entry.
+const NOMINATION_URL = `https://github.com/${REPO}/issues/new?template=nomination.yml`;
 
 const entries = await getCollection('archive');
 // File names don't always match titles (montreal-screwjob.md is "The Montreal Screwjob"),
@@ -36,14 +39,47 @@ const eras = unique([
 ]);
 ---
 
-<Layout title="Contribute | Wrestling Heritage Registry">
+<Layout
+  title="Contribute | Wrestling Heritage Registry"
+  description="Nominate a moment for the Wrestling Heritage Registry, or write the full entry yourself."
+>
   <div class="mb-8 border-b border-registry-border pb-6">
     <h1 class="font-bold text-2xl mb-2 text-registry-text">Contribute an Entry</h1>
     <p class="text-sm text-registry-textMuted max-w-2xl">
-      Propose a moment for the registry. Fill in the form, check it, and submit the entry as a pull
-      request on GitHub. An editor reviews every submission before it goes live.
+      Propose a moment for the registry. You can send a quick nomination, or write the full entry
+      yourself. An editor reviews every submission before it goes live.
     </p>
   </div>
+
+  <section aria-label="Ways to contribute" class="mb-8 grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+    <div class="bg-registry-surface border border-registry-gold rounded-lg p-4 sm:p-5 space-y-3">
+      <h2 class="font-bold text-registry-text">Quick nomination</h2>
+      <p class="text-registry-textMuted">
+        Just what the charter asks for: the work, its promotion or creator, an approximate date, and
+        a sentence or two on why it matters. It's sent as a GitHub issue, so you'll need a free
+        GitHub account, but no article and no pull request.
+      </p>
+      <a
+        href={NOMINATION_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-block bg-registry-gold hover:bg-registry-goldHover text-registry-background font-bold text-sm px-4 py-2 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-registry-surface focus-visible:ring-registry-gold"
+        >Send a quick nomination<span class="sr-only"> (opens GitHub in a new tab)</span></a
+      >
+    </div>
+    <div class="bg-registry-surface border border-registry-border rounded-lg p-4 sm:p-5 space-y-3">
+      <h2 class="font-bold text-registry-text">Write the full entry</h2>
+      <p class="text-registry-textMuted">
+        Use the form below to write the complete entry, with citations and an article of 100 to 2,000
+        words. It's checked as you go and submitted as a pull request on GitHub.
+      </p>
+      <a
+        href="#contribute-form"
+        class="inline-block text-registry-gold underline underline-offset-2 hover:text-registry-goldHover focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold rounded"
+        >Go to the form</a
+      >
+    </div>
+  </section>
 
   <section
     aria-labelledby="selection-heading"
@@ -73,7 +109,7 @@ const eras = unique([
   </section>
 
   <div class="grid grid-cols-1 lg:grid-cols-[1fr_15rem] gap-8 items-start">
-    <div>
+    <div id="contribute-form" class="scroll-mt-6">
       <noscript>
         <p
           class="mb-6 p-4 bg-registry-surface border-l-4 border-registry-gold text-sm text-registry-text"

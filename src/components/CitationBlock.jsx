@@ -19,7 +19,7 @@ function formatDate(value) {
 function Field({ label, children, missing }) {
   return (
     <div>
-      <dt className="font-sans text-[10px] uppercase tracking-wider text-registry-gold mb-1">
+      <dt className="font-sans text-[10px] uppercase tracking-wider text-registry-accent mb-1">
         {label}
       </dt>
       <dd className={missing ? 'italic text-registry-textMuted' : 'text-registry-text'}>
@@ -53,10 +53,10 @@ export default function CitationBlock({ citation }) {
         className="bg-registry-background p-6 rounded border border-registry-border"
       >
         <div className="flex items-center gap-2 mb-4">
-          <div className="w-2 h-2 rounded-full bg-registry-gold" aria-hidden="true" />
+          <div className="w-2 h-2 rounded-full bg-registry-accent" aria-hidden="true" />
           <h2
             id="citation-heading"
-            className="font-sans text-xs uppercase tracking-widest font-semibold text-registry-gold"
+            className="font-sans text-xs uppercase tracking-widest font-semibold text-registry-accent"
           >
             Registry Citation
           </h2>
@@ -91,7 +91,7 @@ export default function CitationBlock({ citation }) {
             </dl>
             {external_links.length > 0 && (
               <div className="mt-auto">
-                <h3 className="font-sans text-[10px] uppercase tracking-wider text-registry-gold mb-1">
+                <h3 className="font-sans text-[10px] uppercase tracking-wider text-registry-accent mb-1">
                   External References
                 </h3>
                 <ul className="flex flex-wrap gap-x-4 gap-y-1 text-xs">
@@ -101,7 +101,7 @@ export default function CitationBlock({ citation }) {
                         href={link.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-registry-text hover:text-registry-gold transition-colors underline decoration-registry-border underline-offset-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold rounded"
+                        className="text-registry-text hover:text-registry-accent transition-colors underline decoration-registry-border underline-offset-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-accent rounded"
                       >
                         {link.name}
                         <span className="sr-only"> (opens in a new tab)</span>

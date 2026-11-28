@@ -56,7 +56,7 @@ function SelectControl({ id, label, value, onChange, options }) {
         id={id}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="bg-registry-background border border-registry-border rounded px-3 py-2 text-sm text-registry-text focus:outline-none focus:border-registry-gold focus-visible:ring-2 focus-visible:ring-registry-gold"
+        className="bg-registry-background border border-registry-border rounded px-3 py-2 text-sm text-registry-text focus:outline-none focus:border-registry-accent focus-visible:ring-2 focus-visible:ring-registry-accent"
       >
         {options.map((option) => (
           <option key={option.value} value={option.value}>
@@ -184,9 +184,9 @@ export default function DirectoryView({ entries = [] }) {
       type="button"
       onClick={() => setActiveView(view)}
       aria-pressed={activeView === view}
-      className={`flex-1 sm:flex-none px-4 py-2 font-sans text-xs font-semibold uppercase tracking-wider border border-registry-border transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold focus-visible:ring-inset ${position} ${
+      className={`flex-1 sm:flex-none px-4 py-2 font-sans text-xs font-semibold uppercase tracking-wider border border-registry-border transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-accent focus-visible:ring-inset ${position} ${
         activeView === view
-          ? 'bg-registry-gold border-registry-gold text-registry-background'
+          ? 'bg-registry-accent border-registry-accent text-registry-background'
           : 'bg-registry-background text-registry-textMuted hover:text-registry-text'
       }`}
     >
@@ -216,7 +216,7 @@ export default function DirectoryView({ entries = [] }) {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Entry, event or person"
-                className="bg-registry-background border border-registry-border rounded px-3 py-2 text-sm text-registry-text placeholder:text-registry-textMuted focus:outline-none focus:border-registry-gold focus-visible:ring-2 focus-visible:ring-registry-gold"
+                className="bg-registry-background border border-registry-border rounded px-3 py-2 text-sm text-registry-text placeholder:text-registry-textMuted focus:outline-none focus:border-registry-accent focus-visible:ring-2 focus-visible:ring-registry-accent"
               />
             </div>
             <div className="flex" role="group" aria-label="View">
@@ -274,7 +274,7 @@ export default function DirectoryView({ entries = [] }) {
               <button
                 type="button"
                 onClick={clearFilters}
-                className="text-registry-gold hover:text-registry-goldHover underline underline-offset-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold rounded"
+                className="text-registry-accent hover:text-registry-accentHover underline underline-offset-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-accent rounded"
               >
                 Clear filters
               </button>
@@ -289,7 +289,7 @@ export default function DirectoryView({ entries = [] }) {
           <button
             type="button"
             onClick={clearFilters}
-            className="text-sm text-registry-gold hover:text-registry-goldHover underline underline-offset-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold rounded"
+            className="text-sm text-registry-accent hover:text-registry-accentHover underline underline-offset-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-accent rounded"
           >
             Clear filters
           </button>
@@ -313,7 +313,7 @@ export default function DirectoryView({ entries = [] }) {
                       <button
                         type="button"
                         onClick={() => handleSort(column.field)}
-                        className={`w-full text-left px-4 py-3 uppercase tracking-wider hover:text-registry-text focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold focus-visible:ring-inset ${active ? 'text-registry-gold' : ''}`}
+                        className={`w-full text-left px-4 py-3 uppercase tracking-wider hover:text-registry-text focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-accent focus-visible:ring-inset ${active ? 'text-registry-accent' : ''}`}
                       >
                         {column.label}
                         <span aria-hidden="true">
@@ -336,11 +336,11 @@ export default function DirectoryView({ entries = [] }) {
                           type="button"
                           onClick={() => toggleGroup(name)}
                           aria-expanded={isOpen}
-                          className="w-full flex items-center gap-2 px-4 py-2 text-left text-xs uppercase tracking-wider focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold focus-visible:ring-inset"
+                          className="w-full flex items-center gap-2 px-4 py-2 text-left text-xs uppercase tracking-wider focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-accent focus-visible:ring-inset"
                         >
                           <span
                             aria-hidden="true"
-                            className={`text-registry-gold transition-transform ${isOpen ? 'rotate-90' : ''}`}
+                            className={`text-registry-accent transition-transform ${isOpen ? 'rotate-90' : ''}`}
                           >
                             ▶
                           </span>
@@ -362,7 +362,7 @@ export default function DirectoryView({ entries = [] }) {
                         <td className="px-4 py-3 sm:min-w-[12rem]">
                           <a
                             href={entry.url}
-                            className="font-medium text-registry-gold hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold rounded"
+                            className="font-medium text-registry-accent underline decoration-registry-textMuted underline-offset-4 hover:decoration-registry-accentHover focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-accent rounded"
                           >
                             {entry.title}
                           </a>
@@ -407,11 +407,11 @@ export default function DirectoryView({ entries = [] }) {
                     onClick={() => toggleGroup(name)}
                     aria-expanded={isOpen}
                     aria-controls={listId}
-                    className="mb-4 flex items-center gap-3 bg-registry-surfaceHover rounded px-4 py-2 text-left text-sm uppercase tracking-wider focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold"
+                    className="mb-4 flex items-center gap-3 bg-registry-surfaceHover rounded px-4 py-2 text-left text-sm uppercase tracking-wider focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-accent"
                   >
                     <span
                       aria-hidden="true"
-                      className={`text-registry-gold transition-transform ${isOpen ? 'rotate-90' : ''}`}
+                      className={`text-registry-accent transition-transform ${isOpen ? 'rotate-90' : ''}`}
                     >
                       ▶
                     </span>
@@ -434,12 +434,12 @@ export default function DirectoryView({ entries = [] }) {
                             aria-hidden="true"
                             className={`absolute -left-[9px] top-5 w-4 h-4 rounded-full border-2 ${style.dot}`}
                           />
-                          <article className="bg-registry-surface border border-registry-border rounded-lg p-4 sm:p-5 hover:border-registry-gold transition-colors">
+                          <article className="bg-registry-surface border border-registry-border rounded-lg p-4 sm:p-5 hover:border-registry-accent transition-colors">
                             <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-4 mb-2">
                               <h2 className="font-bold text-lg leading-snug">
                                 <a
                                   href={entry.url}
-                                  className="text-registry-text hover:text-registry-gold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold rounded"
+                                  className="text-registry-text hover:text-registry-accent transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-accent rounded"
                                 >
                                   {entry.title}
                                 </a>

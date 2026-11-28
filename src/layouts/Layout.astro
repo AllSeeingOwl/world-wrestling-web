@@ -38,8 +38,8 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : un
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
   </head>
-  <body class="bg-registry-background text-registry-text font-sans min-h-screen selection:bg-registry-gold selection:text-registry-background">
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-registry-surface focus:text-registry-gold focus:border focus:border-registry-gold focus:top-0 focus:left-0">
+  <body class="bg-registry-background text-registry-text font-sans min-h-screen selection:bg-registry-accent selection:text-registry-background">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-registry-surface focus:text-registry-accent focus:border focus:border-registry-accent focus:top-0 focus:left-0">
       Skip to main content
     </a>
     <header class="bg-registry-surface mb-8 border-b border-registry-border">
@@ -47,7 +47,7 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : un
         <div class="flex items-center gap-4">
           <div>
             <p class="font-heading font-bold text-3xl sm:text-4xl text-registry-text tracking-tight mb-1">
-              Wrestling Heritage <span class="text-registry-gold">Registry</span>
+              Wrestling Heritage <span class="text-registry-accent">Registry</span>
             </p>
             <p class="font-mono text-[10px] sm:text-xs uppercase tracking-widest text-registry-textMuted">
               The Crabtree Catalogue

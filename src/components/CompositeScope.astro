@@ -19,7 +19,7 @@ const parts = [...components].sort((a, b) => a.date.localeCompare(b.date));
 >
   <h2
     id="composite-scope-heading"
-    class="font-mono text-xs uppercase tracking-widest text-registry-gold mb-1"
+    class="font-mono text-xs uppercase tracking-widest text-registry-accent mb-1"
   >
     Scope of this composite work
   </h2>
@@ -31,7 +31,7 @@ const parts = [...components].sort((a, b) => a.date.localeCompare(b.date));
     {
       parts.map((part, index) => (
         <li class="flex gap-3 text-sm">
-          <span class="font-mono text-registry-gold shrink-0 w-5" aria-hidden="true">
+          <span class="font-mono text-registry-accent shrink-0 w-5" aria-hidden="true">
             {index + 1}.
           </span>
           <div class="min-w-0">
@@ -41,7 +41,7 @@ const parts = [...components].sort((a, b) => a.date.localeCompare(b.date));
               {part.event_name && ` · ${part.event_name}`}
             </p>
             {part.title === proposedMerit && (
-              <p class="mt-1 inline-block text-[11px] font-semibold text-registry-background bg-registry-gold rounded px-2 py-0.5">
+              <p class="mt-1 inline-block text-[11px] font-semibold text-registry-background bg-registry-accent rounded px-2 py-0.5">
                 Proposed for a Citation for Individual Merit
               </p>
             )}

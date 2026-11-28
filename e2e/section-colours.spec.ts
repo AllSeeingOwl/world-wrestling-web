@@ -86,3 +86,23 @@ test('the submit form shows the chosen section colour', async ({ page }) => {
   await page.getByLabel('Registry section').selectOption('Registry of Homage & Influence');
   await expect(page.getByTestId('section-preview')).toContainText('Homage & Influence');
 });
+
+// Gold is reserved for the Registry of Excellence, so links, buttons and the site header
+// must never use the Excellence colours.
+test('interactive elements do not use the Excellence gold', async ({ page }) => {
+  const gold = ['rgb(251, 191, 36)', 'rgb(252, 211, 77)', 'rgb(245, 158, 11)', 'rgb(217, 119, 6)'];
+  for (const path of ['/', '/contribute', '/about']) {
+    await page.goto(path);
+    const colours = await page
+      .locator('header a, header span, main a, main button')
+      .evaluateAll((els) =>
+        els
+          .filter((el) => !el.closest('[data-legend-for], .article-item, [data-section]'))
+          .flatMap((el) => {
+            const style = getComputedStyle(el);
+            return [style.color, style.backgroundColor];
+          })
+      );
+    for (const colour of colours) expect(gold).not.toContain(colour);
+  }
+});

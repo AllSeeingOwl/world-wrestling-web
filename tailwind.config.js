@@ -18,8 +18,11 @@ export default {
           surfaceHover: '#334155', // Slate 700 - Hover states
           text: '#F8FAFC', // Slate 50 - Primary text
           textMuted: '#94A3B8', // Slate 400 - Secondary text/metadata
-          gold: '#F59E0B', // Amber 500 - Championship Gold
-          goldHover: '#D97706', // Amber 600 - Gold hover
+          // Links, buttons and focus rings. Deliberately neutral: gold is reserved for the
+          // Registry of Excellence, and each registry section has its own colour
+          // (src/utils/sections.js), so interactive elements must not look like a section.
+          accent: '#E2E8F0', // Slate 200
+          accentHover: '#FFFFFF',
           red: '#DC2626', // Red 600 - Intensity Red
           border: '#334155', // Slate 700 - Subtle borders
         },

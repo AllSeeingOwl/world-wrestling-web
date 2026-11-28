@@ -89,7 +89,7 @@ const EMPTY = {
 };
 
 const inputClass =
-  'w-full bg-registry-background border border-registry-border rounded px-3 py-2 text-sm text-registry-text placeholder:text-registry-textMuted focus:outline-none focus:border-registry-gold focus-visible:ring-2 focus-visible:ring-registry-gold aria-[invalid=true]:border-registry-red';
+  'w-full bg-registry-background border border-registry-border rounded px-3 py-2 text-sm text-registry-text placeholder:text-registry-textMuted focus:outline-none focus:border-registry-accent focus-visible:ring-2 focus-visible:ring-registry-accent aria-[invalid=true]:border-registry-red';
 
 function Field({ id, label, required, hint, error, children }) {
   const describedBy = [hint && `${id}-hint`, error && `${id}-error`].filter(Boolean).join(' ');
@@ -98,7 +98,7 @@ function Field({ id, label, required, hint, error, children }) {
       <label htmlFor={id} className="block text-sm font-semibold text-registry-text">
         {label}
         {required ? (
-          <span className="text-registry-gold" aria-hidden="true">
+          <span className="text-registry-accent" aria-hidden="true">
             {' '}
             *
           </span>
@@ -129,7 +129,7 @@ function Field({ id, label, required, hint, error, children }) {
 function Section({ title, children }) {
   return (
     <fieldset className="bg-registry-surface border border-registry-border rounded-lg p-4 sm:p-6 space-y-5">
-      <legend className="px-2 -ml-2 font-mono text-xs uppercase tracking-widest text-registry-gold">
+      <legend className="px-2 -ml-2 font-mono text-xs uppercase tracking-widest text-registry-accent">
         {title}
       </legend>
       {children}
@@ -494,7 +494,7 @@ export default function ContributeForm({
           <button
             type="button"
             onClick={clearForm}
-            className="text-registry-gold underline underline-offset-2 hover:text-registry-goldHover focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold rounded"
+            className="text-registry-accent underline underline-offset-2 hover:text-registry-accentHover focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-accent rounded"
           >
             Start over
           </button>
@@ -675,7 +675,7 @@ export default function ContributeForm({
                     setErrors({});
                     setResult(null);
                   }}
-                  className="sm:mt-6 text-sm text-registry-textMuted hover:text-red-400 underline underline-offset-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold rounded justify-self-start"
+                  className="sm:mt-6 text-sm text-registry-textMuted hover:text-red-400 underline underline-offset-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-accent rounded justify-self-start"
                 >
                   Remove<span className="sr-only"> part {i + 1}</span>
                 </button>
@@ -694,7 +694,7 @@ export default function ContributeForm({
                     : [...prev, { title: '', date: '', event_name: '' }]
                 )
               }
-              className="text-sm font-semibold text-registry-gold hover:text-registry-goldHover focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold rounded"
+              className="text-sm font-semibold text-registry-accent hover:text-registry-accentHover focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-accent rounded"
             >
               {parts.length === 0 ? '+ This is a composite work' : '+ Add a part'}
             </button>
@@ -846,7 +846,7 @@ export default function ContributeForm({
                     setErrors({});
                     setResult(null);
                   }}
-                  className="sm:mt-6 text-sm text-registry-textMuted hover:text-red-400 underline underline-offset-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold rounded justify-self-start"
+                  className="sm:mt-6 text-sm text-registry-textMuted hover:text-red-400 underline underline-offset-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-accent rounded justify-self-start"
                 >
                   Remove<span className="sr-only"> link {i + 1}</span>
                 </button>
@@ -855,7 +855,7 @@ export default function ContributeForm({
             <button
               type="button"
               onClick={() => setLinks((prev) => [...prev, { name: '', url: '' }])}
-              className="text-sm font-semibold text-registry-gold hover:text-registry-goldHover focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold rounded"
+              className="text-sm font-semibold text-registry-accent hover:text-registry-accentHover focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-accent rounded"
             >
               + Add a link
             </button>
@@ -886,7 +886,7 @@ export default function ContributeForm({
         <div className="flex flex-col sm:flex-row sm:items-center gap-3">
           <button
             type="submit"
-            className="bg-registry-gold hover:bg-registry-goldHover text-registry-background font-bold uppercase tracking-wider text-sm px-6 py-3 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-registry-background focus-visible:ring-registry-gold"
+            className="bg-registry-accent hover:bg-registry-accentHover text-registry-background font-bold uppercase tracking-wider text-sm px-6 py-3 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-registry-background focus-visible:ring-registry-accent"
           >
             Check &amp; prepare entry
           </button>
@@ -901,7 +901,7 @@ export default function ContributeForm({
           ref={reviewRef}
           tabIndex={-1}
           aria-labelledby="contribute-ready-heading"
-          className="bg-registry-surface border border-registry-gold rounded-lg p-4 sm:p-6 space-y-4 focus:outline-none"
+          className="bg-registry-surface border border-registry-accent rounded-lg p-4 sm:p-6 space-y-4 focus:outline-none"
         >
           <div>
             <h2 id="contribute-ready-heading" className="font-bold text-lg text-registry-text">
@@ -919,7 +919,7 @@ export default function ContributeForm({
                 href={result.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-center bg-registry-gold hover:bg-registry-goldHover text-registry-background font-bold text-sm px-4 py-2 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-registry-surface focus-visible:ring-registry-gold"
+                className="text-center bg-registry-accent hover:bg-registry-accentHover text-registry-background font-bold text-sm px-4 py-2 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-registry-surface focus-visible:ring-registry-accent"
               >
                 Open a pull request on GitHub
                 <span className="sr-only"> (opens in a new tab)</span>
@@ -928,14 +928,14 @@ export default function ContributeForm({
             <button
               type="button"
               onClick={download}
-              className="bg-registry-background border border-registry-border hover:border-registry-gold text-registry-text font-semibold text-sm px-4 py-2 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold"
+              className="bg-registry-background border border-registry-border hover:border-registry-accent text-registry-text font-semibold text-sm px-4 py-2 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-accent"
             >
               Download {result.filename}
             </button>
             <button
               type="button"
               onClick={copy}
-              className="bg-registry-background border border-registry-border hover:border-registry-gold text-registry-text font-semibold text-sm px-4 py-2 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold"
+              className="bg-registry-background border border-registry-border hover:border-registry-accent text-registry-text font-semibold text-sm px-4 py-2 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-accent"
             >
               {copied ? 'Copied' : 'Copy Markdown'}
             </button>
@@ -967,7 +967,7 @@ export default function ContributeForm({
           </ol>
 
           <details className="group">
-            <summary className="cursor-pointer text-sm font-semibold text-registry-gold focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold rounded">
+            <summary className="cursor-pointer text-sm font-semibold text-registry-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-accent rounded">
               Preview the Markdown
             </summary>
             <pre className="mt-3 max-h-96 overflow-auto bg-registry-background border border-registry-border rounded p-3 text-xs text-registry-text whitespace-pre-wrap break-words">

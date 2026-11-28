@@ -54,7 +54,7 @@ const sections = REGISTRY_SECTIONS.map((value) => ({
       <label for="promotion-filter" class="text-xs font-semibold text-registry-textMuted uppercase">Promotion / Creator</label>
       <select
         id="promotion-filter"
-        class="bg-registry-background border border-registry-border text-registry-text text-sm rounded focus:ring-registry-gold focus:border-registry-gold block w-full p-2"
+        class="bg-registry-background border border-registry-border text-registry-text text-sm rounded focus:ring-registry-accent focus:border-registry-accent block w-full p-2"
       >
         <option value="all">All Promotions &amp; Creators</option>
         {promotions.map((promo) => (
@@ -67,7 +67,7 @@ const sections = REGISTRY_SECTIONS.map((value) => ({
       <label for="era-filter" class="text-xs font-semibold text-registry-textMuted uppercase">Decade</label>
       <select
         id="era-filter"
-        class="bg-registry-background border border-registry-border text-registry-text text-sm rounded focus:ring-registry-gold focus:border-registry-gold block w-full p-2"
+        class="bg-registry-background border border-registry-border text-registry-text text-sm rounded focus:ring-registry-accent focus:border-registry-accent block w-full p-2"
       >
         <option value="all">All Decades</option>
         {eras.map((era) => (
@@ -80,7 +80,7 @@ const sections = REGISTRY_SECTIONS.map((value) => ({
       <label for="section-filter" class="text-xs font-semibold text-registry-textMuted uppercase">Registry Section</label>
       <select
         id="section-filter"
-        class="bg-registry-background border border-registry-border text-registry-text text-sm rounded focus:ring-registry-gold focus:border-registry-gold block w-full p-2"
+        class="bg-registry-background border border-registry-border text-registry-text text-sm rounded focus:ring-registry-accent focus:border-registry-accent block w-full p-2"
       >
         <option value="all">All Sections</option>
         {sections.map((section) => (
@@ -101,7 +101,7 @@ const sections = REGISTRY_SECTIONS.map((value) => ({
     {articles.map((article) => (
       <a
         href={resolvePath(`/${article.slug}`)}
-        class="block group article-item focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold focus-visible:ring-offset-2 focus-visible:ring-offset-registry-background rounded"
+        class="block group article-item focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-accent focus-visible:ring-offset-2 focus-visible:ring-offset-registry-background rounded"
         data-promotion={article.promotion_group}
         data-era={article.era}
         data-section={article.registry_section}

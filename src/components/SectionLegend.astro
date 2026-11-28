@@ -37,7 +37,7 @@ const labelId = `section-legend-label${filterId ? `-${filterId}` : ''}`;
                 aria-pressed="false"
                 disabled={empty}
                 title={empty ? 'No entries in this section yet' : `Show only ${style.short}`}
-                class="inline-flex items-center gap-2 rounded px-1.5 py-0.5 border border-transparent aria-pressed:border-registry-textMuted aria-pressed:bg-registry-surface disabled:opacity-50 disabled:cursor-not-allowed hover:enabled:bg-registry-surface focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold"
+                class="inline-flex items-center gap-2 rounded px-1.5 py-0.5 border border-transparent aria-pressed:border-registry-textMuted aria-pressed:bg-registry-surface disabled:opacity-50 disabled:cursor-not-allowed hover:enabled:bg-registry-surface focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-accent"
               >
                 <span class={`inline-block w-3 h-3 rounded-sm ${style.swatch}`} aria-hidden="true" />
                 <span class={style.text}>{style.short}</span>

@@ -26,7 +26,7 @@ const links = [
 <nav class="relative z-50">
   <button
     id="hamburger-btn"
-    class="block text-registry-text focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold focus-visible:ring-offset-2 focus-visible:ring-offset-registry-surface rounded p-2 -mr-2 hover:text-registry-gold transition-colors"
+    class="block text-registry-text focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-accent focus-visible:ring-offset-2 focus-visible:ring-offset-registry-surface rounded p-2 -mr-2 hover:text-registry-accent transition-colors"
     aria-label="Open menu"
     aria-expanded="false"
   >
@@ -47,10 +47,10 @@ const links = [
             <a
               href={resolvePath(link.href)}
               aria-current={active ? "page" : undefined}
-              class={`block px-4 py-2 font-sans text-sm uppercase tracking-widest transition-colors rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold focus-visible:ring-inset ${
+              class={`block px-4 py-2 font-sans text-sm uppercase tracking-widest transition-colors rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-accent focus-visible:ring-inset ${
                 active
-                  ? 'bg-registry-surface text-registry-gold font-bold border-l-2 border-registry-gold -ml-[2px]'
-                  : 'text-registry-textMuted hover:bg-registry-surface hover:text-registry-gold border-l-2 border-transparent -ml-[2px]'
+                  ? 'bg-registry-surface text-registry-accent font-bold border-l-2 border-registry-accent -ml-[2px]'
+                  : 'text-registry-textMuted hover:bg-registry-surface hover:text-registry-accent border-l-2 border-transparent -ml-[2px]'
               }`}
             >
               {link.name}

@@ -15,7 +15,7 @@ const sections = getHeadings().filter((heading) => heading.depth === 2);
   <div class="mb-6">
     <a
       href={resolvePath('/')}
-      class="text-sm text-registry-gold hover:text-registry-goldHover transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold focus-visible:ring-offset-2 focus-visible:ring-offset-registry-background rounded px-1"
+      class="text-sm text-registry-accent underline underline-offset-2 hover:text-registry-accentHover transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-accent focus-visible:ring-offset-2 focus-visible:ring-offset-registry-background rounded px-1"
       >&larr; Back to Registry</a
     >
   </div>
@@ -40,7 +40,7 @@ const sections = getHeadings().filter((heading) => heading.depth === 2);
             <li>
               <a
                 href={`#${section.slug}`}
-                class="text-registry-text hover:text-registry-gold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-gold rounded"
+                class="text-registry-text hover:text-registry-accent transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-registry-accent rounded"
               >
                 {section.text}
               </a>

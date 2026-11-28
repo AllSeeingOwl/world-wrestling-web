@@ -8,7 +8,9 @@ The color palette is designed to evoke a sense of professional history while cap
 
 - **Primary Background:** A deep, dark slate/navy to represent a sophisticated, archival feel.
 - **Surface Background:** Slightly lighter than the primary background for cards and panels.
-- **Accents:** Championship Gold (for significant achievements, titles, and highlights) and Intensity Red (for alerts, active states, or intense moments).
+- **Section colours:** Each registry section has one colour, used for its labels, card stripes and charter headings: Excellence gold, Infamy Division A rose, Infamy Division B red, Homage & Influence blue. They are defined once in `src/utils/sections.js`. Gold is reserved for the Registry of Excellence and is not used for anything else.
+- **Interface accent:** Links, buttons and focus rings use a neutral light grey (`registry-accent`), so they are never mistaken for a registry section. Text links are underlined.
+- **Alerts:** Form errors use red, the conventional error colour.
 - **Text:** High-contrast off-white for body text to ensure readability against dark backgrounds, with softer grays for secondary text.
 
 ### Example Tailwind Configuration (`tailwind.config.js` extension)
@@ -24,8 +26,8 @@ module.exports = {
           surfaceHover: '#334155', // Slate 700 - Hover states
           text: '#F8FAFC', // Slate 50 - Primary text
           textMuted: '#94A3B8', // Slate 400 - Secondary text/metadata
-          gold: '#F59E0B', // Amber 500 - Championship Gold
-          goldHover: '#D97706', // Amber 600 - Gold hover
+          accent: '#E2E8F0', // Slate 200 - links, buttons and focus rings
+          accentHover: '#FFFFFF',
           red: '#DC2626', // Red 600 - Intensity Red
           border: '#334155', // Slate 700 - Subtle borders
         },
@@ -72,14 +74,14 @@ import React from 'react';
 
 const RegistryCard = ({ title, date, promotion, significance, summary }) => {
   return (
-    <article className="bg-registry-surface border border-registry-border rounded-lg p-6 hover:border-registry-gold transition-colors focus-within:ring-2 focus-within:ring-registry-gold focus-within:ring-offset-2 focus-within:ring-offset-registry-background">
+    <article className="bg-registry-surface border border-registry-border rounded-lg p-6 hover:border-registry-accent transition-colors focus-within:ring-2 focus-within:ring-registry-accent focus-within:ring-offset-2 focus-within:ring-offset-registry-background">
       <div className="flex justify-between items-start mb-4">
         <h3 className="font-heading text-xl font-bold text-registry-text mb-2">
           <a href="#" className="focus:outline-none before:absolute before:inset-0 relative">
             {title}
           </a>
         </h3>
-        <span className="bg-registry-gold text-registry-background text-xs font-bold px-2 py-1 rounded uppercase tracking-wider">
+        <span className="bg-registry-accent text-registry-background text-xs font-bold px-2 py-1 rounded uppercase tracking-wider">
           {promotion}
         </span>
       </div>
@@ -115,7 +117,7 @@ const RegistryFilters = () => {
         </label>
         <select
           id="promotion-filter"
-          className="bg-registry-background border border-registry-border text-registry-text text-sm rounded focus:ring-registry-gold focus:border-registry-gold block w-full p-2"
+          className="bg-registry-background border border-registry-border text-registry-text text-sm rounded focus:ring-registry-accent focus:border-registry-accent block w-full p-2"
         >
           <option value="">All Promotions</option>
           <option value="wwf">WWF/WWE</option>
@@ -175,9 +177,9 @@ const TimelineEvent = ({ year, title, isMajor }) => {
       </div>
       {/* Timeline Node */}
       <div
-        className={`absolute left-0 sm:left-28 top-7 w-3 h-3 rounded-full border-2 ${isMajor ? 'bg-registry-gold border-registry-gold' : 'bg-registry-background border-registry-textMuted'} group-hover:border-registry-gold group-hover:bg-registry-gold transition-colors`}
+        className={`absolute left-0 sm:left-28 top-7 w-3 h-3 rounded-full border-2 ${isMajor ? 'bg-registry-accent border-registry-accent' : 'bg-registry-background border-registry-textMuted'} group-hover:border-registry-accent group-hover:bg-registry-accent transition-colors`}
       ></div>
-      <div className="bg-registry-surface p-4 rounded-lg border border-registry-border group-hover:border-registry-gold transition-colors">
+      <div className="bg-registry-surface p-4 rounded-lg border border-registry-border group-hover:border-registry-accent transition-colors">
         <h4 className="font-heading font-bold text-lg text-registry-text">{title}</h4>
       </div>
     </div>
@@ -210,5 +212,5 @@ To ensure the registry is available to all users, the following accessibility st
 
 - **ARIA Labels:** All interactive elements, especially custom filters and complex components (like the timeline), use appropriate `aria-label`, `aria-expanded`, and `aria-controls` attributes.
 - **Keyboard Navigation:** All features are fully operable via keyboard. Forms and links utilize intuitive tab ordering. The `RegistryCard` example uses a pseudo-element link trick to make the whole card clickable while maintaining a single, logical focus target for screen readers.
-- **Focus Indicators:** Custom, high-visibility focus rings are defined using Tailwind's `focus:ring` utilities (e.g., `focus:ring-registry-gold`), ensuring users navigating via keyboard can easily track their position.
+- **Focus Indicators:** Custom, high-visibility focus rings are defined using Tailwind's `focus:ring` utilities (e.g., `focus:ring-registry-accent`), ensuring users navigating via keyboard can easily track their position.
 - **High Contrast Mode Compatibility:** The color palette (off-white text on dark slate backgrounds) inherently provides a high contrast ratio (well above WCAG AA standards). Border colors are distinct enough to ensure component boundaries are visible even in OS-level high contrast modes.
